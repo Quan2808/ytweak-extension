@@ -1,18 +1,11 @@
 import { t } from "@shared/utils/i18n";
 import { logoMarkup } from "./headerLogo";
-import "./style.css";
-
-const adsSelector = [
-  { parent: "ytd-rich-item-renderer", child: "ytd-ad-slot-renderer" },
-  { parent: "ytd-rich-section-renderer" },
-];
 
 function loadLogo() {
   // Desktop
   if (document.getElementById("logo-icon")) {
     const logoIcons = document.querySelectorAll("#logo-icon");
     logoIcons.forEach(function (logoIcon) {
-      // Tránh lặp lại nếu đã chèn rồi
       if (logoIcon.parentNode.querySelector("nice-logo")) return;
 
       logoIcon.insertAdjacentHTML("afterend", logoMarkup);

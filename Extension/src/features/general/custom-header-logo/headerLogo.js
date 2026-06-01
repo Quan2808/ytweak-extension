@@ -1,32 +1,3 @@
-export const styleMarkup = `
-<style>
-  .ytweak-logo-container.ytweak-logo, ytweak-logo {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    vertical-align: middle;
-    fill: var(--iron-icon-fill-color, currentcolor);
-    stroke: var(--iron-icon-stroke-color, none);
-    width: var(--iron-icon-width, 24px);
-    height: var(--iron-icon-height, 24px);
-    margin-left: var(--iron-icon_-_margin-left);
-    margin-bottom: var(--iron-icon_-_margin-bottom);
-    margin-right: var(--iron-icon_-_margin-right);
-    width: var(--iron-icon_-_width, var(--iron-icon-width, 24px));
-    height: var(--iron-icon_-_height, var(--iron-icon-height, 24px));
-    margin-top: var(--iron-icon_-_margin-top);
-  }
-  ytweak-logo.ytd-topbar-logo-renderer {
-    height: 20px;
-    width: 90px;
-    padding: 18px 14px 18px 16px;
-    color: var(--yt-spec-wordmark-text);
-    flex: none;
-  }
-</style>
-`;
-
 export const logoMarkup = `<nice-logo class="style-scope ytd-topbar-logo-renderer">
   <svg viewBox="0 0 97 20" preserveAspectRatio="xMidYMid meet" focusable="false"
     class="style-scope yt-icon"
