@@ -1,5 +1,7 @@
+import { categories } from "@features/index";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
+import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import VideoSettingsIcon from "@mui/icons-material/VideoSettings";
@@ -9,10 +11,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { categories } from "@features/index";
-// import DiscreteSlider from "@features/video/volume-amplifier/component.jsx";
 import { t } from "@shared/utils/i18n";
-import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
+
 const ICON_MAP = {
   SettingsOutlined: <SettingsOutlinedIcon />,
   PaletteOutlined: <PaletteOutlinedIcon />,

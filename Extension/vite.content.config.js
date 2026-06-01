@@ -1,17 +1,8 @@
 import { defineConfig } from "vite";
-import { resolve } from "path";
-
-const r = (...args) => resolve(__dirname, ...args);
+import { r, aliases } from "./vite.shared.js";
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      "@shared": r("src/shared"),
-      "@features": r("src/features"),
-      "@entries": r("src/entries"),
-      "@public": r("public"),
-    },
-  },
+  resolve: { alias: aliases },
   build: {
     outDir: r("dist"),
     emptyOutDir: false,

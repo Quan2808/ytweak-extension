@@ -24,7 +24,7 @@ export function AppThemeProvider({ children }) {
           mode: mode ? "dark" : "light",
         },
         typography: {
-          fontFamily: ["Roboto", "sans-serif"].join(","),
+          fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
         },
       }),
     [mode],

@@ -1,28 +1,22 @@
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-
 import CssBaseline from "@mui/material/CssBaseline";
-import { StrictMode, useState, useEffect } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 
-import AppHeader from "../../components/Header";
-import TweakCategory from "../../components/TweakCategory";
-import TweakList from "../../components/TweakList";
+import AppHeader from "@components/Header";
+import TweakCategory from "@components/TweakCategory";
+import TweakList from "@components/TweakList";
 
-import "../../index.css";
 import "./popup.css";
 
 import { allTweaks } from "@features/index";
 import { storage } from "@shared/utils/storage";
-import { I18nProvider } from "@shared/utils/i18nContext";
 
+import { I18nProvider } from "@shared/contexts/I18nContext";
 // Theme
 import {
   AppThemeProvider,
   useThemeContext,
-} from "../../components/ThemeContext";
+} from "@shared/contexts/ThemeContext";
 
 function initEnabledMap() {
   return Object.fromEntries(allTweaks.map((t) => [t.id, t.default ?? false]));

@@ -1,11 +1,10 @@
 import { t } from "@shared/utils/i18n";
-// import tweakExample from "./tweak-example";
-import customHeaderLogo from "./general/custom-header-logo";
-import linkSanitizer from "./general/link-sanitizer";
-import volumpeAmp from "./video/volume-amplifier";
-import hidePremiumVideoQualityTitle from "./video/hide-premium-video-quality-title";
-import addPipButton from "./player/add-pip-button";
-import addLoopButton from "./player/add-loop-button";
+// import tweakExample from "@features/tweak-example";
+import customHeaderLogo from "@features/general/custom-header-logo";
+import linkSanitizer from "@features/general/link-sanitizer";
+import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-quality-title";
+import addPipButton from "@features/player/add-pip-button";
+import addLoopButton from "@features/player/add-loop-button";
 
 export const categories = [
   // Add new category here:
@@ -29,10 +28,7 @@ export const categories = [
       return t("category_video_label");
     },
     icon: "VideoSettings",
-    tweaks: [
-      // volumpeAmp,
-      hidePremiumVideoQualityTitle,
-    ],
+    tweaks: [hidePremiumVideoQualityTitle],
   },
   {
     id: "player",

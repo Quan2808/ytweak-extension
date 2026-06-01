@@ -1,3 +1,4 @@
+import { categories } from "@features/index";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -7,7 +8,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Switch from "@mui/material/Switch";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { categories } from "@features/index";
 
 export default function TweakCategory({
   categoryId,

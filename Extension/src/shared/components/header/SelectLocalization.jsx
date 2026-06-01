@@ -7,7 +7,7 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
 import TranslateRoundedIcon from "@mui/icons-material/TranslateRounded";
-import { useI18n } from "@shared/utils/i18nContext";
+import { useI18n } from "@shared/contexts/I18nContext";
 import { Tooltip } from "@mui/material";
 import { t } from "@shared/utils/i18n";
 

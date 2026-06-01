@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { storage } from "./storage";
-import { initI18n, setLang } from "./i18n";
+import { storage } from "@shared/utils/storage";
+import { initI18n, setLang } from "@shared/utils/i18n";
 
 const I18nContext = createContext(null);
 

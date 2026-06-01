@@ -7,8 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { t } from "@shared/utils/i18n";
-import { useI18n } from "@shared/utils/i18nContext";
-import LanguageSelector from "./header/select-localization";
+import { useI18n } from "@shared/contexts/I18nContext";
+import LanguageSelector from "@components/header/SelectLocalization";
 
 export default function AppHeader({ currentMode, onToggleTheme }) {
   useI18n();
