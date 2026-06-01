@@ -52,7 +52,9 @@ export default function TweakCategory({
                   <ListItemText
                     id={tweak.id}
                     primary={tweak.name}
-                    secondary={tweak.description ?? "Không có mô tả"}
+                    {...(tweak.description !== null
+                      ? { secondary: tweak.description }
+                      : {})}
                   />
                   <Switch
                     edge="end"

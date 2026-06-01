@@ -24,7 +24,7 @@ export default function AppHeader({ currentMode, onToggleTheme }) {
           <Typography
             variant="h6"
             sx={{
-              fontFamily: "'Alternate Gothic No2', sans-serif !important",
+              fontFamily: "'TWeak Logo', sans-serif !important",
               fontWeight: 700,
               fontSize: "1.75rem",
               letterSpacing: "-1.4px",

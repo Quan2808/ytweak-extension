@@ -37,8 +37,17 @@ export function getLang() {
 
 export function t(key, ...substitutions) {
   if (isChromeExtension) {
-    const chromeMsg = chrome.i18n.getMessage(key, substitutions.map(String));
+    const cleanKey = key.toLowerCase();
+    const chromeMsg = chrome.i18n.getMessage(
+      cleanKey,
+      substitutions.map(String),
+    );
+
+    // Nếu Chrome tìm thấy, trả về kết quả dịch
     if (chromeMsg) return chromeMsg;
+
+    // NẾU RỖNG: Trả về chuỗi rỗng "" (hoặc null) thay vì trả về cái `key` gốc
+    return "";
   }
 
   let msg = flatLocales[currentLang]?.[key] ?? flatLocales.en[key] ?? key;
