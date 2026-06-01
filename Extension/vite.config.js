@@ -21,8 +21,8 @@ export default defineConfig(() => ({
       },
       output: {
         entryFileNames: ({ name }) =>
-          name === "background" ? "[name].js" : "assets/[name].js",
-        chunkFileNames: "assets/[name].js",
+          name === "background" ? "[name].js" : "popup/[name].js",
+        chunkFileNames: "popup/[name].js",
         assetFileNames: ({ name }) => {
           if (
             name &&
@@ -30,9 +30,9 @@ export default defineConfig(() => ({
               name.endsWith(".woff") ||
               name.endsWith(".woff2"))
           ) {
-            return "assets/fonts/[name].[ext]"; // Đưa font vào assets/fonts
+            return "assets/fonts/[name].[ext]";
           }
-          return "assets/[name].[ext]"; // Đưa css và các asset khác của popup vào assets/popup
+          return "popup/[name].[ext]";
         },
       },
     },
