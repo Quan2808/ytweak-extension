@@ -1,14 +1,16 @@
-import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LanguageSelector from "@components/header/SelectLocalization";
+import { useI18n } from "@shared/contexts/I18nContext";
+import { t } from "@shared/utils/i18n";
+
 import GitHubIcon from "@mui/icons-material/GitHub";
-import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
+import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
+
 import { Tooltip } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { t } from "@shared/utils/i18n";
-import { useI18n } from "@shared/contexts/I18nContext";
-import LanguageSelector from "@components/header/SelectLocalization";
 
 export default function AppHeader({ currentMode, onToggleTheme }) {
   useI18n();
@@ -59,7 +61,11 @@ export default function AppHeader({ currentMode, onToggleTheme }) {
                 onClick={onToggleTheme}
                 color="inherit"
               >
-                {currentMode ? <LightModeIcon /> : <DarkModeIcon />}
+                {currentMode ? (
+                  <LightModeRoundedIcon />
+                ) : (
+                  <DarkModeRoundedIcon />
+                )}
               </IconButton>
             </Tooltip>
           </div>

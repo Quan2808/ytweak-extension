@@ -9,9 +9,12 @@ export function I18nProvider({ children }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    storage.get("lang").then((stored) => {
+    storage.get("lang").then(async (stored) => {
       const saved = stored?.lang ?? "en";
-      initI18n(saved);
+
+      // THÊM AWAIT Ở ĐÂY: Chờ nạp xong JSON ngôn ngữ đã lưu
+      await initI18n(saved);
+
       setLangState(saved);
       setReady(true);
     });
@@ -22,14 +25,11 @@ export function I18nProvider({ children }) {
 
     await storage.set({ lang: newLang });
 
-    setLang(newLang);
+    // THÊM AWAIT Ở ĐÂY: Chờ nạp xong ngôn ngữ mới trước khi reload
+    await setLang(newLang);
     setLangState(newLang);
 
     window.location.reload();
-
-    // if (typeof chrome !== "undefined" && chrome.runtime) {
-    //   window.location.reload();
-    // }
   }
 
   if (!ready) return null;

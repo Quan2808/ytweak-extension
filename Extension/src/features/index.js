@@ -19,7 +19,7 @@ export const categories = [
     get label() {
       return t("category_general_label");
     },
-    icon: "SettingsOutlined",
+    icon: "Settings",
     tweaks: [customHeaderLogo, linkSanitizer],
   },
   {
@@ -35,7 +35,7 @@ export const categories = [
     get label() {
       return t("category_player_label");
     },
-    icon: "PlayArrowOutlined",
+    icon: "PlayArrow",
     tweaks: [addPipButton, addLoopButton],
   },
   {
@@ -43,7 +43,7 @@ export const categories = [
     get label() {
       return t("category_comingSoon_label");
     },
-    icon: "SettingsOutlined",
+    icon: "MoreHoriz",
     tweaks: [],
   },
 ];
