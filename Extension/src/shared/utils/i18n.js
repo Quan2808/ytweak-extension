@@ -1,23 +1,27 @@
-import en from "@public/_locales/en/messages.json";
-import vi from "@public/_locales/vi/messages.json";
-
 const isChromeExtension =
   typeof chrome !== "undefined" && !!chrome.i18n?.getMessage;
 
-const locales = { en, vi };
-
-function flatten(messages) {
-  return Object.fromEntries(
-    Object.entries(messages).map(([k, v]) => [k, v.message]),
-  );
-}
-
-const flatLocales = {
-  en: flatten(en),
-  vi: flatten(vi),
-};
-
+let flatLocales = { en: {}, vi: {} };
 let currentLang = "en";
+
+if (import.meta.env.DEV) {
+  const en = await import("@public/_locales/en/messages.json").then(
+    (m) => m.default,
+  );
+  const vi = await import("@public/_locales/vi/messages.json").then(
+    (m) => m.default,
+  );
+
+  const flatten = (messages) =>
+    Object.fromEntries(
+      Object.entries(messages).map(([k, v]) => [k, v.message]),
+    );
+
+  flatLocales = {
+    en: flatten(en),
+    vi: flatten(vi),
+  };
+}
 
 export function initI18n(lang = "en") {
   currentLang = lang in flatLocales ? lang : "en";
@@ -32,15 +36,16 @@ export function getLang() {
 }
 
 export function t(key, ...substitutions) {
+  if (isChromeExtension) {
+    const chromeMsg = chrome.i18n.getMessage(key, substitutions.map(String));
+    if (chromeMsg) return chromeMsg;
+  }
+
   let msg = flatLocales[currentLang]?.[key] ?? flatLocales.en[key] ?? key;
 
   substitutions.forEach((sub, i) => {
     msg = msg.replace(`$${i + 1}`, String(sub));
   });
-
-  if (isChromeExtension && msg === key && chrome.i18n.getMessage(key)) {
-    return chrome.i18n.getMessage(key, substitutions.map(String));
-  }
 
   return msg;
 }
