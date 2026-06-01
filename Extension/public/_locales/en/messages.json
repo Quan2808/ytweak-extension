@@ -1,0 +1,54 @@
+{
+  "appName": { "message": "YTweak" },
+  "appDescription": { "message": "Tweak YouTube to your liking." },
+
+  "tooltip_language": { "message": "Change language" },
+  "tooltip_github": { "message": "GitHub repository" },
+  "tooltip_theme_dark": { "message": "Turn on the light" },
+  "tooltip_theme_light": { "message": "Turn off the light" },
+
+  "category_general_label": { "message": "General" },
+  "category_comingSoon_label": { "message": "Coming soon" },
+  "category_tweakCount": {
+    "message": "$1 tweaks",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+
+  "tweak_customLogo_name": { "message": "Replace YouTube Logo" },
+  "tweak_customLogo_desc": {
+    "message": "Replace the original YouTube logo with the Premium logo."
+  },
+
+  "tweak_linkSanitizer_name": { "message": "Clean sharing links" },
+  "tweak_linkSanitizer_desc": {
+    "message": "Remove tracking parameters (si, pp, feature...) from YouTube links and share dialogs."
+  },
+
+  "category_video_label": { "message": "Video" },
+
+  "tweak_volumeAmplifier_name": { "message": "Volume Amplifier" },
+  "tweak_volumeAmplifier_desc": {
+    "message": "Volume Amplifier desc"
+  },
+
+  "tweak_hidePremiumVideoQualityTitle_name": {
+    "message": "Hide premium video quality title"
+  },
+  "tweak_hidePremiumVideoQualityTitle_desc": {
+    "message": ""
+  },
+
+  "category_player_label": { "message": "Player" },
+  "tweak_pipButton_name": {
+    "message": "Show Picture in Picture video button."
+  },
+  "tweak_pipButton_desc": {
+    "message": ""
+  },
+  "tweak_loopButton_name": {
+    "message": "Show Loop video button."
+  },
+  "tweak_loopButton_desc": {
+    "message": ""
+  }
+}

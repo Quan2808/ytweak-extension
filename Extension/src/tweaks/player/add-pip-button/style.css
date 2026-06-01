@@ -1,0 +1,8 @@
+#ytweak-pip-button {
+  opacity: 0.9;
+  transition: opacity 0.15s;
+}
+
+#ytweak-pip-button:hover {
+  opacity: 1;
+}

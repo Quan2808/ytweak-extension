@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "YTweak",
+  "version": "1.0.0",
+  "description": "Lorem ipsum dolor sit amet...",
+  "default_locale": "en",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["assets/content.js"],
+      "css": ["assets/content.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
