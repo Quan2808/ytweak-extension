@@ -1,8 +1,5 @@
-import { t } from "../../../utils/i18n";
-import {
-  updateButtonUI,
-  injectYTWatchRightButton,
-} from "../../../utils/player";
+import { t } from "@shared/utils/i18n";
+import { updateButtonUI, injectYTWatchRightButton } from "@shared/utils/player";
 
 let interval = null;
 

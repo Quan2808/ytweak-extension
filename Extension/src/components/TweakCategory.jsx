@@ -7,7 +7,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Switch from "@mui/material/Switch";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { categories } from "../tweaks";
+import { categories } from "@features/index";
 
 export default function TweakCategory({
   categoryId,

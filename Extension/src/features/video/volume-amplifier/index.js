@@ -1,4 +1,4 @@
-import { t } from "../../../utils/i18n";
+import { t } from "@shared/utils/i18n";
 
 let audioCtx = null;
 let gainNode = null;

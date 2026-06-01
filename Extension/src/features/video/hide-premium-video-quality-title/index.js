@@ -1,4 +1,4 @@
-import { t } from "../../../utils/i18n";
+import { t } from "@shared/utils/i18n";
 
 let observer = null;
 let rafId = null;
@@ -28,12 +28,12 @@ function scheduleClean() {
 }
 
 export default {
-  id: "hide-premium-video-upsell-banner",
+  id: "hide-premium-quality",
   get name() {
-    return t("tweak_hidePremiumQuality_name");
+    return t("tweak_hidePremiumVideoQualityTitle_name");
   },
   get description() {
-    return t("tweak_hidePremiumQuality_desc");
+    return t("tweak_hidePremiumVideoQualityTitle_desc");
   },
   default: true,
 

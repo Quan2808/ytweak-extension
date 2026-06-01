@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "YTweak",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lorem ipsum dolor sit amet...",
   "default_locale": "en",
   "action": {
@@ -15,9 +15,15 @@
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
-      "js": ["assets/content.js"],
-      "css": ["assets/content.css"],
+      "js": ["content.js"],
+      "css": ["assets/features.css"],
       "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*.css", "assets/*.js"],
+      "matches": ["<all_urls>"]
     }
   ]
 }

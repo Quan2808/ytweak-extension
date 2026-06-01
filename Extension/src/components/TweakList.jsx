@@ -9,9 +9,9 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { categories } from "../tweaks";
-// import DiscreteSlider from "../tweaks/video/volume-amplifier/component.jsx";
-import { t } from "../utils/i18n";
+import { categories } from "@features/index";
+// import DiscreteSlider from "@features/video/volume-amplifier/component.jsx";
+import { t } from "@shared/utils/i18n";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 const ICON_MAP = {
   SettingsOutlined: <SettingsOutlinedIcon />,

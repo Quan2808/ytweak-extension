@@ -1,5 +1,5 @@
-import en from "../../public/_locales/en/messages.json";
-import vi from "../../public/_locales/vi/messages.json";
+import en from "@public/_locales/en/messages.json";
+import vi from "@public/_locales/vi/messages.json";
 
 const isChromeExtension =
   typeof chrome !== "undefined" && !!chrome.i18n?.getMessage;

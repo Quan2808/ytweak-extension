@@ -1,4 +1,4 @@
-import { t } from "../../../utils/i18n";
+import { t } from "@shared/utils/i18n";
 import { logoMarkup } from "./headerLogo";
 import "./style.css";
 

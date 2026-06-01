@@ -1,29 +1,25 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
 
+const r = (...args) => resolve(__dirname, ...args);
+
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@shared": r("src/shared"),
+      "@features": r("src/features"),
+      "@entries": r("src/entries"),
+      "@public": r("public"),
+    },
+  },
   build: {
-    outDir: resolve(__dirname, "dist"),
+    outDir: r("dist"),
     emptyOutDir: false,
     lib: {
-      entry: resolve(__dirname, "src/entries/content/content.js"),
+      entry: r("src/entries/content/index.js"),
       name: "content",
       formats: ["iife"],
-      fileName: () => "assets/content.js",
-    },
-    rollupOptions: {
-      output: {
-        assetFileNames: (assetInfo) => {
-          // ✅ Tất cả CSS từ bất kỳ tweak nào đều → content.css
-          const isFromTweaks = assetInfo.originalFileNames?.some((f) =>
-            f.replace(/\\/g, "/").includes("src/tweaks/"),
-          );
-          if (assetInfo.ext === "css" && isFromTweaks) {
-            return "assets/content.[ext]";
-          }
-          return "assets/content.[ext]";
-        },
-      },
+      fileName: () => "content.js",
     },
   },
 });

@@ -6,8 +6,8 @@ import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { t } from "../utils/i18n";
-import { useI18n } from "../utils/I18nContext";
+import { t } from "@shared/utils/i18n";
+import { useI18n } from "@shared/utils/i18nContext";
 import LanguageSelector from "./header/select-localization";
 
 export default function AppHeader({ currentMode, onToggleTheme }) {
@@ -40,7 +40,7 @@ export default function AppHeader({ currentMode, onToggleTheme }) {
                 aria-label="github repository"
                 color="inherit"
                 component="a"
-                href="https://github.com/Quan2808/YTweak"
+                href={t("github_url")}
                 target="_blank"
                 rel="noopener noreferrer"
               >

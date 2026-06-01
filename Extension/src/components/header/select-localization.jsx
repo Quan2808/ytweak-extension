@@ -6,10 +6,10 @@ import Paper from "@mui/material/Paper";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
-import GTranslateIcon from "@mui/icons-material/GTranslate";
-import { useI18n } from "../../utils/I18nContext";
+import TranslateRoundedIcon from "@mui/icons-material/TranslateRounded";
+import { useI18n } from "@shared/utils/i18nContext";
 import { Tooltip } from "@mui/material";
-import { t } from "../../utils/i18n";
+import { t } from "@shared/utils/i18n";
 
 const languages = [
   { code: "en", label: "English" },
@@ -46,7 +46,7 @@ export default function LanguageSelector() {
           onClick={handleToggle}
           color="inherit"
         >
-          <GTranslateIcon />
+          <TranslateRoundedIcon />
         </IconButton>
 
         <Popper

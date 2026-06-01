@@ -2,6 +2,8 @@
   "appName": { "message": "YTweak" },
   "appDescription": { "message": "Tùy chỉnh YouTube theo ý bạn." },
 
+  "github_url": { "message": "https://github.com/Quan2808/ytweak-extension" },
+
   "tooltip_language": { "message": "Đổi ngôn ngữ" },
   "tooltip_github": { "message": "Xem mã nguồn trên GitHub" },
   "tooltip_theme_dark": { "message": "Chuyển sang chế độ sáng" },

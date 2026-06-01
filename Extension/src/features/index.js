@@ -1,4 +1,4 @@
-import { t } from "../utils/i18n";
+import { t } from "@shared/utils/i18n";
 // import tweakExample from "./tweak-example";
 import customHeaderLogo from "./general/custom-header-logo";
 import linkSanitizer from "./general/link-sanitizer";

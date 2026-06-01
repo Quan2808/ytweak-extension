@@ -14,9 +14,9 @@ import TweakList from "../../components/TweakList";
 import "../../index.css";
 import "./popup.css";
 
-import { allTweaks } from "../../tweaks";
-import { storage } from "../../utils/storage";
-import { I18nProvider } from "../../utils/I18nContext";
+import { allTweaks } from "@features/index";
+import { storage } from "@shared/utils/storage";
+import { I18nProvider } from "@shared/utils/i18nContext";
 
 // Theme
 import {

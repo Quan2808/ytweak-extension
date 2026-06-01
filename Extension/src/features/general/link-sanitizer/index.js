@@ -1,4 +1,4 @@
-import { t } from "../../../utils/i18n";
+import { t } from "@shared/utils/i18n";
 
 const TRACKING_PARAMS = ["si", "pp", "feature", "src", "ved", "usp"];
 
