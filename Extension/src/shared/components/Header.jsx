@@ -29,6 +29,7 @@ export default function AppHeader({ currentMode, onToggleTheme }) {
               fontSize: "1.75rem",
               letterSpacing: "-1.4px",
               lineHeight: 1,
+              userSelect: "none",
             }}
           >
             TWeak

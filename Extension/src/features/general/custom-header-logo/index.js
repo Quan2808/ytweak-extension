@@ -31,6 +31,7 @@ function loadLogo() {
 }
 
 let logoInterval = null;
+let observer = null;
 
 export default {
   id: "custom-header-logo",
@@ -43,17 +44,31 @@ export default {
   default: true,
 
   enable() {
-    // Vì YouTube chuyển trang liên tục, cần lặp lại việc kiểm tra để thay logo
-    if (!logoInterval) {
-      logoInterval = setInterval(loadLogo, 500);
+    // if (!logoInterval) {
+    //   logoInterval = setInterval(loadLogo, 500);
+    //   loadLogo();
+    // }
+
+    observer = new MutationObserver(() => {
       loadLogo();
-    }
+    });
+
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+    });
+    loadLogo();
   },
 
   disable() {
-    if (logoInterval) {
-      clearInterval(logoInterval);
-      logoInterval = null;
+    // if (logoInterval) {
+    //   clearInterval(logoInterval);
+    //   logoInterval = null;
+    // }
+
+    if (observer) {
+      clearInterval(observer);
+      observer = null;
     }
   },
 };
