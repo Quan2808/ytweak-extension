@@ -10,7 +10,12 @@ export default defineConfig({
       entry: r("src/entries/content/index.js"),
       name: "content",
       formats: ["iife"],
-      fileName: () => "content.js",
+      fileName: () => "content/content.js",
+    },
+    rollupOptions: {
+      output: {
+        assetFileNames: "content/content.[ext]",
+      },
     },
   },
 });

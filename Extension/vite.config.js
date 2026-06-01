@@ -23,7 +23,17 @@ export default defineConfig(() => ({
         entryFileNames: ({ name }) =>
           name === "background" ? "[name].js" : "assets/[name].js",
         chunkFileNames: "assets/[name].js",
-        assetFileNames: "assets/[name].[ext]",
+        assetFileNames: ({ name }) => {
+          if (
+            name &&
+            (name.endsWith(".ttf") ||
+              name.endsWith(".woff") ||
+              name.endsWith(".woff2"))
+          ) {
+            return "assets/fonts/[name].[ext]"; // Đưa font vào assets/fonts
+          }
+          return "assets/[name].[ext]"; // Đưa css và các asset khác của popup vào assets/popup
+        },
       },
     },
   },
