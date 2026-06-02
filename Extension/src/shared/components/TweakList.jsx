@@ -45,7 +45,6 @@ export default function TweakList({ onNavigate }) {
             </ListItem>
           ))}
         </List>
-        {/* <DiscreteSlider></DiscreteSlider> */}
       </nav>
     </Box>
   );

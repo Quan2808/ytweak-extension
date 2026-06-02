@@ -6,6 +6,8 @@ import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-qua
 import addPipButton from "@features/player/add-pip-button";
 import addLoopButton from "@features/player/add-loop-button";
 
+import "@features/general/custom-header-logo/style.css";
+
 export const categories = [
   // Add new category here:
   // {
