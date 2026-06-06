@@ -1,5 +1,3 @@
-import { Tooltip } from "@mui/material";
-
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
 import IconButton from "@mui/material/IconButton";
@@ -7,10 +5,11 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
+import Tooltip from "@mui/material/Tooltip";
 
 import TranslateRoundedIcon from "@mui/icons-material/TranslateRounded";
 
-import * as React from "react";
+import { useRef, useState } from "react";
 
 import { useI18n } from "@shared/contexts/I18nContext";
 import { t } from "@shared/utils/i18n";
@@ -22,8 +21,10 @@ const languages = [
 
 export default function LanguageSelector() {
   const { lang, changeLang } = useI18n();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
+  const [open, setOpen] = useState(false);
+  // anchorEl stored in state so Popper re-renders correctly when it changes
+  const [anchorEl, setAnchorEl] = useState(null);
+  const anchorRef = useRef(null);
 
   const handleToggle = () => setOpen((prev) => !prev);
 
@@ -41,7 +42,10 @@ export default function LanguageSelector() {
     <>
       <Tooltip title={t("tooltip_language")} placement="left" arrow>
         <IconButton
-          ref={anchorRef}
+          ref={(node) => {
+            anchorRef.current = node;
+            setAnchorEl(node);
+          }}
           size="medium"
           aria-controls={open ? "language-menu" : undefined}
           aria-expanded={open ? "true" : undefined}
@@ -52,42 +56,42 @@ export default function LanguageSelector() {
         >
           <TranslateRoundedIcon />
         </IconButton>
-
-        <Popper
-          sx={{ zIndex: 1300 }}
-          open={open}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          transition
-          disablePortal
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom",
-              }}
-            >
-              <Paper elevation={4} sx={{ minWidth: 140 }}>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList id="language-menu" autoFocusItem>
-                    {languages.map((language) => (
-                      <MenuItem
-                        key={language.code}
-                        selected={language.code === lang}
-                        onClick={() => handleLanguageSelect(language.code)}
-                      >
-                        {language.label}
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
       </Tooltip>
+
+      <Popper
+        sx={{ zIndex: 1300 }}
+        open={open}
+        anchorEl={anchorEl}
+        role={undefined}
+        transition
+        disablePortal
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === "bottom" ? "center top" : "center bottom",
+            }}
+          >
+            <Paper elevation={4} sx={{ minWidth: 140 }}>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList id="language-menu" autoFocusItem>
+                  {languages.map((language) => (
+                    <MenuItem
+                      key={language.code}
+                      selected={language.code === lang}
+                      onClick={() => handleLanguageSelect(language.code)}
+                    >
+                      {language.label}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
     </>
   );
 }

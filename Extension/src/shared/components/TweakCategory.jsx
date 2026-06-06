@@ -19,16 +19,16 @@ export default function TweakCategory({
   onBack,
 }) {
   const category = categories.find((c) => c.id === categoryId);
-  if (!category) return null;
 
-  // Khởi tạo state cho các tweak có extra UI
   const [extraValues, setExtraValues] = useState(() =>
     Object.fromEntries(
-      category.tweaks
+      (category?.tweaks ?? [])
         .filter((t) => t.extra)
         .map((t) => [t.id, t.extraDefaultValue ?? null]),
     ),
   );
+
+  if (!category) return null;
 
   const subheader = (
     <ListItem sx={{ px: 1, py: 0.5 }}>

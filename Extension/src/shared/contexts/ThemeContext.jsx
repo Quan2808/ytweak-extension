@@ -1,6 +1,6 @@
 import { createTheme, ThemeProvider, useMediaQuery } from "@mui/material";
 
-import { createContext, useContext, useState, useMemo, useEffect } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 const ThemeContext = createContext();
 
@@ -8,15 +8,14 @@ export const useThemeContext = () => useContext(ThemeContext);
 
 export function AppThemeProvider({ children }) {
   const preferDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [mode, setMode] = useState(preferDarkMode);
 
-  useEffect(() => {
-    setMode(preferDarkMode);
-  }, [preferDarkMode]);
+  // Initialize from system preference; user can override with toggleTheme.
+  const [manualMode, setManualMode] = useState(null);
 
-  const toggleTheme = () => {
-    setMode((prev) => !prev);
-  };
+  // Use manual override if set, otherwise follow system preference
+  const mode = manualMode !== null ? manualMode : preferDarkMode;
+
+  const toggleTheme = () => setManualMode((prev) => !(prev ?? preferDarkMode));
 
   const theme = useMemo(
     () =>
