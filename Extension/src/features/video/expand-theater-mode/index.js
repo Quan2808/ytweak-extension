@@ -46,22 +46,10 @@ export default {
   default: false,
 
   enable() {
-    observer = new MutationObserver(() => {
-      injectTheaterStyle();
-    });
-
-    observer.observe(document.documentElement, {
-      childList: true,
-      subtree: true,
-    });
     injectTheaterStyle();
   },
 
   disable() {
-    if (observer) {
-      clearInterval(observer);
-      observer = null;
-    }
     removeTheaterStyle();
   },
 };
