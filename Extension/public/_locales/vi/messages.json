@@ -38,6 +38,12 @@
   "tweak_hidePremiumVideoQualityTitle_desc": {
     "message": ""
   },
+  "tweak_expandTheaterMode_name": {
+    "message": "Mở rộng chế độ rạp hát"
+  },
+  "tweak_expandTheaterMode_desc": {
+    "message": ""
+  },
 
   "category_player_label": { "message": "Player" },
   "tweak_pipButton_name": {

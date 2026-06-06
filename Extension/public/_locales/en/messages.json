@@ -40,6 +40,13 @@
     "message": ""
   },
 
+  "tweak_expandTheaterMode_name": {
+    "message": "Expand theater mode"
+  },
+  "tweak_expandTheaterMode_desc": {
+    "message": ""
+  },
+
   "category_player_label": { "message": "Player" },
   "tweak_pipButton_name": {
     "message": "Show Picture in Picture video button."
