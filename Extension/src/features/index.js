@@ -5,8 +5,8 @@ import customHeaderLogo from "@features/general/custom-header-logo";
 import linkSanitizer from "@features/general/link-sanitizer";
 import addLoopButton from "@features/player/add-loop-button";
 import addPipButton from "@features/player/add-pip-button";
-import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-quality-title";
 import expandTheaterMode from "@features/video/expand-theater-mode";
+import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-quality-title";
 
 import "@features/general/custom-header-logo/style.css";
 

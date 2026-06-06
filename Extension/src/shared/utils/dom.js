@@ -12,7 +12,7 @@ export const addStyle = (id, css) => {
   removeElementById(id);
 
   const style = document.createElement("style");
-  style.id = id;
+  style.id = `ytweak-${id}`;
   style.className = "ytweak";
   style.textContent = css;
 

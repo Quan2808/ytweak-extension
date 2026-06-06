@@ -1,9 +1,8 @@
 import { removeElement, addStyle } from "@shared/utils/dom";
-import { t } from "@shared/utils/i18n"; // Giả định hàm dịch thuật của bạn nằm ở đây
+import { t } from "@shared/utils/i18n";
 
-const THEATER_STYLE_ID = "ytweak-expand-theater-mode";
+const THEATER_STYLE_ID = "expand-theater-mode";
 
-// Gộp chung các chuỗi CSS lại làm một cho gọn
 const cssStyles = `
   ytd-watch-flexy[theater] #player-full-bleed-container.ytd-watch-flexy,
   ytd-watch-grid[theater] #player-full-bleed-container.ytd-watch-grid {
@@ -34,7 +33,7 @@ function removeTheaterStyle() {
 let observer = null;
 
 export default {
-  id: "expand-theater-mode",
+  id: THEATER_STYLE_ID,
 
   get name() {
     return t("tweak_expandTheaterMode_name");
