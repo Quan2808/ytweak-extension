@@ -1,14 +1,18 @@
-import * as React from "react";
-import IconButton from "@mui/material/IconButton";
-import Popper from "@mui/material/Popper";
-import Grow from "@mui/material/Grow";
-import Paper from "@mui/material/Paper";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import MenuList from "@mui/material/MenuList";
-import MenuItem from "@mui/material/MenuItem";
-import TranslateRoundedIcon from "@mui/icons-material/TranslateRounded";
-import { useI18n } from "@shared/contexts/I18nContext";
 import { Tooltip } from "@mui/material";
+
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Grow from "@mui/material/Grow";
+import IconButton from "@mui/material/IconButton";
+import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
+
+import TranslateRoundedIcon from "@mui/icons-material/TranslateRounded";
+
+import * as React from "react";
+
+import { useI18n } from "@shared/contexts/I18nContext";
 import { t } from "@shared/utils/i18n";
 
 const languages = [

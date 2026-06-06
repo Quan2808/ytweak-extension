@@ -1,8 +1,9 @@
 {
   "name": "ytweak-extension",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "module",
+  "// versioning": "Semantic Versioning (SemVer) guide below",
   "scripts": {
     "dev": "vite",
     "build": "vite build && vite build --config vite.content.config.js",
@@ -12,6 +13,11 @@
     "version:minor": "npm version minor --no-git-tag-version",
     "version:major": "npm version major --no-git-tag-version"
   },
+  "// semver rules": [
+    "patch → bug fixes, refactor, lint/build tooling changes",
+    "minor → new feature (backward compatible)",
+    "major → breaking change, manifest/API change"
+  ],
   "dependencies": {
     "@mui/icons-material": "^9.0.1",
     "@mui/material": "^9.0.1",

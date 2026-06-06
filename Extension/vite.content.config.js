@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+
 import { r, aliases } from "./vite.shared.js";
 
 export default defineConfig({

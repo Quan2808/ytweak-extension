@@ -1,6 +1,14 @@
 import CssBaseline from "@mui/material/CssBaseline";
+
 import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+
+import { I18nProvider } from "@shared/contexts/I18nContext";
+import {
+  AppThemeProvider,
+  useThemeContext,
+} from "@shared/contexts/ThemeContext";
+import { storage } from "@shared/utils/storage";
 
 import AppHeader from "@components/Header";
 import TweakCategory from "@components/TweakCategory";
@@ -9,18 +17,11 @@ import TweakList from "@components/TweakList";
 import "./popup.css";
 
 import { allTweaks } from "@features/index";
-import { storage } from "@shared/utils/storage";
 
-import { I18nProvider } from "@shared/contexts/I18nContext";
 // Theme
-import {
-  AppThemeProvider,
-  useThemeContext,
-} from "@shared/contexts/ThemeContext";
-
-function initEnabledMap() {
-  return Object.fromEntries(allTweaks.map((t) => [t.id, t.default ?? false]));
-}
+// function initEnabledMap() {
+//   return Object.fromEntries(allTweaks.map((t) => [t.id, t.default ?? false]));
+// }
 
 function PopupContent() {
   const { mode, toggleTheme } = useThemeContext();

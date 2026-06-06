@@ -1,7 +1,7 @@
 const isChromeExtension =
   typeof chrome !== "undefined" && !!chrome.i18n?.getMessage;
 
-let flatLocales = { en: {}, vi: {} };
+const flatLocales = { en: {}, vi: {} };
 let currentLang = "en";
 let isReady = false;
 

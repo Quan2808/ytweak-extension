@@ -1,13 +1,3 @@
-import { categories } from "@features/index";
-import { t } from "@shared/utils/i18n";
-
-import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
-import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
-import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
-import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
-import VideoSettingsRoundedIcon from "@mui/icons-material/VideoSettingsRounded";
-import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -15,6 +5,19 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+
+import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
+import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
+import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
+import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
+import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
+import VideoSettingsRoundedIcon from "@mui/icons-material/VideoSettingsRounded";
+
+
+import { t } from "@shared/utils/i18n";
+
+import { categories } from "@features/index";
 
 const ICON_MAP = {
   Settings: <SettingsRoundedIcon />,

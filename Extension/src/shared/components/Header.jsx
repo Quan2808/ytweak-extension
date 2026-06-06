@@ -1,16 +1,20 @@
-import LanguageSelector from "@components/header/SelectLocalization";
-import { useI18n } from "@shared/contexts/I18nContext";
-import { t } from "@shared/utils/i18n";
 
-import GitHubIcon from "@mui/icons-material/GitHub";
-import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
-import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 
 import { Tooltip } from "@mui/material";
+
 import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+
+import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
+
+import { useI18n } from "@shared/contexts/I18nContext";
+import { t } from "@shared/utils/i18n";
+
+import LanguageSelector from "@components/header/SelectLocalization";
 
 export default function AppHeader({ currentMode, onToggleTheme }) {
   useI18n();

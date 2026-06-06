@@ -1,4 +1,5 @@
 import { t } from "@shared/utils/i18n";
+
 import { logoMarkup } from "./headerLogo";
 
 function loadLogo() {
@@ -23,7 +24,7 @@ function loadLogo() {
   }
 }
 
-let logoInterval = null;
+// const logoInterval = null;
 let observer = null;
 
 export default {
