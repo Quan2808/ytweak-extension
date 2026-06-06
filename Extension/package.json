@@ -6,7 +6,7 @@
   "// versioning": "Semantic Versioning (SemVer) guide below",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vite build --config vite.content.config.js",
+    "build": "eslint . && vite build && vite build --config vite.content.config.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "version:patch": "npm version patch --no-git-tag-version",
