@@ -1,8 +1,19 @@
 import { execSync } from "child_process";
 import fs from "fs";
+import JSZip from "jszip";
+import path from "path";
 import readline from "readline";
+import { fileURLToPath } from "url";
 
-console.log("\n🔍 Running linter check...");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const rootDir = path.resolve(__dirname, "..");
+const distDir = path.resolve(rootDir, "dist");
+const releaseDir = path.resolve(rootDir, "release");
+const pkgPath = path.resolve(rootDir, "package.json");
+
+console.log("\n🔍 Running linter check... 🛠️");
 try {
   execSync("npm run lint", { stdio: "inherit" });
 } catch (error) {
@@ -12,7 +23,7 @@ try {
   process.exit(1);
 }
 
-const pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
+const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
 const currentVersion = pkg.version;
 
 function getNextVersion(type) {
@@ -62,7 +73,7 @@ function renderMenu() {
 
   options.forEach((opt, index) => {
     const isSelected = index === selectedIndex;
-    const prefix = isSelected ? "\x1b[36m❯ ●\x1b[0m" : "  ○";
+    const prefix = isSelected ? "\x1b[36m❯ ●\x1b[0m" : "   ○";
     const label = isSelected
       ? `\x1b[36m${opt.label.padEnd(6)}\x1b[0m`
       : opt.label.padEnd(6);
@@ -77,7 +88,7 @@ function renderMenu() {
 
 renderMenu();
 
-process.stdin.on("keypress", (str, key) => {
+const handleMenuKeyPress = (str, key) => {
   if (key.ctrl && key.name === "c") {
     process.exit();
   }
@@ -93,11 +104,12 @@ process.stdin.on("keypress", (str, key) => {
   }
 
   if (key.name === "return" || key.name === "enter") {
-    process.stdin.setRawMode(false);
-    process.stdin.pause();
+    process.stdin.removeListener("keypress", handleMenuKeyPress);
     executeBuild(options[selectedIndex]);
   }
-});
+};
+
+process.stdin.on("keypress", handleMenuKeyPress);
 
 function executeBuild(selectedOpt) {
   let versionCommand = "";
@@ -121,9 +133,145 @@ function executeBuild(selectedOpt) {
     console.log("\n📦 Running production build...\n");
     execSync("npm run build:core", { stdio: "inherit" });
 
-    console.log("\n✨ \x1b[32mBuild completed successfully!\x1b[0m\n");
+    console.log("\n✨ \x1b[32mBuild completed successfully!\x1b[0m");
+
+    askForZip(selectedOpt.next);
   } catch (error) {
     console.error("\n❌ Build failed:", error.message);
+    process.exit(1);
+  }
+}
+
+function askForZip(targetVersion) {
+  let zipIndex = 0;
+
+  const renderZipMenu = () => {
+    console.clear();
+    console.log(
+      "\n\x1b[36m📦 Production Build Success! Ready for Release? \x1b[0m",
+    );
+    console.log(`Target Version: \x1b[32mv${targetVersion}\x1b[0m`);
+    console.log("----------------------------------------------------");
+    console.log(
+      "Do you want to export this build to a \x1b[33m.zip\x1b[0m file?\n",
+    );
+    console.log(
+      ` ${zipIndex === 0 ? "\x1b[36m❯ ● Yes, zip it please\x1b[0m" : "   ○ Yes, zip it please"}`,
+    );
+    console.log(
+      ` ${zipIndex === 1 ? "\x1b[31m❯ ● No, keep dist directory only\x1b[0m" : "   ○ No, keep dist directory only"}`,
+    );
+    console.log("----------------------------------------------------");
+    console.log(
+      "Use \x1b[33m↑/↓ (Arrow keys)\x1b[0m, press \x1b[33mEnter\x1b[0m to confirm.",
+    );
+  };
+
+  renderZipMenu();
+
+  const handleZipKeyPress = (str, key) => {
+    if (key.ctrl && key.name === "c") {
+      process.exit();
+    }
+
+    if (key.name === "up" || key.name === "down") {
+      zipIndex = zipIndex === 0 ? 1 : 0;
+      renderZipMenu();
+    }
+
+    if (key.name === "return" || key.name === "enter") {
+      process.stdin.removeListener("keypress", handleZipKeyPress);
+
+      if (process.stdin.isTTY) {
+        process.stdin.setRawMode(false);
+      }
+      process.stdin.pause();
+
+      if (zipIndex === 0) {
+        executeZip(targetVersion);
+      } else {
+        console.log(
+          "\n👋 \x1b[33mSkipped zip creation. Pure build files are ready in 'dist/'.\x1b[0m\n",
+        );
+        process.exit(0);
+      }
+    }
+  };
+
+  process.stdin.on("keypress", handleZipKeyPress);
+}
+
+function addDirectoryToZip(zip, targetDir, currentDir = targetDir) {
+  const files = fs.readdirSync(currentDir);
+
+  for (const file of files) {
+    const filePath = path.join(currentDir, file);
+    const stat = fs.statSync(filePath);
+
+    const relativePath = path.relative(targetDir, filePath).replace(/\\/g, "/");
+
+    if (stat.isDirectory()) {
+      addDirectoryToZip(zip, targetDir, filePath);
+    } else {
+      zip.file(relativePath, fs.readFileSync(filePath));
+    }
+  }
+}
+
+async function executeZip(version) {
+  const zipFileName = `${pkg.name}-v${version}.zip`;
+  const zipFilePath = path.join(releaseDir, zipFileName);
+
+  if (!fs.existsSync(distDir)) {
+    console.error(
+      `\n❌ Error: 'dist/' directory not found! Please build again.`,
+    );
+    process.exit(1);
+  }
+
+  if (!fs.existsSync(releaseDir)) {
+    fs.mkdirSync(releaseDir, { recursive: true });
+  } else {
+    const existingFiles = fs.readdirSync(releaseDir);
+    let deletedCount = 0;
+
+    for (const file of existingFiles) {
+      if (file.endsWith(".zip") && file.startsWith(`${pkg.name}-v`)) {
+        fs.unlinkSync(path.join(releaseDir, file));
+        deletedCount++;
+      }
+    }
+    if (deletedCount > 0) {
+      console.log(
+        `\n🧹 Cleaned up \x1b[33m${deletedCount}\x1b[0m old zip release package(s).`,
+      );
+    }
+  }
+
+  console.log(
+    `\n🤐 Compressing production files into \x1b[36mrelease/${zipFileName}\x1b[0m...`,
+  );
+
+  try {
+    const zip = new JSZip();
+
+    addDirectoryToZip(zip, distDir);
+
+    const content = await zip.generateAsync({
+      type: "nodebuffer",
+      compression: "DEFLATE",
+      compressionOptions: { level: 9 },
+    });
+
+    fs.writeFileSync(zipFilePath, content);
+
+    const sizeInMB = (content.length / 1024 / 1024).toFixed(2);
+    console.log(`\n🎉 \x1b[32mZip package created successfully!\x1b[0m`);
+    console.log(`📁 Path: \x1b[36mrelease/${zipFileName}\x1b[0m`);
+    console.log(`⚡ Size: \x1b[33m${sizeInMB} MB\x1b[0m\n`);
+    process.exit(0);
+  } catch (err) {
+    console.error("\n❌ Compression failed:", err.message);
     process.exit(1);
   }
 }
