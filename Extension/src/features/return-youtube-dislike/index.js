@@ -1,8 +1,8 @@
+import { addStyle } from "@shared/utils/dom.js";
 import { t } from "@shared/utils/i18n";
 
 import { setEventListeners, setupMobileHistoryPatch } from "./events.js";
 import { CSS } from "./ratebar.js";
-import { addStyle } from "@shared/utils/dom.js";
 
 const TWEAK_ID = "ryd";
 

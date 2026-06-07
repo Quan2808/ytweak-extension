@@ -1,4 +1,3 @@
-
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -14,7 +13,7 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import VideoSettingsRoundedIcon from "@mui/icons-material/VideoSettingsRounded";
 
-
+import { ReturnYouTubeDislikeIcon } from "@shared/icons";
 import { t } from "@shared/utils/i18n";
 
 import { categories } from "@features/index";
@@ -26,6 +25,7 @@ const ICON_MAP = {
   VideoSettings: <VideoSettingsRoundedIcon />,
   PlayArrow: <PlayArrowOutlinedIcon />,
   MoreHoriz: <MoreHorizOutlinedIcon />,
+  RYD: <ReturnYouTubeDislikeIcon />,
 };
 
 export default function TweakList({ onNavigate }) {

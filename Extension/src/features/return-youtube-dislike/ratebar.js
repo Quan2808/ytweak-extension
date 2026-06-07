@@ -1,7 +1,8 @@
+import { addStyle } from "@shared/utils/dom.js";
+
 import { extConfig, isMobile } from "./config.js";
 import { getButtons, getLikeButton, getDislikeButton } from "./dom.js";
 import { getColorFromTheme } from "./format.js";
-import { addStyle } from "@shared/utils/dom.js";
 
 export const CSS = `
   #ytweak-ryd-bar-container {
