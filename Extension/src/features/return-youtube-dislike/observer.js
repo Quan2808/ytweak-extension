@@ -1,5 +1,3 @@
-import { cLog } from "./config.js";
-
 export function createObserver(options, callback) {
   const obs = new MutationObserver(callback);
   return {

@@ -38,24 +38,11 @@ export function injectCSS() {
 }
 
 function buildTooltipHTML(likes, dislikes, widthPercent) {
-  const likePct = parseFloat(widthPercent.toFixed(1)).toLocaleString();
-  const dislikePct = (
-    100 - parseFloat(widthPercent.toFixed(1))
-  ).toLocaleString();
-  switch (extConfig.tooltipPercentageMode) {
-    case "dash_like":
-      return `${likes.toLocaleString()}&nbsp;/&nbsp;${dislikes.toLocaleString()}&nbsp;&nbsp;-&nbsp;&nbsp;${likePct}%`;
-    case "dash_dislike":
-      return `${likes.toLocaleString()}&nbsp;/&nbsp;${dislikes.toLocaleString()}&nbsp;&nbsp;-&nbsp;&nbsp;${dislikePct}%`;
-    case "both":
-      return `${likePct}%&nbsp;/&nbsp;${dislikePct}%`;
-    case "only_like":
-      return `${likePct}%`;
-    case "only_dislike":
-      return `${dislikePct}%`;
-    default:
-      return `${likes.toLocaleString()}&nbsp;/&nbsp;${dislikes.toLocaleString()}`;
-  }
+  // const likePct = parseFloat(widthPercent.toFixed(1)).toLocaleString();
+  // const dislikePct = (
+  //   100 - parseFloat(widthPercent.toFixed(1))
+  // ).toLocaleString();
+  return `${likes.toLocaleString()}&nbsp;/&nbsp;${dislikes.toLocaleString()}`;
 }
 
 export function createRateBar(likes, dislikes) {
@@ -70,9 +57,9 @@ export function createRateBar(likes, dislikes) {
   if (existing) {
     const widthPx =
       getLikeButton().clientWidth + (getDislikeButton()?.clientWidth ?? 52);
-    document.querySelector(".ryd-tooltip").style.width = widthPx + "px";
+    document.querySelector(".ryd-tooltip").style.width = `${widthPx}px`;
     document.getElementById("return-youtube-dislike-bar").style.width =
-      widthPercent + "%";
+      `${widthPercent}%`;
     return;
   }
 

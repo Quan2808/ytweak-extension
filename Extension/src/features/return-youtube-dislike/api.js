@@ -2,7 +2,6 @@ import { extConfig, isMobile, isShorts, cLog } from "./config.js";
 import {
   getVideoId,
   getLikeButton,
-  getDislikeButton,
   getLikeTextContainer,
   getDislikeTextContainer,
 } from "./dom.js";
@@ -78,6 +77,6 @@ export async function fetchAndSetVotes() {
       if (nativeLikes !== false) setLikes(numberFormat(nativeLikes));
     }
   } catch (err) {
-    if (err.name !== "AbortError") cLog("Failed to fetch votes: " + err);
+    if (err.name !== "AbortError") cLog(`Failed to fetch votes: ${err}`);
   }
 }

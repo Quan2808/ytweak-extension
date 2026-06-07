@@ -5,7 +5,7 @@ export const store = {
   dislikesValue: 0,
   mobileDislikes: 0,
   preNavigateLikeButton: null,
-  currentVideoId: null, // track để detect video change
+  currentVideoId: null,
 
   // Cached DOM references — cleared on each navigation
   _buttons: null,

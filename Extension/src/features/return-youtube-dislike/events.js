@@ -1,3 +1,9 @@
+import {
+  fetchAndSetVotes,
+  setLikes,
+  setDislikes,
+  getLikeCountFromButton,
+} from "./api.js";
 import { extConfig, isMobile, isShorts, cLog } from "./config.js";
 import {
   getButtons,
@@ -9,14 +15,8 @@ import {
   checkForUserAvatarButton,
 } from "./dom.js";
 import { numberFormat } from "./format.js";
-import { createRateBar } from "./ratebar.js";
-import {
-  fetchAndSetVotes,
-  setLikes,
-  setDislikes,
-  getLikeCountFromButton,
-} from "./api.js";
 import { createObserver } from "./observer.js";
+import { createRateBar } from "./ratebar.js";
 import { store } from "./store.js";
 
 // ─── DOM update ───────────────────────────────────────────────────────────────
@@ -142,7 +142,7 @@ function pollUntilReady() {
     return;
   }
 
-  // Cache is stale on each navigation — clear before querying
+  // Clear DOM cache each poll tick — buttons may not be in DOM yet
   store.clearCache();
 
   const ready = isShorts() || (getButtons()?.offsetParent && isVideoLoaded());
@@ -159,10 +159,15 @@ function pollUntilReady() {
   fetchAndSetVotes();
 }
 
+function startPoll() {
+  if (rafId !== null) cancelAnimationFrame(rafId);
+  rafStart = performance.now();
+  rafId = requestAnimationFrame(pollUntilReady);
+}
+
 export function onNavigate() {
   const newVideoId = getVideoId();
 
-  // Same video — nothing to do (e.g. query param changes unrelated to video)
   if (newVideoId && newVideoId === store.currentVideoId) {
     cLog("Same video, skipping reload");
     return;
@@ -171,16 +176,26 @@ export function onNavigate() {
   cLog(`Navigation detected: ${store.currentVideoId} → ${newVideoId}`);
   store.currentVideoId = newVideoId;
   store.reset();
+  startPoll();
+}
 
-  // Cancel any pending poll
-  if (rafId !== null) {
-    cancelAnimationFrame(rafId);
-    rafId = null;
+function onVisibilityChange() {
+  if (document.visibilityState !== "visible") return;
+
+  // No data yet — full fetch needed
+  if (!store.currentVideoId || store.dislikesValue === 0) {
+    startPoll();
+    return;
   }
 
-  rafStart = performance.now();
-  rafId = requestAnimationFrame(pollUntilReady);
+  // Data already in store — just re-paint the DOM (fast, no network)
+  cLog("Tab became visible, re-applying stored votes");
+  store.clearCache();
+  store.preNavigateLikeButton = null; // force re-register listeners
+  startPoll();
 }
+
+export { onVisibilityChange };
 
 // ─── Mobile: keep dislike text alive (YouTube resets it) ─────────────────────
 

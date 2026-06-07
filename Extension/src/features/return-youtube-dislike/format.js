@@ -8,7 +8,7 @@ export function roundDown(num) {
 }
 
 export function getNumberFormatter(optionSelect) {
-  let userLocales =
+  const userLocales =
     document.documentElement.lang ||
     navigator.language ||
     (() => {

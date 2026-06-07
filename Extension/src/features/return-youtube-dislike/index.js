@@ -1,10 +1,12 @@
 import { t } from "@shared/utils/i18n";
-import { injectCSS } from "./ratebar.js";
+
 import {
   onNavigate,
+  onVisibilityChange,
   setupMobileHistoryPatch,
   teardownMobileHistoryPatch,
 } from "./events.js";
+import { injectCSS } from "./ratebar.js";
 import { store } from "./store.js";
 
 const TWEAK_ID = "return-youtube-dislike";
@@ -27,13 +29,14 @@ export default {
   enable() {
     styleEl = injectCSS();
     window.addEventListener("yt-navigate-finish", onNavigate, true);
+    document.addEventListener("visibilitychange", onVisibilityChange);
     setupMobileHistoryPatch();
-    // Run immediately for the current page
     onNavigate();
   },
 
   disable() {
     window.removeEventListener("yt-navigate-finish", onNavigate, true);
+    document.removeEventListener("visibilitychange", onVisibilityChange);
     teardownMobileHistoryPatch();
 
     // Remove ratio bar
