@@ -4,67 +4,38 @@ export function roundDown(num) {
   if (num < 1000) return num;
   const int = Math.floor(Math.log10(num) - 2);
   const decimal = int + (int % 3 ? 1 : 0);
-  const value = Math.floor(num / 10 ** decimal);
-  return value * 10 ** decimal;
+  return Math.floor(num / 10 ** decimal) * 10 ** decimal;
 }
 
 export function getNumberFormatter(optionSelect) {
-  let userLocales;
+  let userLocales =
+    document.documentElement.lang ||
+    navigator.language ||
+    (() => {
+      try {
+        return new URL(
+          Array.from(document.querySelectorAll("head > link[rel='search']"))
+            .find((n) => n?.getAttribute("href")?.includes("?locale="))
+            ?.getAttribute("href"),
+        )?.searchParams?.get("locale");
+      } catch {
+        cLog("Cannot find browser locale, defaulting to en");
+        return "en";
+      }
+    })();
 
-  if (document.documentElement.lang) {
-    userLocales = document.documentElement.lang;
-  } else if (navigator.language) {
-    userLocales = navigator.language;
-  } else {
-    try {
-      userLocales = new URL(
-        Array.from(document.querySelectorAll("head > link[rel='search']"))
-          ?.find((n) => n?.getAttribute("href")?.includes("?locale="))
-          ?.getAttribute("href"),
-      )?.searchParams?.get("locale");
-    } catch {
-      cLog("Cannot find browser locale. Use en as default for number formatting.");
-      userLocales = "en";
-    }
-  }
-
-  let formatterNotation;
-  let formatterCompactDisplay;
-
-  switch (optionSelect) {
-    case "compactLong":
-      formatterNotation = "compact";
-      formatterCompactDisplay = "long";
-      break;
-    case "standard":
-      formatterNotation = "standard";
-      formatterCompactDisplay = "short";
-      break;
-    case "compactShort":
-    default:
-      formatterNotation = "compact";
-      formatterCompactDisplay = "short";
-  }
+  const isLong = optionSelect === "compactLong";
+  const isStandard = optionSelect === "standard";
 
   return Intl.NumberFormat(userLocales, {
-    notation: formatterNotation,
-    compactDisplay: formatterCompactDisplay,
+    notation: isStandard ? "standard" : "compact",
+    compactDisplay: isLong ? "long" : "short",
   });
 }
 
 export function numberFormat(numberState) {
-  const numberDisplay = extConfig.numberDisplayRoundDown ? roundDown(numberState) : numberState;
-  return getNumberFormatter(extConfig.numberDisplayFormat).format(numberDisplay);
-}
-
-export function getColorFromTheme(voteIsLike) {
-  switch (extConfig.colorTheme) {
-    case "accessible":
-      return voteIsLike ? "dodgerblue" : "gold";
-    case "neon":
-      return voteIsLike ? "aqua" : "magenta";
-    case "classic":
-    default:
-      return voteIsLike ? "lime" : "red";
-  }
+  const value = extConfig.numberDisplayRoundDown
+    ? roundDown(numberState)
+    : numberState;
+  return getNumberFormatter(extConfig.numberDisplayFormat).format(value);
 }

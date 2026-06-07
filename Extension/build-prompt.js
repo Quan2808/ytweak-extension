@@ -2,6 +2,16 @@ import { execSync } from "child_process";
 import fs from "fs";
 import readline from "readline";
 
+console.log("\n🔍 Running linter check...");
+try {
+  execSync("npm run lint", { stdio: "inherit" });
+} catch (error) {
+  console.error(
+    "\n❌ Lint check failed. Please fix the errors before building.",
+  );
+  process.exit(1);
+}
+
 const pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
 const currentVersion = pkg.version;
 
@@ -41,9 +51,13 @@ if (process.stdin.isTTY) {
 
 function renderMenu() {
   console.clear();
-  console.log(`Current Version: \x1b[32mv${currentVersion}\x1b[0m`);
   console.log(
-    "\nUse \x1b[33m↑/↓ (Arrow keys)\x1b[0m to navigate, press \x1b[33mEnter\x1b[0m to select:\n",
+    "\n\x1b[36m========== Ytweak Extension Build Manager ==========\x1b[0m",
+  );
+  console.log(`Current Version: \x1b[32mv${currentVersion}\x1b[0m`);
+  console.log("----------------------------------------------------");
+  console.log(
+    "Use \x1b[33m↑/↓ (Arrow keys)\x1b[0m to navigate, press \x1b[33mEnter\x1b[0m to select:\n",
   );
 
   options.forEach((opt, index) => {
@@ -58,6 +72,7 @@ function renderMenu() {
 
     console.log(` ${prefix} ${label} ${details}`);
   });
+  console.log("----------------------------------------------------");
 }
 
 renderMenu();
