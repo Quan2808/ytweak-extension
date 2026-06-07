@@ -1,4 +1,5 @@
-export const logoMarkup = `<nice-logo class="style-scope ytd-topbar-logo-renderer">
+export const logoMarkup = `
+<nice-logo class="style-scope ytd-topbar-logo-renderer">
   <svg viewBox="0 0 97 20" preserveAspectRatio="xMidYMid meet" focusable="false"
     class="style-scope yt-icon"
     style="pointer-events: none; display: block; width: 100%; height: 100%;">
@@ -19,4 +20,5 @@ export const logoMarkup = `<nice-logo class="style-scope ytd-topbar-logo-rendere
       </g>
     </g>
   </svg>
-</nice-logo>`;
+</nice-logo>
+`;

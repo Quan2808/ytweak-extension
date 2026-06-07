@@ -1,10 +1,16 @@
 import { t } from "@shared/utils/i18n";
+
 // import tweakExample from "@features/tweak-example";
 import customHeaderLogo from "@features/general/custom-header-logo";
 import linkSanitizer from "@features/general/link-sanitizer";
-import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-quality-title";
-import addPipButton from "@features/player/add-pip-button";
 import addLoopButton from "@features/player/add-loop-button";
+import addPipButton from "@features/player/add-pip-button";
+import expandTheaterMode from "@features/video/expand-theater-mode";
+import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-quality-title";
+
+import returnYoutubeDislike from "./return-youtube-dislike";
+
+import "@features/general/custom-header-logo/style.css";
 
 export const categories = [
   // Add new category here:
@@ -28,7 +34,7 @@ export const categories = [
       return t("category_video_label");
     },
     icon: "VideoSettings",
-    tweaks: [hidePremiumVideoQualityTitle],
+    tweaks: [hidePremiumVideoQualityTitle, expandTheaterMode],
   },
   {
     id: "player",
@@ -37,6 +43,14 @@ export const categories = [
     },
     icon: "PlayArrow",
     tweaks: [addPipButton, addLoopButton],
+  },
+  {
+    id: "returnYouTubeDislike",
+    get label() {
+      return t("category_returnYouTubeDislike_label");
+    },
+    icon: "RYD",
+    tweaks: [returnYoutubeDislike],
   },
   {
     id: "test",

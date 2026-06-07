@@ -1,12 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "YTweak",
+  "name": "__MSG_appName__",
   "version": "1.0.1",
-  "description": "Lorem ipsum dolor sit amet...",
+  "description": "__MSG_appDescription__",
   "default_locale": "en",
   "action": {
     "default_popup": "index.html"
   },
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://returnyoutubedislikeapi.com/*"
+  ],
   "permissions": ["storage"],
   "background": {
     "service_worker": "background.js",
@@ -14,7 +18,11 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.youtube.com/*"],
+      "matches": [
+        "*://youtube.com/*",
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*"
+      ],
       "js": ["content/content.js"],
       "css": ["content/content.css"],
       "run_at": "document_start"

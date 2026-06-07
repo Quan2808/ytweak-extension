@@ -1,6 +1,7 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { storage } from "@shared/utils/storage";
+import { createContext, useContext, useEffect, useState } from "react";
+
 import { initI18n, setLang } from "@shared/utils/i18n";
+import { storage } from "@shared/utils/storage";
 
 const I18nContext = createContext(null);
 
@@ -12,7 +13,6 @@ export function I18nProvider({ children }) {
     storage.get("lang").then(async (stored) => {
       const saved = stored?.lang ?? "en";
 
-      // THÊM AWAIT Ở ĐÂY: Chờ nạp xong JSON ngôn ngữ đã lưu
       await initI18n(saved);
 
       setLangState(saved);
@@ -25,7 +25,6 @@ export function I18nProvider({ children }) {
 
     await storage.set({ lang: newLang });
 
-    // THÊM AWAIT Ở ĐÂY: Chờ nạp xong ngôn ngữ mới trước khi reload
     await setLang(newLang);
     setLangState(newLang);
 

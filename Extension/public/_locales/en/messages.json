@@ -40,6 +40,13 @@
     "message": ""
   },
 
+  "tweak_expandTheaterMode_name": {
+    "message": "Expand theater mode"
+  },
+  "tweak_expandTheaterMode_desc": {
+    "message": ""
+  },
+
   "category_player_label": { "message": "Player" },
   "tweak_pipButton_name": {
     "message": "Show Picture in Picture video button."
@@ -50,7 +57,18 @@
   "tweak_loopButton_name": {
     "message": "Show Loop video button."
   },
+
   "tweak_loopButton_desc": {
     "message": ""
+  },
+
+  "category_returnYouTubeDislike_label": {
+    "message": "Return YouTube Dislike"
+  },
+  "tweak_ryd_desc": {
+    "message": "Adds an option to show the dislike count of videos with Return YouTube Dislike."
+  },
+  "tweak_ryd_name": {
+    "message": "Return YouTube Dislike"
   }
 }

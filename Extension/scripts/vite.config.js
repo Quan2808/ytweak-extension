@@ -1,6 +1,7 @@
-import { defineConfig } from "vite";
-import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+
 import { r, aliases, serveLocales } from "./vite.shared.js";
 
 export default defineConfig(() => ({

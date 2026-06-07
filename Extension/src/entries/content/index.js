@@ -1,5 +1,4 @@
 import { allTweaks } from "@features/index";
-import "@features/general/custom-header-logo/style.css";
 
 function initExtension() {
   chrome.storage.local.get(null, (settings) => {
