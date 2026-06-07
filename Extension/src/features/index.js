@@ -8,6 +8,8 @@ import addPipButton from "@features/player/add-pip-button";
 import expandTheaterMode from "@features/video/expand-theater-mode";
 import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-quality-title";
 
+import returnYoutubeDislike from "./return-youtube-dislike";
+
 import "@features/general/custom-header-logo/style.css";
 
 export const categories = [
@@ -41,6 +43,14 @@ export const categories = [
     },
     icon: "PlayArrow",
     tweaks: [addPipButton, addLoopButton],
+  },
+  {
+    id: "returnYouTubeDislike",
+    get label() {
+      return t("category_returnYouTubeDislike_label");
+    },
+    icon: "RYD",
+    tweaks: [returnYoutubeDislike],
   },
   {
     id: "test",

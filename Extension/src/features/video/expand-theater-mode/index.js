@@ -30,8 +30,6 @@ function removeTheaterStyle() {
   removeElement(`#${THEATER_STYLE_ID}`);
 }
 
-let observer = null;
-
 export default {
   id: THEATER_STYLE_ID,
 

@@ -57,7 +57,18 @@
   "tweak_loopButton_name": {
     "message": "Show Loop video button."
   },
+
   "tweak_loopButton_desc": {
     "message": ""
+  },
+
+  "category_returnYouTubeDislike_label": {
+    "message": "Return YouTube Dislike"
+  },
+  "tweak_ryd_desc": {
+    "message": "Adds an option to show the dislike count of videos with Return YouTube Dislike."
+  },
+  "tweak_ryd_name": {
+    "message": "Return YouTube Dislike"
   }
 }
