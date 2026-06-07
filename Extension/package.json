@@ -1,12 +1,13 @@
 {
   "name": "ytweak-extension",
   "private": true,
-  "version": "1.3.1",
+  "version": "1.3.2",
   "type": "module",
   "// versioning": "Semantic Versioning (SemVer) guide below",
   "scripts": {
     "dev": "vite",
-    "build": "eslint . && vite build && vite build --config vite.content.config.js",
+    "build": "node build-prompt.js",
+    "build:core": "eslint . && vite build && vite build --config vite.content.config.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "version:patch": "npm version patch --no-git-tag-version",
