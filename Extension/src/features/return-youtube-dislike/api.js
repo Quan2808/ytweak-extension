@@ -1,26 +1,25 @@
 import { extConfig, isMobile, isShorts, cLog } from "./config.js";
 import {
-  getButtons,
   getVideoId,
   getLikeButton,
   getDislikeButton,
   getLikeTextContainer,
   getDislikeTextContainer,
 } from "./dom.js";
-import { numberFormat, getColorFromTheme } from "./format.js";
-import { getShortsObserver } from "./observer.js";
+import { numberFormat } from "./format.js";
 import { createRateBar } from "./ratebar.js";
 import { store } from "./store.js";
 
+let abortController = null;
+
 export function setLikes(likesCount) {
   if (isMobile) {
-    getButtons()?.children[0]?.querySelector(".button-renderer-text") &&
-      (getButtons().children[0].querySelector(
-        ".button-renderer-text",
-      ).innerText = likesCount);
+    const el = getLikeButton()?.querySelector(".button-renderer-text");
+    if (el) el.innerText = likesCount;
     return;
   }
-  getLikeTextContainer().innerText = likesCount;
+  const el = getLikeTextContainer();
+  if (el) el.innerText = likesCount;
 }
 
 export function setDislikes(dislikesCount) {
@@ -29,80 +28,56 @@ export function setDislikes(dislikesCount) {
     return;
   }
   const container = getDislikeTextContainer();
-  container?.removeAttribute("is-empty");
-  if (container?.innerText !== dislikesCount) {
+  if (!container) return;
+  container.removeAttribute("is-empty");
+  if (container.innerText !== dislikesCount)
     container.innerText = dislikesCount;
-  }
 }
 
 export function getLikeCountFromButton() {
   try {
     if (isShorts()) return false;
-    const likeButton =
+    const btn =
       getLikeButton()?.querySelector("yt-formatted-string#text") ??
       getLikeButton()?.querySelector("button");
-    const likesStr = likeButton?.getAttribute("aria-label")?.replace(/\D/g, "");
-    return likesStr?.length > 0 ? parseInt(likesStr) : false;
+    const str = btn?.getAttribute("aria-label")?.replace(/\D/g, "");
+    return str?.length > 0 ? parseInt(str, 10) : false;
   } catch {
     return false;
   }
 }
 
 export async function fetchAndSetVotes() {
-  cLog("Fetching votes...");
+  const videoId = getVideoId();
+  if (!videoId) return;
+
+  abortController?.abort();
+  abortController = new AbortController();
+
+  cLog(`Fetching votes for ${videoId}...`);
 
   try {
     const response = await fetch(
-      `https://returnyoutubedislikeapi.com/votes?videoId=${getVideoId()}`,
+      `https://returnyoutubedislikeapi.com/votes?videoId=${videoId}`,
+      { signal: abortController.signal },
     );
     const json = await response.json();
-
-    if (!json || "traceId" in response) return;
+    if (!json || "traceId" in json) return;
 
     const { dislikes, likes } = json;
-    cLog(`Received count: ${dislikes}`);
+    cLog(`Received — likes: ${likes}, dislikes: ${dislikes}`);
 
     store.likesValue = likes;
     store.dislikesValue = dislikes;
 
     setDislikes(numberFormat(dislikes));
+    createRateBar(likes, dislikes);
 
     if (extConfig.numberDisplayReformatLikes) {
       const nativeLikes = getLikeCountFromButton();
       if (nativeLikes !== false) setLikes(numberFormat(nativeLikes));
     }
-
-    createRateBar(likes, dislikes);
-
-    if (extConfig.coloredThumbs) {
-      const dislikeButton = getDislikeButton();
-
-      if (isShorts()) {
-        const shortLikeButton = getLikeButton()?.querySelector(
-          "tp-yt-paper-button#button",
-        );
-        const shortDislikeButton = dislikeButton?.querySelector(
-          "tp-yt-paper-button#button",
-        );
-
-        if (shortLikeButton?.getAttribute("aria-pressed") === "true") {
-          shortLikeButton.style.color = getColorFromTheme(true);
-        }
-        if (shortDislikeButton?.getAttribute("aria-pressed") === "true") {
-          shortDislikeButton.style.color = getColorFromTheme(false);
-        }
-
-        const observer = getShortsObserver();
-        if (observer) {
-          observer.observe(shortLikeButton);
-          observer.observe(shortDislikeButton);
-        }
-      } else {
-        getLikeButton().style.color = getColorFromTheme(true);
-        if (dislikeButton) dislikeButton.style.color = getColorFromTheme(false);
-      }
-    }
   } catch (err) {
-    cLog(`Failed to fetch votes: ${  err}`);
+    if (err.name !== "AbortError") cLog("Failed to fetch votes: " + err);
   }
 }

@@ -1,120 +1,155 @@
 import { isMobile, isShorts, cLog } from "./config.js";
+import { store } from "./store.js";
+
+// ─── Viewport ────────────────────────────────────────────────────────────────
 
 export function isInViewport(element) {
   const rect = element.getBoundingClientRect();
-  const height = innerHeight || document.documentElement.clientHeight;
-  const width = innerWidth || document.documentElement.clientWidth;
-  return (
-    !(rect.top === 0 && rect.left === 0 && rect.bottom === 0 && rect.right === 0) &&
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= height &&
-    rect.right <= width
-  );
+  if (
+    rect.top === 0 &&
+    rect.left === 0 &&
+    rect.bottom === 0 &&
+    rect.right === 0
+  )
+    return false;
+  const h = innerHeight || document.documentElement.clientHeight;
+  const w = innerWidth || document.documentElement.clientWidth;
+  return rect.top >= 0 && rect.left >= 0 && rect.bottom <= h && rect.right <= w;
 }
 
+// ─── Core button queries (cached per navigation) ──────────────────────────────
+
 export function getButtons() {
+  if (store._buttons) return store._buttons;
+
+  let result = null;
+
   if (isShorts()) {
-    const elements = document.querySelectorAll(
-      isMobile
-        ? "ytm-like-button-renderer"
-        : "#like-button > ytd-like-button-renderer",
-    );
-    for (const element of elements) {
-      if (isInViewport(element)) return element;
+    const selector = isMobile
+      ? "ytm-like-button-renderer"
+      : "#like-button > ytd-like-button-renderer";
+    for (const el of document.querySelectorAll(selector)) {
+      if (isInViewport(el)) {
+        result = el;
+        break;
+      }
     }
-  }
-
-  if (isMobile) {
-    return (
-      document.querySelector(".slim-video-action-bar-actions .segmented-buttons") ??
-      document.querySelector(".slim-video-action-bar-actions")
-    );
-  }
-
-  if (document.getElementById("menu-container")?.offsetParent === null) {
-    return (
+  } else if (isMobile) {
+    result =
+      document.querySelector(
+        ".slim-video-action-bar-actions .segmented-buttons",
+      ) ?? document.querySelector(".slim-video-action-bar-actions");
+  } else if (document.getElementById("menu-container")?.offsetParent === null) {
+    result =
       document.querySelector("ytd-menu-renderer.ytd-watch-metadata > div") ??
-      document.querySelector("ytd-menu-renderer.ytd-video-primary-info-renderer > div")
-    );
+      document.querySelector(
+        "ytd-menu-renderer.ytd-video-primary-info-renderer > div",
+      );
+  } else {
+    result = document
+      .getElementById("menu-container")
+      ?.querySelector("#top-level-buttons-computed");
   }
 
-  return document.getElementById("menu-container")?.querySelector("#top-level-buttons-computed");
+  store._buttons = result;
+  return result;
 }
 
 export function getLikeButton() {
+  if (store._likeButton) return store._likeButton;
+
   const buttons = getButtons();
-  return buttons?.children[0]?.tagName === "YTD-SEGMENTED-LIKE-DISLIKE-BUTTON-RENDERER"
-    ? document.querySelector("#segmented-like-button") ??
-        buttons.children[0].children[0]
-    : buttons?.querySelector("like-button-view-model") ?? buttons?.children[0];
+  const result =
+    buttons?.children[0]?.tagName ===
+    "YTD-SEGMENTED-LIKE-DISLIKE-BUTTON-RENDERER"
+      ? (document.querySelector("#segmented-like-button") ??
+        buttons.children[0].children[0])
+      : (buttons?.querySelector("like-button-view-model") ??
+        buttons?.children[0]);
+
+  store._likeButton = result;
+  return result;
 }
 
 export function getDislikeButton() {
+  if (store._dislikeButton) return store._dislikeButton;
+
   const buttons = getButtons();
-  if (buttons?.children[0]?.tagName === "YTD-SEGMENTED-LIKE-DISLIKE-BUTTON-RENDERER") {
-    return buttons.children[0].children[1] === undefined
-      ? document.querySelector("#segmented-dislike-button")
-      : buttons.children[0].children[1];
+  let result;
+
+  if (
+    buttons?.children[0]?.tagName ===
+    "YTD-SEGMENTED-LIKE-DISLIKE-BUTTON-RENDERER"
+  ) {
+    result =
+      buttons.children[0].children[1] === undefined
+        ? document.querySelector("#segmented-dislike-button")
+        : buttons.children[0].children[1];
+  } else if (
+    buttons?.querySelector("segmented-like-dislike-button-view-model")
+  ) {
+    result = buttons.querySelector("dislike-button-view-model");
+    if (!result) cLog("Dislike button wasn't added to DOM yet...");
+  } else {
+    result = buttons?.children[1];
   }
 
-  if (buttons?.querySelector("segmented-like-dislike-button-view-model")) {
-    const dislikeViewModel = buttons.querySelector("dislike-button-view-model");
-    if (!dislikeViewModel) cLog("Dislike button wasn't added to DOM yet...");
-    return dislikeViewModel;
-  }
-
-  return buttons?.children[1];
+  store._dislikeButton = result;
+  return result;
 }
 
+// ─── Text containers ──────────────────────────────────────────────────────────
+
 export function getLikeTextContainer() {
-  const likeButton = getLikeButton();
+  const btn = getLikeButton();
   return (
-    likeButton?.querySelector("#text") ??
-    likeButton?.getElementsByTagName("yt-formatted-string")[0] ??
-    likeButton?.querySelector("span[role='text']")
+    btn?.querySelector("#text") ??
+    btn?.getElementsByTagName("yt-formatted-string")[0] ??
+    btn?.querySelector("span[role='text']")
   );
 }
 
 export function getDislikeTextContainer() {
-  const dislikeButton = getDislikeButton();
+  const btn = getDislikeButton();
   let result =
-    dislikeButton?.querySelector("#text") ??
-    dislikeButton?.getElementsByTagName("yt-formatted-string")[0] ??
-    dislikeButton?.querySelector("span[role='text']");
+    btn?.querySelector("#text") ??
+    btn?.getElementsByTagName("yt-formatted-string")[0] ??
+    btn?.querySelector("span[role='text']");
 
-  if (result === null) {
-    const textSpan = document.createElement("span");
-    textSpan.id = "text";
-    textSpan.style.marginLeft = "6px";
-    dislikeButton?.querySelector("button").appendChild(textSpan);
-    if (dislikeButton) dislikeButton.querySelector("button").style.width = "auto";
-    result = textSpan;
+  if (result === null && btn) {
+    const span = document.createElement("span");
+    span.id = "text";
+    span.style.marginLeft = "6px";
+    btn.querySelector("button")?.appendChild(span);
+    if (btn.querySelector("button"))
+      btn.querySelector("button").style.width = "auto";
+    result = span;
   }
 
   return result;
 }
 
-export function getVideoId() {
-  const urlObject = new URL(window.location.href);
-  const pathname = urlObject.pathname;
+// ─── Video ID ─────────────────────────────────────────────────────────────────
 
+export function getVideoId() {
+  const { pathname, searchParams } = new URL(window.location.href);
   if (pathname.startsWith("/clip")) {
     return (
       document.querySelector("meta[itemprop='videoId']") ??
       document.querySelector("meta[itemprop='identifier']")
-    ).content;
+    )?.content;
   }
-
   if (pathname.startsWith("/shorts")) return pathname.slice(8);
-  return urlObject.searchParams.get("v");
+  return searchParams.get("v");
 }
 
-export function isVideoLoaded() {
-  if (isMobile) {
-    return document.getElementById("player")?.getAttribute("loading") === "false";
-  }
+// ─── Ready check ─────────────────────────────────────────────────────────────
 
+export function isVideoLoaded() {
+  if (isMobile)
+    return (
+      document.getElementById("player")?.getAttribute("loading") === "false"
+    );
   const videoId = getVideoId();
   return (
     document.querySelector(`ytd-watch-grid[video-id='${videoId}']`) !== null ||

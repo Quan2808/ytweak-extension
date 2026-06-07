@@ -1,31 +1,32 @@
-import {
-  fetchAndSetVotes,
-  setLikes,
-  setDislikes,
-  getLikeCountFromButton,
-} from "./api.js";
 import { extConfig, isMobile, isShorts, cLog } from "./config.js";
 import {
   getButtons,
   getLikeButton,
   getDislikeButton,
   getDislikeTextContainer,
+  getVideoId,
   isVideoLoaded,
+  checkForUserAvatarButton,
 } from "./dom.js";
-import { numberFormat, getColorFromTheme } from "./format.js";
-import { createObserver } from "./observer.js";
+import { numberFormat } from "./format.js";
 import { createRateBar } from "./ratebar.js";
+import {
+  fetchAndSetVotes,
+  setLikes,
+  setDislikes,
+  getLikeCountFromButton,
+} from "./api.js";
+import { createObserver } from "./observer.js";
 import { store } from "./store.js";
 
-function updateDOMDislikes() {
+// ─── DOM update ───────────────────────────────────────────────────────────────
+
+export function updateDOMDislikes() {
   setDislikes(numberFormat(store.dislikesValue));
   createRateBar(store.likesValue, store.dislikesValue);
 }
 
-function checkForUserAvatarButton() {
-  if (isMobile) return false;
-  return !!document.querySelector("#avatar-btn");
-}
+// ─── Click handlers ───────────────────────────────────────────────────────────
 
 export function likeClicked() {
   if (!checkForUserAvatarButton()) return;
@@ -45,8 +46,8 @@ export function likeClicked() {
   updateDOMDislikes();
 
   if (extConfig.numberDisplayReformatLikes) {
-    const nativeLikes = getLikeCountFromButton();
-    if (nativeLikes !== false) setLikes(numberFormat(nativeLikes));
+    const n = getLikeCountFromButton();
+    if (n !== false) setLikes(numberFormat(n));
   }
 }
 
@@ -63,91 +64,150 @@ export function dislikeClicked() {
     store.likesValue--;
     store.dislikesValue++;
     store.previousState = 2;
-
     if (extConfig.numberDisplayReformatLikes) {
-      const nativeLikes = getLikeCountFromButton();
-      if (nativeLikes !== false) setLikes(numberFormat(nativeLikes));
+      const n = getLikeCountFromButton();
+      if (n !== false) setLikes(numberFormat(n));
     }
   }
 
   updateDOMDislikes();
 }
 
+// ─── Smartimation observer ────────────────────────────────────────────────────
+
 let smartimationObserver = null;
 
-export function setEventListeners() {
-  let jsInitChecktimer;
-
-  function checkForJS_Finish() {
-    if (!isShorts() && !(getButtons()?.offsetParent && isVideoLoaded())) return;
-
-    const buttons = getButtons();
-    const dislikeButton = getDislikeButton();
-
-    if (store.preNavigateLikeButton !== getLikeButton() && dislikeButton) {
-      cLog("Registering button listeners...");
-      try {
-        const likeButton = getLikeButton();
-        likeButton.addEventListener("click", likeClicked);
-        likeButton.addEventListener("touchstart", likeClicked);
-        dislikeButton.addEventListener("click", dislikeClicked);
-        dislikeButton.addEventListener("touchstart", dislikeClicked);
-        dislikeButton.addEventListener("focusin", updateDOMDislikes);
-        dislikeButton.addEventListener("focusout", updateDOMDislikes);
-        store.preNavigateLikeButton = likeButton;
-
-        if (!smartimationObserver) {
-          smartimationObserver = createObserver(
-            { attributes: true, subtree: true, childList: true },
-            updateDOMDislikes,
-          );
-          smartimationObserver.container = null;
-        }
-
-        const smartimationContainer = buttons.querySelector("yt-smartimation");
-        if (
-          smartimationContainer &&
-          smartimationObserver.container !== smartimationContainer
-        ) {
-          cLog("Initializing smartimation mutation observer");
-          smartimationObserver.disconnect();
-          smartimationObserver.observe(smartimationContainer);
-          smartimationObserver.container = smartimationContainer;
-        }
-      } catch {
-        return; // Don't spam errors
-      }
-    }
-
-    if (dislikeButton) {
-      fetchAndSetVotes();
-      clearInterval(jsInitChecktimer);
-    }
+function attachSmartimationObserver(buttons) {
+  if (!smartimationObserver) {
+    smartimationObserver = createObserver(
+      { attributes: true, subtree: true, childList: true },
+      updateDOMDislikes,
+    );
+    smartimationObserver.container = null;
   }
 
-  cLog("Setting up...");
-  jsInitChecktimer = setInterval(checkForJS_Finish, 111);
+  const container = buttons.querySelector("yt-smartimation");
+  if (container && smartimationObserver.container !== container) {
+    cLog("Initializing smartimation observer");
+    smartimationObserver.disconnect();
+    smartimationObserver.observe(container);
+    smartimationObserver.container = container;
+  }
 }
+
+// ─── Core setup — runs once per navigation ────────────────────────────────────
+
+function setupButtons() {
+  const likeButton = getLikeButton();
+  const dislikeButton = getDislikeButton();
+  const buttons = getButtons();
+
+  if (!likeButton || !dislikeButton) return false;
+
+  // Already wired up for this navigation
+  if (store.preNavigateLikeButton === likeButton) return true;
+
+  cLog("Registering button listeners...");
+  try {
+    likeButton.addEventListener("click", likeClicked);
+    likeButton.addEventListener("touchstart", likeClicked, { passive: true });
+    dislikeButton.addEventListener("click", dislikeClicked);
+    dislikeButton.addEventListener("touchstart", dislikeClicked, {
+      passive: true,
+    });
+    dislikeButton.addEventListener("focusin", updateDOMDislikes);
+    dislikeButton.addEventListener("focusout", updateDOMDislikes);
+
+    store.preNavigateLikeButton = likeButton;
+    if (buttons) attachSmartimationObserver(buttons);
+  } catch {
+    return false;
+  }
+
+  return true;
+}
+
+// ─── Navigation handler ───────────────────────────────────────────────────────
+// YouTube is an SPA — yt-navigate-finish fires on every video change.
+// We also poll briefly with rAF in case the event fires before DOM is ready.
+
+let rafId = null;
+let rafStart = 0;
+const RAF_TIMEOUT_MS = 5000; // give up after 5s of polling
+
+function pollUntilReady() {
+  const now = performance.now();
+  if (now - rafStart > RAF_TIMEOUT_MS) {
+    cLog("Timed out waiting for buttons");
+    return;
+  }
+
+  // Cache is stale on each navigation — clear before querying
+  store.clearCache();
+
+  const ready = isShorts() || (getButtons()?.offsetParent && isVideoLoaded());
+  if (!ready) {
+    rafId = requestAnimationFrame(pollUntilReady);
+    return;
+  }
+
+  if (!setupButtons()) {
+    rafId = requestAnimationFrame(pollUntilReady);
+    return;
+  }
+
+  fetchAndSetVotes();
+}
+
+export function onNavigate() {
+  const newVideoId = getVideoId();
+
+  // Same video — nothing to do (e.g. query param changes unrelated to video)
+  if (newVideoId && newVideoId === store.currentVideoId) {
+    cLog("Same video, skipping reload");
+    return;
+  }
+
+  cLog(`Navigation detected: ${store.currentVideoId} → ${newVideoId}`);
+  store.currentVideoId = newVideoId;
+  store.reset();
+
+  // Cancel any pending poll
+  if (rafId !== null) {
+    cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+
+  rafStart = performance.now();
+  rafId = requestAnimationFrame(pollUntilReady);
+}
+
+// ─── Mobile: keep dislike text alive (YouTube resets it) ─────────────────────
+
+let mobileInterval = null;
 
 export function setupMobileHistoryPatch() {
   if (!isMobile) return;
 
   const originalPush = history.pushState;
   history.pushState = function (...args) {
-    window.returnDislikeButtonlistenersSet = false;
-    setEventListeners(args[2]);
+    onNavigate();
     return originalPush.apply(history, args);
   };
 
-  // Keep dislike text visible on mobile (YouTube resets it)
-  setInterval(() => {
+  mobileInterval = setInterval(() => {
     const dislikeButton = getDislikeButton();
+    if (!dislikeButton) return;
     const text = numberFormat(store.mobileDislikes);
-
-    if (dislikeButton?.querySelector(".button-renderer-text") === null) {
-      getDislikeTextContainer().innerText = text;
-    } else if (dislikeButton) {
-      dislikeButton.querySelector(".button-renderer-text").innerText = text;
-    }
+    const rendered = dislikeButton.querySelector(".button-renderer-text");
+    const target = rendered ?? getDislikeTextContainer();
+    if (target && target.innerText !== text) target.innerText = text;
   }, 1000);
+}
+
+export function teardownMobileHistoryPatch() {
+  if (mobileInterval !== null) {
+    clearInterval(mobileInterval);
+    mobileInterval = null;
+  }
 }
