@@ -65,10 +65,10 @@
   "category_returnYouTubeDislike_label": {
     "message": "Return YouTube Dislike"
   },
-  "tweak_ryd_desc": {
-    "message": "Adds an option to show the dislike count of videos with Return YouTube Dislike."
-  },
   "tweak_ryd_name": {
-    "message": "Return YouTube Dislike"
+    "message": ""
+  },
+  "tweak_ryd_desc": {
+    "message": "Show the dislike count of videos."
   }
 }
