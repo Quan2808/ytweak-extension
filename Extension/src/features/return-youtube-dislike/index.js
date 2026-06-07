@@ -17,11 +17,11 @@ export default {
   id: TWEAK_ID,
 
   get name() {
-    return t("tweak_name");
+    return t("tweak_ryd_name");
   },
 
   get description() {
-    return t("tweak_desc");
+    return t("tweak_ryd_desc");
   },
 
   default: false,
