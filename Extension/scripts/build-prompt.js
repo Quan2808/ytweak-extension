@@ -131,6 +131,15 @@ function executeBuild(selectedOpt) {
       );
     }
 
+    // ✅ Sync manifest.json version với package.json
+    const manifestPath = path.resolve(rootDir, "public/manifest.json");
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+    manifest.version = selectedOpt.next;
+    fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+    console.log(
+      `\n📋 manifest.json synced to \x1b[32mv${selectedOpt.next}\x1b[0m`,
+    );
+
     console.log("\n📦 Running production build...\n");
     execSync("npm run build:core", { stdio: "inherit" });
 
