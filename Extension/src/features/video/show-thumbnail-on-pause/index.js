@@ -163,7 +163,6 @@ export default {
 
     addStyle(TWEAK_ID, TWEAK_CSS);
 
-    setupDomObserver();
     setupNavListener();
     initializeFeature();
   },

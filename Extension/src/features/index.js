@@ -7,9 +7,10 @@ import addLoopButton from "@features/player/add-loop-button";
 import addPipButton from "@features/player/add-pip-button";
 import expandTheaterMode from "@features/video/expand-theater-mode";
 import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-quality-title";
-import showThumbnailOnPause from "./video/show-thumbnail-on-pause";
 
 import returnYoutubeDislike from "./return-youtube-dislike";
+import showThumbnailOnPause from "./video/show-thumbnail-on-pause";
+
 
 import "@features/general/custom-header-logo/style.css";
 

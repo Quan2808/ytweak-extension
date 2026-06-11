@@ -1,9 +1,10 @@
 import { execSync } from "child_process";
 import fs from "fs";
-import JSZip from "jszip";
 import path from "path";
 import readline from "readline";
 import { fileURLToPath } from "url";
+
+import JSZip from "jszip";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
