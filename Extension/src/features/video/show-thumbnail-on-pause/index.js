@@ -162,6 +162,8 @@ export default {
     isDestroyed = false;
 
     addStyle(TWEAK_ID, TWEAK_CSS);
+
+    setupDomObserver();
     setupNavListener();
     initializeFeature();
   },
