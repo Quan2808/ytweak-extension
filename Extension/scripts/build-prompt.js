@@ -166,10 +166,10 @@ function askForZip(targetVersion) {
       "Do you want to export this build to a \x1b[33m.zip\x1b[0m file?\n",
     );
     console.log(
-      ` ${zipIndex === 0 ? "\x1b[36m❯ ● Yes, zip it please\x1b[0m" : "   ○ Yes, zip it please"}`,
+      ` ${zipIndex === 0 ? "\x1b[31m❯ ● No, keep dist directory only\x1b[0m" : "   ○ No, keep dist directory only"}`,
     );
     console.log(
-      ` ${zipIndex === 1 ? "\x1b[31m❯ ● No, keep dist directory only\x1b[0m" : "   ○ No, keep dist directory only"}`,
+      ` ${zipIndex === 1 ? "\x1b[36m❯ ● Yes, zip it please\x1b[0m" : "   ○ Yes, zip it please"}`,
     );
     console.log("----------------------------------------------------");
     console.log(
@@ -197,7 +197,7 @@ function askForZip(targetVersion) {
       }
       process.stdin.pause();
 
-      if (zipIndex === 0) {
+      if (zipIndex === 1) {
         executeZip(targetVersion);
       } else {
         console.log(

@@ -18,11 +18,6 @@ import "./popup.css";
 
 import { allTweaks } from "@features/index";
 
-// Theme
-// function initEnabledMap() {
-//   return Object.fromEntries(allTweaks.map((t) => [t.id, t.default ?? false]));
-// }
-
 function PopupContent() {
   const { mode, toggleTheme } = useThemeContext();
 
