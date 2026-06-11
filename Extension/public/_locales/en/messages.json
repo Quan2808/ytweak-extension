@@ -70,5 +70,8 @@
   },
   "tweak_ryd_desc": {
     "message": "Show the dislike count of videos."
+  },
+  "tweak_showThumbnailOnPause_name": {
+    "message": "Show the video thumbnail on pause."
   }
 }
