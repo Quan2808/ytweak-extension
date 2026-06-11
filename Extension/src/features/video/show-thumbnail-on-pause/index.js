@@ -49,8 +49,8 @@ async function loadThumbnail(overlay, videoId) {
 let videoEl = null;
 let handlers = null;
 let navHandler = null;
-let domObserver = null;
 let isDestroyed = false;
+let initTimeout = null;
 
 function getOverlay() {
   return getElementById(OVERLAY_ID);
@@ -105,11 +105,21 @@ function bindVideo() {
   return true;
 }
 
-function initializeFeature() {
+function initializeFeature(retryCount = 0) {
   if (isDestroyed) return;
 
   const playerContainer = getSelector("#movie_player");
-  if (!playerContainer) return;
+
+  if (!playerContainer) {
+    // Thử lại sau mỗi 300ms, tối đa 15 lần (~4.5 giây) phòng trường hợp mạng chậm
+    if (retryCount < 15) {
+      clearTimeout(initTimeout);
+      initTimeout = setTimeout(() => {
+        initializeFeature(retryCount + 1);
+      }, 300);
+    }
+    return;
+  }
 
   if (!getOverlay()) {
     const overlay = document.createElement("div");
@@ -120,32 +130,17 @@ function initializeFeature() {
   bindVideo();
 }
 
-function setupDomObserver() {
-  if (domObserver) domObserver.disconnect();
-
-  domObserver = new MutationObserver((mutations) => {
-    if (isDestroyed) return;
-
-    const playerContainer = getSelector("#movie_player");
-    const overlay = getOverlay();
-    const video = getSelector("video");
-
-    if ((playerContainer && !overlay) || (video && video !== videoEl)) {
-      initializeFeature();
-    }
-  });
-
-  domObserver.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-}
-
+// ─── SPA navigation handler ───────────────────────────────────────────────────
 function setupNavListener() {
   navHandler = () => {
     if (isDestroyed) return;
     hideOverlay();
-    initializeFeature();
+
+    // Khi chuyển video, hủy các hàng đợi cũ và quét lại DOM mới
+    clearTimeout(initTimeout);
+    initTimeout = setTimeout(() => {
+      initializeFeature();
+    }, 200);
   };
 
   window.addEventListener("yt-navigate-finish", navHandler);
@@ -167,19 +162,13 @@ export default {
     isDestroyed = false;
 
     addStyle(TWEAK_ID, TWEAK_CSS);
-
-    setupDomObserver();
     setupNavListener();
     initializeFeature();
   },
 
   disable() {
     isDestroyed = true;
-
-    if (domObserver) {
-      domObserver.disconnect();
-      domObserver = null;
-    }
+    clearTimeout(initTimeout);
 
     unbindVideo();
 
