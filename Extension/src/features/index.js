@@ -9,6 +9,8 @@ import expandTheaterMode from "@features/video/expand-theater-mode";
 import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-quality-title";
 
 import returnYoutubeDislike from "./return-youtube-dislike";
+import showThumbnailOnPause from "./video/show-thumbnail-on-pause";
+
 
 import "@features/general/custom-header-logo/style.css";
 
@@ -34,7 +36,11 @@ export const categories = [
       return t("category_video_label");
     },
     icon: "VideoSettings",
-    tweaks: [hidePremiumVideoQualityTitle, expandTheaterMode],
+    tweaks: [
+      hidePremiumVideoQualityTitle,
+      expandTheaterMode,
+      showThumbnailOnPause,
+    ],
   },
   {
     id: "player",
