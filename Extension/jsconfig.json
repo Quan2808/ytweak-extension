@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["src/shared/*"],
+      "@components/*": ["src/shared/components/*"],
+      "@features/*": ["src/features/*"],
+      "@entries/*": ["src/entries/*"],
+      "@public/*": ["public/*"]
+    }
+  },
+  "include": ["src/**/*", "scripts/**/*"]
+}

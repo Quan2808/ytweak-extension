@@ -11,9 +11,6 @@ import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-qua
 import returnYoutubeDislike from "./return-youtube-dislike";
 import showThumbnailOnPause from "./video/show-thumbnail-on-pause";
 
-
-import "@features/general/custom-header-logo/style.css";
-
 export const categories = [
   // Add new category here:
   // {
