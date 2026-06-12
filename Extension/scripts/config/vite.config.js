@@ -24,15 +24,17 @@ export default defineConfig(() => ({
         entryFileNames: ({ name }) =>
           name === "background" ? "[name].js" : "popup/[name].js",
         chunkFileNames: "popup/[name].js",
-        assetFileNames: ({ name }) => {
-          if (
-            name &&
-            (name.endsWith(".ttf") ||
-              name.endsWith(".woff") ||
-              name.endsWith(".woff2"))
-          ) {
+        assetFileNames: (chunkInfo) => {
+          const assetName = chunkInfo.names?.[0] || chunkInfo.fileName || "";
+
+          if (/\.(ttf|woff2?)$/i.test(assetName)) {
             return "assets/fonts/[name].[ext]";
           }
+
+          if (/\.(png|jpe?g|svg|gif|webp|ico)$/i.test(assetName)) {
+            return "assets/icons/[name].[ext]";
+          }
+
           return "popup/[name].[ext]";
         },
       },
