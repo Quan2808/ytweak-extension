@@ -1,5 +1,3 @@
-
-
 import { Tooltip } from "@mui/material";
 
 import AppBar from "@mui/material/AppBar";
@@ -38,7 +36,7 @@ export default function AppHeader({ currentMode, onToggleTheme }) {
               userSelect: "none",
             }}
           >
-            TWeak
+            {t("appName")}
           </Typography>
           <div>
             <LanguageSelector />

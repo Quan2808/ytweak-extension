@@ -4,6 +4,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { t } from "@shared/utils/i18n";
 
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import InfoOutlineRoundedIcon from "@mui/icons-material/InfoOutlineRounded";
@@ -42,7 +43,7 @@ export default function TweakList({ onNavigate }) {
               <ListItemIcon sx={{ minWidth: 40 }}>
                 {ICON_MAP.Introduce}
               </ListItemIcon>
-              <ListItemText primary="Introduce" />
+              <ListItemText primary={t("introduce_title")} />
               <ArrowForwardOutlinedIcon
                 sx={{ color: "text.disabled", fontSize: 20 }}
               />

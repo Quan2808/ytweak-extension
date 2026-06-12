@@ -74,19 +74,55 @@ export default function Introduce({ onBack }) {
     <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
       <nav>
         <List dense subheader={subheader} sx={{ paddingTop: 0 }}>
-          <Box sx={{ px: 2, py: 2, textAlign: "center" }}>
-            <Typography variant="h6" fontWeight="bold" gutterBottom>
+          <Box
+            sx={{
+              px: 2,
+              pt: 1,
+              pb: 2,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <Box
+              component="img"
+              src="/icons/YTweak-logo.png"
+              loading="lazy"
+              sx={{
+                height: 120,
+                width: "auto",
+                objectFit: "contain",
+                mb: 0.5,
+              }}
+            />
+            <Typography
+              variant="h6"
+              sx={{
+                fontFamily: "'TWeak Logo', sans-serif !important",
+                fontWeight: 700,
+                fontSize: "1.75rem",
+                letterSpacing: "-1.4px",
+                lineHeight: 1,
+                userSelect: "none",
+              }}
+            >
               {t("appName")}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            {/* <Typography
+              variant="body2"
+              color="text.secondary"
+              textAlign="center"
+              sx={{ fontSize: "0.825rem", px: 1 }}
+            >
               {t("intro_welcome_msg")}
-            </Typography>
+            </Typography> */}
           </Box>
 
-          <Divider sx={{ my: 1 }} />
+          <Divider sx={{ my: 1.5 }} />
 
           {introItems.map((item) => (
-            <ListItem key={item.id} sx={{ px: 2, py: 1 }}>
+            <ListItem key={item.id} sx={{ px: 2, py: 0.85 }}>
               {item.icon}
               <ListItemText
                 id={item.id}
