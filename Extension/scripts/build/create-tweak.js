@@ -12,34 +12,52 @@ import {
 const FEATURES_DIR = path.resolve(rootDir, "src/features");
 const INDEX_FILE_PATH = path.resolve(FEATURES_DIR, "index.js");
 
+const LOCALE_PATH = path.resolve(rootDir, "public/_locales/en/messages.json");
+
 if (!fs.existsSync(INDEX_FILE_PATH)) {
   console.error(`\n❌ Error: Cannot find file at ${INDEX_FILE_PATH}`);
   process.exit(1);
 }
 
-const indexContent = fs.readFileSync(INDEX_FILE_PATH, "utf-8");
-const categoryIdRegex = /id:\s*["']([^"']+)["']/g;
-let match;
-const existingCategories = [];
+function getLocaleMessages() {
+  try {
+    return JSON.parse(fs.readFileSync(LOCALE_PATH, "utf-8"));
+  } catch (e) {
+    console.warn(
+      "⚠️ Warning: Could not parse localization files. Using raw keys instead.",
+    );
+  }
+  return {};
+}
 
-while ((match = categoryIdRegex.exec(indexContent)) !== null) {
-  if (match[1] !== "test") {
-    existingCategories.push(match[1]);
+const locales = getLocaleMessages();
+const indexContent = fs.readFileSync(INDEX_FILE_PATH, "utf-8");
+
+const categoryBlockRegex =
+  /\{\s*id:\s*["']([^"']+)["'][\s\S]*?get label\(\)\s*\{\s*return\s+t\(["']([^"']+)["']\);\s*\},[\s\S]*?\}/g;
+
+const menuOptions = [];
+let match;
+
+while ((match = categoryBlockRegex.exec(indexContent)) !== null) {
+  const [_, catId, catLabelKey] = match;
+
+  if (catId !== "test") {
+    const cleanLabel = locales[catLabelKey]?.message || catLabelKey;
+
+    menuOptions.push({
+      label: `Existing: \x1b[35m${cleanLabel}\x1b[0m (\x1b[90m${catId}\x1b[0m)`,
+      type: "existing",
+      value: catId,
+    });
   }
 }
 
-const menuOptions = [
-  ...existingCategories.map((cat) => ({
-    label: `Existing: ${cat}`,
-    type: "existing",
-    value: cat,
-  })),
-  {
-    label: "✨ Create a completely NEW Category",
-    type: "new",
-    value: null,
-  },
-];
+menuOptions.push({
+  label: "✨ Create a completely NEW Category",
+  type: "new",
+  value: null,
+});
 
 let selectedIndex = 0;
 
@@ -188,13 +206,13 @@ export default {
     updatedContent.slice(nextNewLineIndex + 1);
 
   if (!isNewCategory) {
-    const categoryBlockRegex = new RegExp(
+    const blockRegex = new RegExp(
       `(id:\\s*["']${categoryId}["'][\\s\\S]*?tweaks:\\s*\\[)([\\s\\S]*?)(\\])`,
       "g",
     );
 
     updatedContent = updatedContent.replace(
-      categoryBlockRegex,
+      blockRegex,
       (match, prefix, currentTweaks, suffix) => {
         const trimmedTweaks = currentTweaks.trim();
         const separator = trimmedTweaks ? ",\n      " : "\n      ";
