@@ -2,14 +2,10 @@ import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import { fileURLToPath } from "url";
-
 import JSZip from "jszip";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { rootDir, handleMenuNavigation } from "./shared.js";
 
-const rootDir = path.resolve(__dirname, "..");
 const distDir = path.resolve(rootDir, "dist");
 const releaseDir = path.resolve(rootDir, "release");
 const pkgPath = path.resolve(rootDir, "package.json");
@@ -74,7 +70,7 @@ function renderMenu() {
 
   options.forEach((opt, index) => {
     const isSelected = index === selectedIndex;
-    const prefix = isSelected ? "\x1b[36m❯ ●\x1b[0m" : "   ○";
+    const prefix = isSelected ? "\x1b[36m❯ ●\x1b[0m" : "    ○";
     const label = isSelected
       ? `\x1b[36m${opt.label.padEnd(6)}\x1b[0m`
       : opt.label.padEnd(6);
@@ -90,17 +86,10 @@ function renderMenu() {
 renderMenu();
 
 const handleMenuKeyPress = (str, key) => {
-  if (key.ctrl && key.name === "c") {
-    process.exit();
-  }
+  const previousIndex = selectedIndex;
+  selectedIndex = handleMenuNavigation(key, selectedIndex, options.length);
 
-  if (key.name === "up") {
-    selectedIndex = (selectedIndex - 1 + options.length) % options.length;
-    renderMenu();
-  }
-
-  if (key.name === "down") {
-    selectedIndex = (selectedIndex + 1) % options.length;
+  if (previousIndex !== selectedIndex) {
     renderMenu();
   }
 
@@ -114,7 +103,6 @@ process.stdin.on("keypress", handleMenuKeyPress);
 
 function executeBuild(selectedOpt) {
   let versionCommand = "";
-
   if (selectedOpt.label === "Patch") versionCommand = "npm run version:patch";
   if (selectedOpt.label === "Minor") versionCommand = "npm run version:minor";
   if (selectedOpt.label === "Major") versionCommand = "npm run version:major";
@@ -131,7 +119,6 @@ function executeBuild(selectedOpt) {
       );
     }
 
-    // ✅ Sync manifest.json version với package.json
     const manifestPath = path.resolve(rootDir, "public/manifest.json");
     const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
     manifest.version = selectedOpt.next;
@@ -144,7 +131,6 @@ function executeBuild(selectedOpt) {
     execSync("npm run build:core", { stdio: "inherit" });
 
     console.log("\n✨ \x1b[32mBuild completed successfully!\x1b[0m");
-
     askForZip(selectedOpt.next);
   } catch (error) {
     console.error("\n❌ Build failed:", error.message);
@@ -166,10 +152,10 @@ function askForZip(targetVersion) {
       "Do you want to export this build to a \x1b[33m.zip\x1b[0m file?\n",
     );
     console.log(
-      ` ${zipIndex === 0 ? "\x1b[31m❯ ● No, keep dist directory only\x1b[0m" : "   ○ No, keep dist directory only"}`,
+      ` ${zipIndex === 0 ? "\x1b[31m❯ ● No, keep dist directory only\x1b[0m" : "    ○ No, keep dist directory only"}`,
     );
     console.log(
-      ` ${zipIndex === 1 ? "\x1b[36m❯ ● Yes, zip it please\x1b[0m" : "   ○ Yes, zip it please"}`,
+      ` ${zipIndex === 1 ? "\x1b[36m❯ ● Yes, zip it please\x1b[0m" : "    ○ Yes, zip it please"}`,
     );
     console.log("----------------------------------------------------");
     console.log(
@@ -180,12 +166,10 @@ function askForZip(targetVersion) {
   renderZipMenu();
 
   const handleZipKeyPress = (str, key) => {
-    if (key.ctrl && key.name === "c") {
-      process.exit();
-    }
+    const previousIndex = zipIndex;
+    zipIndex = handleMenuNavigation(key, zipIndex, 2);
 
-    if (key.name === "up" || key.name === "down") {
-      zipIndex = zipIndex === 0 ? 1 : 0;
+    if (previousIndex !== zipIndex) {
       renderZipMenu();
     }
 
@@ -213,11 +197,9 @@ function askForZip(targetVersion) {
 
 function addDirectoryToZip(zip, targetDir, currentDir = targetDir) {
   const files = fs.readdirSync(currentDir);
-
   for (const file of files) {
     const filePath = path.join(currentDir, file);
     const stat = fs.statSync(filePath);
-
     const relativePath = path.relative(targetDir, filePath).replace(/\\/g, "/");
 
     if (stat.isDirectory()) {
@@ -244,7 +226,6 @@ async function executeZip(version) {
   } else {
     const existingFiles = fs.readdirSync(releaseDir);
     let deletedCount = 0;
-
     for (const file of existingFiles) {
       if (file.endsWith(".zip") && file.startsWith(`${pkg.name}-v`)) {
         fs.unlinkSync(path.join(releaseDir, file));
@@ -264,7 +245,6 @@ async function executeZip(version) {
 
   try {
     const zip = new JSZip();
-
     addDirectoryToZip(zip, distDir);
 
     const content = await zip.generateAsync({
@@ -274,7 +254,6 @@ async function executeZip(version) {
     });
 
     fs.writeFileSync(zipFilePath, content);
-
     const sizeInMB = (content.length / 1024 / 1024).toFixed(2);
     console.log(`\n🎉 \x1b[32mZip package created successfully!\x1b[0m`);
     console.log(`📁 Path: \x1b[36mrelease/${zipFileName}\x1b[0m`);
