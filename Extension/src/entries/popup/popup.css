@@ -9,8 +9,16 @@
 html,
 body {
   width: 380px;
-  min-height: 200px;
-  max-height: 580px;
-  overflow-x: hidden;
+  height: 400px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  height: calc(400px - 56px);
+
   overflow-y: auto;
+  overflow-x: hidden;
 }

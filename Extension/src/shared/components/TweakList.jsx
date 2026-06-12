@@ -15,7 +15,6 @@ import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import VideoSettingsRoundedIcon from "@mui/icons-material/VideoSettingsRounded";
 
 import { ReturnYouTubeDislikeIcon } from "@shared/icons";
-import { t } from "@shared/utils/i18n";
 
 import { categories } from "@features/index";
 
@@ -49,7 +48,6 @@ export default function TweakList({ onNavigate }) {
               />
             </ListItemButton>
           </ListItem>
-
           {categories.map((cat) => (
             <ListItem key={cat.id} disablePadding>
               <ListItemButton

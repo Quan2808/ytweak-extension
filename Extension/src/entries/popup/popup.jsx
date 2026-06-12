@@ -18,6 +18,7 @@ import Introduce from "@shared/components/pages/Introduce";
 import "./popup.css";
 
 import { allTweaks } from "@features/index";
+import { Box } from "@mui/material";
 
 function PopupContent() {
   const { mode, toggleTheme } = useThemeContext();
@@ -73,21 +74,22 @@ function PopupContent() {
       <CssBaseline />
       <I18nProvider>
         <AppHeader currentMode={mode} onToggleTheme={toggleTheme} />
+        <Box component="main" className="content">
+          {currentView === "list" && <TweakList onNavigate={setCurrentView} />}
 
-        {currentView === "list" && <TweakList onNavigate={setCurrentView} />}
+          {currentView === "introduce_page" && (
+            <Introduce onBack={() => setCurrentView("list")} />
+          )}
 
-        {currentView === "introduce_page" && (
-          <Introduce onBack={() => setCurrentView("list")} />
-        )}
-
-        {currentView !== "list" && currentView !== "introduce_page" && (
-          <TweakCategory
-            categoryId={currentView}
-            enabledMap={enabledMap}
-            onToggle={handleToggle}
-            onBack={() => setCurrentView("list")}
-          />
-        )}
+          {currentView !== "list" && currentView !== "introduce_page" && (
+            <TweakCategory
+              categoryId={currentView}
+              enabledMap={enabledMap}
+              onToggle={handleToggle}
+              onBack={() => setCurrentView("list")}
+            />
+          )}
+        </Box>
       </I18nProvider>
     </>
   );

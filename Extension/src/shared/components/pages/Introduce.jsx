@@ -1,18 +1,17 @@
 import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import StarOutlineRoundedIcon from "@mui/icons-material/StarOutlineRounded";
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
-import { t } from "@shared/utils/i18n";
 import manifestDataLocal from "@public/manifest.json";
+import { t } from "@shared/utils/i18n";
 
 export default function Introduce({ onBack }) {
   const getManifest = () => {
