@@ -9,6 +9,31 @@
   "tooltip_theme_dark": { "message": "Turn on the light" },
   "tooltip_theme_light": { "message": "Turn off the light" },
 
+  "introduce_title": {
+    "message": "Introduce"
+  },
+  "intro_welcome_msg": {
+    "message": "Thank you for choosing and using this extension!"
+  },
+  "intro_version_name": {
+    "message": "Version"
+  },
+  "intro_version_latest": {
+    "message": "Latest"
+  },
+  "intro_developer_name": {
+    "message": "Developer"
+  },
+  "intro_developer_desc": {
+    "message": "Your Name or Team"
+  },
+  "intro_about_name": {
+    "message": "About this Extension"
+  },
+  "intro_about_desc": {
+    "message": "An extension that helps you customize the interface and features in your own optimal way."
+  },
+
   "category_general_label": { "message": "General" },
   "category_comingSoon_label": { "message": "Coming soon" },
   "category_tweakCount": {

@@ -6,6 +6,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
+import InfoOutlineRoundedIcon from "@mui/icons-material/InfoOutlineRounded";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
@@ -26,6 +27,7 @@ const ICON_MAP = {
   PlayArrow: <PlayArrowOutlinedIcon />,
   MoreHoriz: <MoreHorizOutlinedIcon />,
   RYD: <ReturnYouTubeDislikeIcon />,
+  Introduce: <InfoOutlineRoundedIcon />,
 };
 
 export default function TweakList({ onNavigate }) {
@@ -33,16 +35,25 @@ export default function TweakList({ onNavigate }) {
     <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
       <nav>
         <List dense sx={{ paddingTop: 0 }}>
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => onNavigate("introduce_page")}>
+              <ListItemIcon>{ICON_MAP.Introduce}</ListItemIcon>
+              <ListItemText primary="Introduce" />
+              <ArrowForwardOutlinedIcon sx={{ color: "text.disabled" }} />
+            </ListItemButton>
+          </ListItem>
+
           {categories.map((cat) => (
             <ListItem key={cat.id} disablePadding>
-              <ListItemButton onClick={() => onNavigate(cat.id)}>
+              <ListItemButton
+                onClick={() => {
+                  onNavigate(cat.id);
+                }}
+              >
                 <ListItemIcon>
                   {ICON_MAP[cat.icon] ?? <TuneOutlinedIcon />}
                 </ListItemIcon>
-                <ListItemText
-                  primary={cat.label}
-                  secondary={t("category_tweakCount", cat.tweaks.length)}
-                />
+                <ListItemText primary={cat.label} />
                 <ArrowForwardOutlinedIcon sx={{ color: "text.disabled" }} />
               </ListItemButton>
             </ListItem>

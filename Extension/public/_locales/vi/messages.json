@@ -9,6 +9,31 @@
   "tooltip_theme_dark": { "message": "Chuyển sang chế độ sáng" },
   "tooltip_theme_light": { "message": "Chuyển sang chế độ tối " },
 
+  "introduce_title": {
+    "message": "Giới thiệu"
+  },
+  "intro_welcome_msg": {
+    "message": "Cảm ơn bạn đã lựa chọn và sử dụng tiện ích này!"
+  },
+  "intro_version_name": {
+    "message": "Phiên bản"
+  },
+  "intro_version_latest": {
+    "message": "Mới nhất"
+  },
+  "intro_developer_name": {
+    "message": "Nhà phát triển"
+  },
+  "intro_developer_desc": {
+    "message": "Tên của bạn hoặc Team"
+  },
+  "intro_about_name": {
+    "message": "Về tiện ích này"
+  },
+  "intro_about_desc": {
+    "message": "Tiện ích giúp bạn tùy biến giao diện và tính năng theo cách riêng tối ưu nhất."
+  },
+
   "category_general_label": { "message": "Chung" },
   "category_comingSoon_label": { "message": "Sắp ra mắt" },
   "category_tweakCount": {
