@@ -1,7 +1,11 @@
 import fs from "fs";
-import { resolve } from "path";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 
-export const r = (...args) => resolve(__dirname, "..", ...args);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export const r = (...args) => resolve(__dirname, "../..", ...args);
 
 export const aliases = {
   "@shared": r("src/shared"),

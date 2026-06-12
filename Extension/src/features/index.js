@@ -12,13 +12,6 @@ import returnYoutubeDislike from "./return-youtube-dislike";
 import showThumbnailOnPause from "./video/show-thumbnail-on-pause";
 
 export const categories = [
-  // Add new category here:
-  // {
-  //   id: "category-id",
-  //   label: "category-label",
-  //   icon: "category-icon (use MUI icon)",
-  //   tweaks: [tweakExample],
-  // },
   {
     id: "general",
     get label() {
