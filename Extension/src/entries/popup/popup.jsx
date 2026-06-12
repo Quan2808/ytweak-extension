@@ -13,14 +13,15 @@ import { storage } from "@shared/utils/storage";
 import AppHeader from "@components/Header";
 import TweakCategory from "@components/TweakCategory";
 import TweakList from "@components/TweakList";
+import Introduce from "@shared/components/pages/Introduce";
 
 import "./popup.css";
 
 import { allTweaks } from "@features/index";
+import { Box } from "@mui/material";
 
 function PopupContent() {
   const { mode, toggleTheme } = useThemeContext();
-
   const [currentView, setCurrentView] = useState("list");
   const [enabledMap, setEnabledMap] = useState({});
   const [loaded, setLoaded] = useState(false);
@@ -49,21 +50,46 @@ function PopupContent() {
 
   if (!loaded) return null;
 
+  const renderContent = () => {
+    if (currentView === "list") {
+      return <TweakList onNavigate={setCurrentView} />;
+    }
+
+    if (currentView === "introduce_page") {
+      <Introduce onBack={() => setCurrentView("list")} />;
+    }
+
+    return (
+      <TweakCategory
+        categoryId={currentView}
+        enabledMap={enabledMap}
+        onToggle={handleToggle}
+        onBack={() => setCurrentView("list")}
+      />
+    );
+  };
+
   return (
     <>
       <CssBaseline />
       <I18nProvider>
         <AppHeader currentMode={mode} onToggleTheme={toggleTheme} />
-        {currentView === "list" ? (
-          <TweakList onNavigate={setCurrentView} />
-        ) : (
-          <TweakCategory
-            categoryId={currentView}
-            enabledMap={enabledMap}
-            onToggle={handleToggle}
-            onBack={() => setCurrentView("list")}
-          />
-        )}
+        <Box component="main" className="content">
+          {currentView === "list" && <TweakList onNavigate={setCurrentView} />}
+
+          {currentView === "introduce_page" && (
+            <Introduce onBack={() => setCurrentView("list")} />
+          )}
+
+          {currentView !== "list" && currentView !== "introduce_page" && (
+            <TweakCategory
+              categoryId={currentView}
+              enabledMap={enabledMap}
+              onToggle={handleToggle}
+              onBack={() => setCurrentView("list")}
+            />
+          )}
+        </Box>
       </I18nProvider>
     </>
   );

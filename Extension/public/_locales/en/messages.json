@@ -9,6 +9,31 @@
   "tooltip_theme_dark": { "message": "Turn on the light" },
   "tooltip_theme_light": { "message": "Turn off the light" },
 
+  "introduce_title": {
+    "message": "Introduce"
+  },
+  "intro_welcome_msg": {
+    "message": "Thank you for choosing and using this extension!"
+  },
+  "intro_version_name": {
+    "message": "Version"
+  },
+  "intro_version_latest": {
+    "message": "Latest"
+  },
+  "intro_developer_name": {
+    "message": "Developer"
+  },
+  "intro_developer_desc": {
+    "message": "Quan2808"
+  },
+  "intro_about_name": {
+    "message": "About this Extension"
+  },
+  "intro_about_desc": {
+    "message": "An extension that helps you customize the interface and features in your own optimal way."
+  },
+
   "category_general_label": { "message": "General" },
   "category_comingSoon_label": { "message": "Coming soon" },
   "category_tweakCount": {
@@ -31,6 +56,9 @@
   "tweak_volumeAmplifier_name": { "message": "Volume Amplifier" },
   "tweak_volumeAmplifier_desc": {
     "message": "Volume Amplifier desc"
+  },
+  "tweak_showThumbnailOnPause_name": {
+    "message": "Show the video thumbnail on pause."
   },
 
   "tweak_hidePremiumVideoQualityTitle_name": {
@@ -66,12 +94,9 @@
     "message": "Return YouTube Dislike"
   },
   "tweak_ryd_name": {
-    "message": ""
+    "message": "Turn on Return YouTube Dislike"
   },
   "tweak_ryd_desc": {
-    "message": "Show the dislike count of videos."
-  },
-  "tweak_showThumbnailOnPause_name": {
-    "message": "Show the video thumbnail on pause."
+    "message": ""
   }
 }

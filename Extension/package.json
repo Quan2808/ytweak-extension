@@ -1,11 +1,11 @@
 {
   "name": "ytweak-extension",
   "private": true,
-  "version": "1.4.2",
+  "version": "1.4.4",
   "type": "module",
   "// versioning": "Semantic Versioning (SemVer) guide below",
   "scripts": {
-    "dev": "vite --config scripts/vite.config.js",
+    "dev": "vite --config scripts/config/vite.config.js",
     "build": "node scripts/build/build-prompt.js",
     "build:core": "vite build -c scripts/config/vite.config.js && vite build -c scripts/config/vite.content.config.js",
     "lint": "eslint .",
