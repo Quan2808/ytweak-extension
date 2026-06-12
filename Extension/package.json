@@ -9,6 +9,7 @@
     "build": "node scripts/build-prompt.js",
     "build:core": "vite build --config scripts/vite.config.js && vite build --config scripts/vite.content.config.js",
     "lint": "eslint .",
+    "new": "node scripts/create-tweak.js",
     "preview": "vite preview",
     "version:patch": "npm version patch --no-git-tag-version",
     "version:minor": "npm version minor --no-git-tag-version",
