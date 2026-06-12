@@ -34,27 +34,35 @@ export default function TweakList({ onNavigate }) {
   return (
     <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
       <nav>
-        <List dense sx={{ paddingTop: 0 }}>
+        <List sx={{ paddingTop: 0 }}>
           <ListItem disablePadding>
-            <ListItemButton onClick={() => onNavigate("introduce_page")}>
-              <ListItemIcon>{ICON_MAP.Introduce}</ListItemIcon>
+            <ListItemButton
+              onClick={() => onNavigate("introduce_page")}
+              sx={{ px: 2, py: 1.5 }}
+            >
+              <ListItemIcon sx={{ minWidth: 40 }}>
+                {ICON_MAP.Introduce}
+              </ListItemIcon>
               <ListItemText primary="Introduce" />
-              <ArrowForwardOutlinedIcon sx={{ color: "text.disabled" }} />
+              <ArrowForwardOutlinedIcon
+                sx={{ color: "text.disabled", fontSize: 20 }}
+              />
             </ListItemButton>
           </ListItem>
 
           {categories.map((cat) => (
             <ListItem key={cat.id} disablePadding>
               <ListItemButton
-                onClick={() => {
-                  onNavigate(cat.id);
-                }}
+                onClick={() => onNavigate(cat.id)}
+                sx={{ px: 2, py: 1.5 }}
               >
-                <ListItemIcon>
+                <ListItemIcon sx={{ minWidth: 40 }}>
                   {ICON_MAP[cat.icon] ?? <TuneOutlinedIcon />}
                 </ListItemIcon>
                 <ListItemText primary={cat.label} />
-                <ArrowForwardOutlinedIcon sx={{ color: "text.disabled" }} />
+                <ArrowForwardOutlinedIcon
+                  sx={{ color: "text.disabled", fontSize: 20 }}
+                />
               </ListItemButton>
             </ListItem>
           ))}

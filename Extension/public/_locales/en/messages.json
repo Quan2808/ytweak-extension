@@ -25,7 +25,7 @@
     "message": "Developer"
   },
   "intro_developer_desc": {
-    "message": "Your Name or Team"
+    "message": "Quan2808"
   },
   "intro_about_name": {
     "message": "About this Extension"
@@ -56,6 +56,9 @@
   "tweak_volumeAmplifier_name": { "message": "Volume Amplifier" },
   "tweak_volumeAmplifier_desc": {
     "message": "Volume Amplifier desc"
+  },
+  "tweak_showThumbnailOnPause_name": {
+    "message": "Show the video thumbnail on pause."
   },
 
   "tweak_hidePremiumVideoQualityTitle_name": {
@@ -91,12 +94,9 @@
     "message": "Return YouTube Dislike"
   },
   "tweak_ryd_name": {
-    "message": ""
+    "message": "Turn on Return YouTube Dislike"
   },
   "tweak_ryd_desc": {
-    "message": "Show the dislike count of videos."
-  },
-  "tweak_showThumbnailOnPause_name": {
-    "message": "Show the video thumbnail on pause."
+    "message": ""
   }
 }

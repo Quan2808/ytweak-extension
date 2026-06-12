@@ -30,11 +30,21 @@ export default function Introduce({ onBack }) {
   const extensionVersion = manifestData.version;
 
   const subheader = (
-    <ListItem sx={{ px: 1, py: 0.5 }}>
-      <IconButton onClick={onBack} size="small" sx={{ mr: 1 }}>
-        <ArrowBackIcon fontSize="small" />
-      </IconButton>
-      <Typography variant="subtitle2" color="text.secondary">
+    <ListItem
+      sx={{
+        px: 2,
+        py: 1.5,
+        display: "flex",
+        alignItems: "center",
+        minHeight: 56,
+      }}
+    >
+      <Box sx={{ minWidth: 40, display: "flex", alignItems: "center" }}>
+        <IconButton onClick={onBack} size="small" sx={{ ml: -0.75 }}>
+          <ArrowBackIcon fontSize="small" />
+        </IconButton>
+      </Box>
+      <Typography variant="subtitle1" component="div" sx={{ fontWeight: 500 }}>
         {t("introduce_title")}
       </Typography>
     </ListItem>

@@ -82,5 +82,11 @@
   },
   "tweak_loopButton_desc": {
     "message": ""
+  },
+  "tweak_ryd_name": {
+    "message": "Bật Return YouTube Dislike"
+  },
+  "tweak_ryd_desc": {
+    "message": ""
   }
 }

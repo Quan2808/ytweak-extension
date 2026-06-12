@@ -31,11 +31,21 @@ export default function TweakCategory({
   if (!category) return null;
 
   const subheader = (
-    <ListItem sx={{ px: 1, py: 0.5 }}>
-      <IconButton onClick={onBack} size="small" sx={{ mr: 1 }}>
-        <ArrowBackIcon fontSize="small" />
-      </IconButton>
-      <Typography variant="subtitle2" color="text.secondary">
+    <ListItem
+      sx={{
+        px: 2,
+        py: 1.5,
+        display: "flex",
+        alignItems: "center",
+        minHeight: 56,
+      }}
+    >
+      <Box sx={{ minWidth: 40, display: "flex", alignItems: "center" }}>
+        <IconButton onClick={onBack} size="small" sx={{ ml: -0.75 }}>
+          <ArrowBackIcon fontSize="small" />
+        </IconButton>
+      </Box>
+      <Typography variant="subtitle1" component="div" sx={{ fontWeight: 500 }}>
         {category.label}
       </Typography>
     </ListItem>
@@ -44,14 +54,17 @@ export default function TweakCategory({
   return (
     <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
       <nav>
-        <List dense subheader={subheader} sx={{ paddingTop: 0 }}>
+        {/* Để ý phần List: Tweak UI của các item con bên dưới cũng nên ép px: 2 cho đều */}
+        <List subheader={subheader} sx={{ paddingTop: 0, paddingBottom: 0 }}>
           {category.tweaks.map((tweak) => {
             const ExtraUI = tweak.extra;
             const isEnabled = !!enabledMap[tweak.id];
 
             return (
-              <>
-                <ListItem key={tweak.id}>
+              <Box key={tweak.id}>
+                {" "}
+                {/* Dùng Box bọc thay vì <> trống để tránh lỗi key của React Fragment */}
+                <ListItem sx={{ px: 2, py: 1 }}>
                   <ListItemText
                     id={tweak.id}
                     primary={tweak.name}
@@ -66,17 +79,17 @@ export default function TweakCategory({
                     slotProps={{ input: { "aria-labelledby": tweak.id } }}
                   />
                 </ListItem>
-
                 {ExtraUI && isEnabled && (
-                  <ExtraUI
-                    key={`${tweak.id}-extra`}
-                    value={extraValues[tweak.id]}
-                    onChange={(val) =>
-                      setExtraValues((prev) => ({ ...prev, [tweak.id]: val }))
-                    }
-                  />
+                  <Box sx={{ px: 2, pb: 1 }}>
+                    <ExtraUI
+                      value={extraValues[tweak.id]}
+                      onChange={(val) =>
+                        setExtraValues((prev) => ({ ...prev, [tweak.id]: val }))
+                      }
+                    />
+                  </Box>
                 )}
-              </>
+              </Box>
             );
           })}
         </List>
