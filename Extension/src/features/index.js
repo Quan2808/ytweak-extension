@@ -1,7 +1,6 @@
 import { t } from "@shared/utils/i18n";
 
-// import tweakExample from "@features/tweak-example";
-import customHeaderLogo from "@features/general/custom-header-logo";
+import customHeaderLogo from "@features/general/change-header-logo";
 import linkSanitizer from "@features/general/link-sanitizer";
 import addLoopButton from "@features/player/add-loop-button";
 import addPipButton from "@features/player/add-pip-button";

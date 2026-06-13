@@ -1,5 +1,5 @@
-.nice-logo-container.nice-logo,
-nice-logo {
+.tweak-change-logo-container.tweak-change-logo,
+tweak-change-logo {
   display: -ms-inline-flexbox;
   display: -webkit-inline-flex;
   display: inline-flex;
@@ -23,7 +23,7 @@ nice-logo {
   margin-top: var(--iron-icon_-_margin-top);
 }
 
-nice-logo.ytd-topbar-logo-renderer {
+tweak-change-logo.ytd-topbar-logo-renderer {
   height: 20px;
   width: 90px;
   padding: 18px 14px 18px 16px;

@@ -7,7 +7,7 @@ function loadLogo() {
   if (document.getElementById("logo-icon")) {
     const logoIcons = document.querySelectorAll("#logo-icon");
     logoIcons.forEach(function (logoIcon) {
-      if (logoIcon.parentNode.querySelector("nice-logo")) return;
+      if (logoIcon.parentNode.querySelector("tweak-change-logo")) return;
 
       logoIcon.insertAdjacentHTML("afterend", logoMarkup);
       logoIcon.remove();
