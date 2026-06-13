@@ -87,7 +87,7 @@ export default function Introduce({ onBack }) {
           >
             <Box
               component="img"
-              src="assets/icons/YTweak-logo.png"
+              src="assets/icons/logo-transparent.png"
               loading="lazy"
               sx={{
                 height: 120,
