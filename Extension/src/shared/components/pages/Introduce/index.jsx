@@ -1,20 +1,24 @@
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper"; // ← Thêm
-
+import React from "react";
+import {
+  Box,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+  Paper,
+  ListItemButton,
+} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 import manifestDataLocal from "@public/manifest.json";
 import { t } from "@shared/utils/i18n";
-import { ListItemButton, ListItemIcon } from "@mui/material";
-import VerifiedIcon from "@mui/icons-material/Verified";
+
+import BrandHeader from "./BrandHeader";
+import IntroItem from "./IntroItem";
 
 export default function Introduce({ onBack, onNavigate }) {
   const getManifest = () => {
@@ -68,7 +72,6 @@ export default function Introduce({ onBack, onNavigate }) {
           top: 0,
           zIndex: 10,
           borderRadius: 0,
-          bgcolor: "background.paper",
         }}
       >
         <List sx={{ paddingTop: 0, pb: 0 }}>
@@ -78,7 +81,7 @@ export default function Introduce({ onBack, onNavigate }) {
               py: 1.5,
               display: "flex",
               alignItems: "center",
-              minHeight: 56,
+              minHeight: 57,
               borderBottom: "1px solid",
               borderColor: "divider",
             }}
@@ -99,56 +102,13 @@ export default function Introduce({ onBack, onNavigate }) {
         </List>
       </Paper>
 
-      <Box sx={{ overflowY: "auto", height: "calc(100% - 56px)" }}>
+      <Box sx={{ overflowY: "auto", height: "calc(100% - 57px)" }}>
         <List sx={{ paddingTop: 0 }}>
-          <Box
-            sx={{
-              px: 2,
-              pt: 3,
-              pb: 2,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 1,
-            }}
-          >
-            <Box
-              component="img"
-              src="assets/icons/logo-transparent.png"
-              loading="lazy"
-              sx={{
-                height: 120,
-                width: "auto",
-                objectFit: "contain",
-                mb: 0.5,
-              }}
-            />
-            <Typography
-              variant="h6"
-              sx={{
-                fontFamily: "'TWeak Logo', sans-serif !important",
-                fontWeight: 700,
-                fontSize: "1.75rem",
-                letterSpacing: "-1.4px",
-                lineHeight: 1,
-                userSelect: "none",
-              }}
-            >
-              {t("appName")}
-            </Typography>
-          </Box>
-
+          <BrandHeader />
           <Divider sx={{ my: 1.5, mx: 2 }} />
 
           {introItems.map((item) => (
-            <ListItem key={item.id} sx={{ px: 2, py: 0.85 }}>
-              {item.icon}
-              <ListItemText
-                id={item.id}
-                primary={item.name}
-                {...(item.description ? { secondary: item.description } : {})}
-              />
-            </ListItem>
+            <IntroItem key={item.id} item={item} />
           ))}
 
           <ListItem disablePadding>
