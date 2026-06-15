@@ -14,6 +14,7 @@ import { t } from "@shared/utils/i18n";
 import licensesData from "@shared/assets/licenses.json";
 
 import LicenseAccordion from "./LicenseAccordion";
+import Subheader from "@shared/components/Subheader";
 
 export default function License({ onBack }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -57,38 +58,7 @@ export default function License({ onBack }) {
         overflow: "hidden",
       }}
     >
-      <Paper
-        elevation={0}
-        sx={{
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-          borderRadius: 0,
-        }}
-      >
-        <List sx={{ paddingTop: 0, pb: 0 }}>
-          <ListItem
-            sx={{
-              px: 2,
-              py: 1.5,
-              display: "flex",
-              alignItems: "center",
-              minHeight: 57,
-              borderBottom: "1px solid",
-              borderColor: "divider",
-            }}
-          >
-            <Box sx={{ minWidth: 40 }}>
-              <IconButton onClick={onBack} size="small" sx={{ ml: -0.75 }}>
-                <ArrowBackIcon fontSize="small" />
-              </IconButton>
-            </Box>
-            <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-              {t("license_title")}
-            </Typography>
-          </ListItem>
-        </List>
-      </Paper>
+      <Subheader title={t("license_title")} onBack={onBack} />
 
       <Box sx={{ overflowY: "auto", height: "calc(100% - 57px)" }}>
         <List sx={{ paddingTop: 0 }}>

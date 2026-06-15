@@ -1,22 +1,18 @@
-import React from "react";
+import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import {
   Box,
   Divider,
-  IconButton,
   List,
   ListItem,
-  ListItemText,
-  Typography,
-  Paper,
   ListItemButton,
+  ListItemText,
 } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import CodeRoundedIcon from "@mui/icons-material/CodeRounded";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 import manifestDataLocal from "@public/manifest.json";
 import { t } from "@shared/utils/i18n";
 
+import Subheader from "@shared/components/Subheader";
 import BrandHeader from "./BrandHeader";
 import IntroItem from "./IntroItem";
 
@@ -65,42 +61,7 @@ export default function Introduce({ onBack, onNavigate }) {
         overflow: "hidden",
       }}
     >
-      <Paper
-        elevation={0}
-        sx={{
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-          borderRadius: 0,
-        }}
-      >
-        <List sx={{ paddingTop: 0, pb: 0 }}>
-          <ListItem
-            sx={{
-              px: 2,
-              py: 1.5,
-              display: "flex",
-              alignItems: "center",
-              minHeight: 57,
-              borderBottom: "1px solid",
-              borderColor: "divider",
-            }}
-          >
-            <Box sx={{ minWidth: 40, display: "flex", alignItems: "center" }}>
-              <IconButton onClick={onBack} size="small" sx={{ ml: -0.75 }}>
-                <ArrowBackIcon fontSize="small" />
-              </IconButton>
-            </Box>
-            <Typography
-              variant="subtitle1"
-              component="div"
-              sx={{ fontWeight: 500 }}
-            >
-              {t("introduce_title")}
-            </Typography>
-          </ListItem>
-        </List>
-      </Paper>
+      <Subheader title={t("introduce_title")} onBack={onBack} />
 
       <Box sx={{ overflowY: "auto", height: "calc(100% - 57px)" }}>
         <List sx={{ paddingTop: 0 }}>
