@@ -14,6 +14,7 @@ import AppHeader from "@components/Header";
 import TweakCategory from "@components/TweakCategory";
 import TweakList from "@components/TweakList";
 import Introduce from "@shared/components/pages/Introduce";
+import LicensePage from "@shared/components/pages/License";
 
 import "./popup.css";
 
@@ -78,17 +79,26 @@ function PopupContent() {
           {currentView === "list" && <TweakList onNavigate={setCurrentView} />}
 
           {currentView === "introduce_page" && (
-            <Introduce onBack={() => setCurrentView("list")} />
-          )}
-
-          {currentView !== "list" && currentView !== "introduce_page" && (
-            <TweakCategory
-              categoryId={currentView}
-              enabledMap={enabledMap}
-              onToggle={handleToggle}
+            <Introduce
               onBack={() => setCurrentView("list")}
+              onNavigate={setCurrentView}
             />
           )}
+
+          {currentView === "license_page" && (
+            <LicensePage onBack={() => setCurrentView("introduce_page")} />
+          )}
+
+          {currentView !== "list" &&
+            currentView !== "introduce_page" &&
+            currentView !== "license_page" && (
+              <TweakCategory
+                categoryId={currentView}
+                enabledMap={enabledMap}
+                onToggle={handleToggle}
+                onBack={() => setCurrentView("list")}
+              />
+            )}
         </Box>
       </I18nProvider>
     </>

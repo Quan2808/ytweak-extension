@@ -5,7 +5,7 @@
   "github_url": { "message": "https://github.com/Quan2808/ytweak-extension" },
 
   "tooltip_language": { "message": "Change language" },
-  "tooltip_github": { "message": "GitHub repository" },
+  "tooltip_github": { "message": "Click to open the repository on GitHub." },
   "tooltip_theme_dark": { "message": "Turn on the light" },
   "tooltip_theme_light": { "message": "Turn off the light" },
 
@@ -32,6 +32,10 @@
   },
   "intro_about_desc": {
     "message": "An extension that helps you customize the interface and features in your own optimal way."
+  },
+
+  "license_title": {
+    "message": "Open source licenses"
   },
 
   "category_general_label": { "message": "General" },

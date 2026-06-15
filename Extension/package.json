@@ -1,7 +1,7 @@
 {
   "name": "ytweak-extension",
   "private": true,
-  "version": "1.4.8",
+  "version": "1.4.9",
   "type": "module",
   "// versioning": "Semantic Versioning (SemVer) guide below",
   "scripts": {
@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "new": "node scripts/build/create-tweak.js",
     "preview": "vite preview",
+    "license:scan": "npx license-checker --json --out src/shared/assets/licenses.json --production",
     "version:patch": "npm version patch --no-git-tag-version",
     "version:minor": "npm version minor --no-git-tag-version",
     "version:major": "npm version major --no-git-tag-version"
@@ -25,6 +26,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^9.0.1",
     "@mui/material": "^9.0.1",
+    "license-checker": "^25.0.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
   },

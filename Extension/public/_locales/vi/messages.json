@@ -5,7 +5,7 @@
   "github_url": { "message": "https://github.com/Quan2808/ytweak-extension" },
 
   "tooltip_language": { "message": "Đổi ngôn ngữ" },
-  "tooltip_github": { "message": "Xem mã nguồn trên GitHub" },
+  "tooltip_github": { "message": "Nhấp để mở repository trên GitHub" },
   "tooltip_theme_dark": { "message": "Chuyển sang chế độ sáng" },
   "tooltip_theme_light": { "message": "Chuyển sang chế độ tối " },
 
@@ -32,6 +32,9 @@
   },
   "intro_about_desc": {
     "message": "Tiện ích giúp bạn tùy biến giao diện và tính năng theo cách riêng tối ưu nhất."
+  },
+  "license_title": {
+    "message": "Giấy phép mã nguồn mở"
   },
 
   "category_general_label": { "message": "Chung" },
