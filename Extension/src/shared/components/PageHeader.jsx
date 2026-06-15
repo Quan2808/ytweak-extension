@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-export default function Subheader({ title, onBack }) {
+export default function PageHeader({ title, onBack }) {
   return (
     <Paper
       elevation={0}

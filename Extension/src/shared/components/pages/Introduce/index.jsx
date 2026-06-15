@@ -12,7 +12,7 @@ import {
 import manifestDataLocal from "@public/manifest.json";
 import { t } from "@shared/utils/i18n";
 
-import Subheader from "@shared/components/Subheader";
+import Subheader from "@shared/components/PageHeader";
 import BrandHeader from "./BrandHeader";
 import IntroItem from "./IntroItem";
 

@@ -1,7 +1,6 @@
-import CssBaseline from "@mui/material/CssBaseline";
-
-import { StrictMode, useEffect, useState } from "react";
+import React, { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { Box, CssBaseline } from "@mui/material";
 
 import { I18nProvider } from "@shared/contexts/I18nContext";
 import {
@@ -9,6 +8,7 @@ import {
   useThemeContext,
 } from "@shared/contexts/ThemeContext";
 import { storage } from "@shared/utils/storage";
+import { allTweaks } from "@features/index";
 
 import AppHeader from "@shared/components/AppHeader";
 import TweakCategory from "@components/TweakCategory";
@@ -18,16 +18,12 @@ import LicensePage from "@shared/components/pages/License";
 
 import "./popup.css";
 
-import { allTweaks } from "@features/index";
-import { Box } from "@mui/material";
-
 function PopupContent() {
   const { mode, toggleTheme } = useThemeContext();
   const [currentView, setCurrentView] = useState("list");
   const [enabledMap, setEnabledMap] = useState({});
   const [loaded, setLoaded] = useState(false);
 
-  // Load settings
   useEffect(() => {
     storage.get(null).then((settings) => {
       const map = Object.fromEntries(
@@ -51,23 +47,29 @@ function PopupContent() {
 
   if (!loaded) return null;
 
-  const renderContent = () => {
-    if (currentView === "list") {
-      return <TweakList onNavigate={setCurrentView} />;
+  const renderView = () => {
+    switch (currentView) {
+      case "list":
+        return <TweakList onNavigate={setCurrentView} />;
+      case "introduce_page":
+        return (
+          <Introduce
+            onBack={() => setCurrentView("list")}
+            onNavigate={setCurrentView}
+          />
+        );
+      case "license_page":
+        return <LicensePage onBack={() => setCurrentView("introduce_page")} />;
+      default:
+        return (
+          <TweakCategory
+            categoryId={currentView}
+            enabledMap={enabledMap}
+            onToggle={handleToggle}
+            onBack={() => setCurrentView("list")}
+          />
+        );
     }
-
-    if (currentView === "introduce_page") {
-      <Introduce onBack={() => setCurrentView("list")} />;
-    }
-
-    return (
-      <TweakCategory
-        categoryId={currentView}
-        enabledMap={enabledMap}
-        onToggle={handleToggle}
-        onBack={() => setCurrentView("list")}
-      />
-    );
   };
 
   return (
@@ -75,30 +77,15 @@ function PopupContent() {
       <CssBaseline />
       <I18nProvider>
         <AppHeader currentMode={mode} onToggleTheme={toggleTheme} />
-        <Box component="main" className="content">
-          {currentView === "list" && <TweakList onNavigate={setCurrentView} />}
-
-          {currentView === "introduce_page" && (
-            <Introduce
-              onBack={() => setCurrentView("list")}
-              onNavigate={setCurrentView}
-            />
-          )}
-
-          {currentView === "license_page" && (
-            <LicensePage onBack={() => setCurrentView("introduce_page")} />
-          )}
-
-          {currentView !== "list" &&
-            currentView !== "introduce_page" &&
-            currentView !== "license_page" && (
-              <TweakCategory
-                categoryId={currentView}
-                enabledMap={enabledMap}
-                onToggle={handleToggle}
-                onBack={() => setCurrentView("list")}
-              />
-            )}
+        <Box
+          sx={{
+            height: "calc(400px - 56px)",
+            flex: 1,
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
+          {renderView()}
         </Box>
       </I18nProvider>
     </>
@@ -113,7 +100,6 @@ export default function Popup() {
   );
 }
 
-// Render
 const container = document.getElementById("root");
 if (!container._reactRoot) {
   container._reactRoot = createRoot(container);

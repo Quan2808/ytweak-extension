@@ -1,11 +1,3 @@
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import { t } from "@shared/utils/i18n";
-
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import InfoOutlineRoundedIcon from "@mui/icons-material/InfoOutlineRounded";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
@@ -14,10 +6,18 @@ import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import VideoSettingsRoundedIcon from "@mui/icons-material/VideoSettingsRounded";
-
-import { ReturnYouTubeDislikeIcon } from "@shared/icons";
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 
 import { categories } from "@features/index";
+import { ReturnYouTubeDislikeIcon } from "@shared/icons";
+import { t } from "@shared/utils/i18n";
 
 const ICON_MAP = {
   Settings: <SettingsRoundedIcon />,
@@ -32,9 +32,16 @@ const ICON_MAP = {
 
 export default function TweakList({ onNavigate }) {
   return (
-    <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+    <Box
+      sx={{
+        width: "100%",
+        bgcolor: "background.paper",
+        height: "100%",
+        overflowY: "auto",
+      }}
+    >
       <nav>
-        <List sx={{ paddingTop: 0 }}>
+        <List sx={{ paddingTop: 0, paddingBottom: 0 }}>
           <ListItem disablePadding>
             <ListItemButton
               onClick={() => onNavigate("introduce_page")}
@@ -49,6 +56,7 @@ export default function TweakList({ onNavigate }) {
               />
             </ListItemButton>
           </ListItem>
+
           {categories.map((cat) => (
             <ListItem key={cat.id} disablePadding>
               <ListItemButton

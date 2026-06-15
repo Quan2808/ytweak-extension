@@ -1,20 +1,11 @@
-import React, { useState, useMemo } from "react";
-import {
-  Box,
-  Typography,
-  List,
-  ListItem,
-  Divider,
-  IconButton,
-  Paper,
-} from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Divider, List, ListItem, Typography } from "@mui/material";
+import { useMemo, useState } from "react";
 
-import { t } from "@shared/utils/i18n";
 import licensesData from "@shared/assets/licenses.json";
+import { t } from "@shared/utils/i18n";
 
+import Subheader from "@shared/components/PageHeader";
 import LicenseAccordion from "./LicenseAccordion";
-import Subheader from "@shared/components/Subheader";
 
 export default function License({ onBack }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,7 +20,25 @@ export default function License({ onBack }) {
       const match = key.match(/(.+)@(.+)$/);
       const name = match ? match[1] : key;
       const version = match ? match[2] : "unknown";
-      const publisher = pkg.publisher || "Unknown";
+
+      let publisher = pkg.publisher;
+
+      if (!publisher || publisher.toLowerCase() === "unknown") {
+        const repoUrl = pkg.repository;
+        if (repoUrl && typeof repoUrl === "string") {
+          const repoMatch = repoUrl.match(
+            /(?:github\.com|gitlab\.com)[:/]([^/]+)/i,
+          );
+
+          if (repoMatch && repoMatch[1]) {
+            publisher = repoMatch[1];
+          }
+        }
+      }
+
+      if (!publisher) {
+        publisher = "Unknown Publisher";
+      }
 
       if (!groups[publisher]) groups[publisher] = [];
       groups[publisher].push({

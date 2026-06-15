@@ -34,7 +34,6 @@ export default function LicenseAccordion({ publisher, packages, index }) {
         <ListItemText
           primary={publisher}
           secondary={`${packages.length} packages`}
-          primaryTypographyProps={{ fontWeight: 600 }}
         />
       </AccordionSummary>
 
