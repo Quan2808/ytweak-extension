@@ -10,7 +10,7 @@ import {
 } from "@shared/contexts/ThemeContext";
 import { storage } from "@shared/utils/storage";
 
-import AppHeader from "@components/Header";
+import AppHeader from "@shared/components/AppHeader";
 import TweakCategory from "@components/TweakCategory";
 import TweakList from "@components/TweakList";
 import Introduce from "@shared/components/pages/Introduce";
