@@ -1,10 +1,12 @@
+import { extConfig, isMobile, isShorts, cLog } from "../shared/config.js";
+import { numberFormat } from "../shared/format.js";
+import { createObserver } from "../shared/observer.js";
 import {
   fetchAndSetVotes,
   setLikes,
   setDislikes,
   getLikeCountFromButton,
 } from "./api.js";
-import { extConfig, isMobile, isShorts, cLog } from "./config.js";
 import {
   getButtons,
   getLikeButton,
@@ -14,22 +16,60 @@ import {
   isVideoLoaded,
   checkForUserAvatarButton,
 } from "./dom.js";
-import { numberFormat } from "./format.js";
-import { createObserver } from "./observer.js";
-import { createRateBar } from "./ratebar.js";
+import { createRateBar } from "../ryd/ratebar.js";
 import { store } from "./store.js";
 
-// ─── DOM update ───────────────────────────────────────────────────────────────
+// ─── Polling & Ready States ──────────────────────────────────────────────────
+let rafId = null;
+let rafStart = 0;
+const RAF_TIMEOUT_MS = 5000;
 
+function pollUntilReady() {
+  if (performance.now() - rafStart > RAF_TIMEOUT_MS) {
+    cLog(
+      isShorts()
+        ? "[Shorts] Timed out waiting for buttons"
+        : "Timed out waiting for buttons",
+    );
+    return;
+  }
+
+  if (isShorts() && !getVideoId()) return;
+
+  store.clearCache();
+
+  const ready = isShorts()
+    ? isVideoLoaded()
+    : getButtons()?.offsetParent && isVideoLoaded();
+
+  if (!ready || !setupButtons()) {
+    rafId = requestAnimationFrame(pollUntilReady);
+    return;
+  }
+
+  fetchAndSetVotes();
+}
+
+function startPoll() {
+  if (rafId !== null) cancelAnimationFrame(rafId);
+  rafStart = performance.now();
+  rafId = requestAnimationFrame(pollUntilReady);
+}
+
+// ─── DOM update ───────────────────────────────────────────────────────────────
 export function updateDOMDislikes() {
   setDislikes(numberFormat(store.dislikesValue));
-  createRateBar(store.likesValue, store.dislikesValue);
+
+  // Shorts không có thanh RateBar
+  if (!isShorts()) {
+    createRateBar(store.likesValue, store.dislikesValue);
+  }
 }
 
 // ─── Click handlers ───────────────────────────────────────────────────────────
-
 export function likeClicked() {
-  if (!checkForUserAvatarButton()) return;
+  // Shorts không cần check avatar-btn (hoặc không phụ thuộc cơ chế này như video thường)
+  if (!isShorts() && !checkForUserAvatarButton()) return;
 
   if (store.previousState === 1) {
     store.likesValue--;
@@ -45,14 +85,14 @@ export function likeClicked() {
 
   updateDOMDislikes();
 
-  if (extConfig.numberDisplayReformatLikes) {
+  if (!isShorts() && extConfig.numberDisplayReformatLikes) {
     const n = getLikeCountFromButton();
     if (n !== false) setLikes(numberFormat(n));
   }
 }
 
 export function dislikeClicked() {
-  if (!checkForUserAvatarButton()) return;
+  if (!isShorts() && !checkForUserAvatarButton()) return;
 
   if (store.previousState === 3) {
     store.dislikesValue++;
@@ -64,7 +104,7 @@ export function dislikeClicked() {
     store.likesValue--;
     store.dislikesValue++;
     store.previousState = 2;
-    if (extConfig.numberDisplayReformatLikes) {
+    if (!isShorts() && extConfig.numberDisplayReformatLikes) {
       const n = getLikeCountFromButton();
       if (n !== false) setLikes(numberFormat(n));
     }
@@ -74,10 +114,11 @@ export function dislikeClicked() {
 }
 
 // ─── Smartimation observer ────────────────────────────────────────────────────
-
 let smartimationObserver = null;
 
 function attachSmartimationObserver(buttons) {
+  if (isShorts() || !buttons) return; // Shorts không sử dụng smartimation observer của video thường
+
   if (!smartimationObserver) {
     smartimationObserver = createObserver(
       { attributes: true, subtree: true, childList: true },
@@ -95,19 +136,18 @@ function attachSmartimationObserver(buttons) {
   }
 }
 
-// ─── Core setup — runs once per navigation ────────────────────────────────────
-
+// ─── Button wiring ────────────────────────────────────────────────────────────
 function setupButtons() {
   const likeButton = getLikeButton();
   const dislikeButton = getDislikeButton();
   const buttons = getButtons();
 
   if (!likeButton || !dislikeButton) return false;
-
-  // Already wired up for this navigation
   if (store.preNavigateLikeButton === likeButton) return true;
 
-  cLog("Registering button listeners...");
+  const prefix = isShorts() ? "[Shorts] " : "";
+  cLog(`${prefix}Registering button listeners...`);
+
   try {
     likeButton.addEventListener("click", likeClicked);
     likeButton.addEventListener("touchstart", likeClicked, { passive: true });
@@ -115,11 +155,17 @@ function setupButtons() {
     dislikeButton.addEventListener("touchstart", dislikeClicked, {
       passive: true,
     });
-    dislikeButton.addEventListener("focusin", updateDOMDislikes);
-    dislikeButton.addEventListener("focusout", updateDOMDislikes);
+
+    if (!isShorts()) {
+      dislikeButton.addEventListener("focusin", updateDOMDislikes);
+      dislikeButton.addEventListener("focusout", updateDOMDislikes);
+    }
 
     store.preNavigateLikeButton = likeButton;
-    if (buttons) attachSmartimationObserver(buttons);
+
+    if (buttons) {
+      attachSmartimationObserver(buttons);
+    }
   } catch {
     return false;
   }
@@ -127,78 +173,52 @@ function setupButtons() {
   return true;
 }
 
-// ─── Navigation handler ───────────────────────────────────────────────────────
-// YouTube is an SPA — yt-navigate-finish fires on every video change.
-// We also poll briefly with rAF in case the event fires before DOM is ready.
-
-let rafId = null;
-let rafStart = 0;
-const RAF_TIMEOUT_MS = 5000; // give up after 5s of polling
-
-function pollUntilReady() {
-  const now = performance.now();
-  if (now - rafStart > RAF_TIMEOUT_MS) {
-    cLog("Timed out waiting for buttons");
-    return;
-  }
-
-  // Clear DOM cache each poll tick — buttons may not be in DOM yet
-  store.clearCache();
-
-  const ready = isShorts() || (getButtons()?.offsetParent && isVideoLoaded());
-  if (!ready) {
-    rafId = requestAnimationFrame(pollUntilReady);
-    return;
-  }
-
-  if (!setupButtons()) {
-    rafId = requestAnimationFrame(pollUntilReady);
-    return;
-  }
-
-  fetchAndSetVotes();
-}
-
-function startPoll() {
-  if (rafId !== null) cancelAnimationFrame(rafId);
-  rafStart = performance.now();
-  rafId = requestAnimationFrame(pollUntilReady);
-}
-
+// ─── Navigation ───────────────────────────────────────────────────────────────
 export function onNavigate() {
   const newVideoId = getVideoId();
 
   if (newVideoId && newVideoId === store.currentVideoId) {
-    cLog("Same video, skipping reload");
+    cLog(
+      isShorts()
+        ? "[Shorts] Same Short, skipping reload"
+        : "Same video, skipping reload",
+    );
     return;
   }
 
-  cLog(`Navigation detected: ${store.currentVideoId} → ${newVideoId}`);
+  if (isShorts()) {
+    cLog(`[Shorts] Navigation → ${newVideoId}`);
+  } else {
+    cLog(`Navigation detected: ${store.currentVideoId} → ${newVideoId}`);
+  }
+
   store.currentVideoId = newVideoId;
   store.reset();
   startPoll();
 }
 
-function onVisibilityChange() {
+// ─── Visibility ───────────────────────────────────────────────────────────────
+export function onVisibilityChange() {
   if (document.visibilityState !== "visible") return;
 
-  // No data yet — full fetch needed
+  if (isShorts()) {
+    store.clearCache();
+    startPoll();
+    return;
+  }
+
   if (!store.currentVideoId || store.dislikesValue === 0) {
     startPoll();
     return;
   }
 
-  // Data already in store — just re-paint the DOM (fast, no network)
   cLog("Tab became visible, re-applying stored votes");
   store.clearCache();
-  store.preNavigateLikeButton = null; // force re-register listeners
+  store.preNavigateLikeButton = null;
   startPoll();
 }
 
-export { onVisibilityChange };
-
-// ─── Mobile: keep dislike text alive (YouTube resets it) ─────────────────────
-
+// ─── Mobile history patch ─────────────────────────────────────────────────────
 let mobileInterval = null;
 
 export function setupMobileHistoryPatch() {

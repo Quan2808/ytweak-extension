@@ -1,5 +1,5 @@
-import { extConfig, isMobile } from "./config.js";
-import { getButtons, getLikeButton, getDislikeButton } from "./dom.js";
+import { extConfig, isMobile } from "../shared/config.js";
+import { getButtons, getLikeButton, getDislikeButton } from "../shared/dom.js";
 
 const CSS = `
   #return-youtube-dislike-bar-container {

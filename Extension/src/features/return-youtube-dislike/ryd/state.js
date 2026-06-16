@@ -1,5 +1,5 @@
-import { isMobile } from "./config.js";
-import { getDislikeButton, getLikeButton } from "./dom.js";
+import { isMobile } from "../shared/config.js";
+import { getDislikeButton, getLikeButton } from "../shared/dom.js";
 
 export function isVideoLiked() {
   if (isMobile) {

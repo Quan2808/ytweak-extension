@@ -7,7 +7,7 @@ import addPipButton from "@features/player/add-pip-button";
 import expandTheaterMode from "@features/video/expand-theater-mode";
 import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-quality-title";
 
-import returnYoutubeDislike from "./return-youtube-dislike";
+import returnYoutubeDislike from "./return-youtube-dislike/ryd";
 import showThumbnailOnPause from "./video/show-thumbnail-on-pause";
 
 export const categories = [

@@ -1,20 +1,18 @@
 import { t } from "@shared/utils/i18n";
-
 import {
   onNavigate,
   onVisibilityChange,
   setupMobileHistoryPatch,
   teardownMobileHistoryPatch,
-} from "./events.js";
-import { injectCSS } from "./ratebar.js";
-import { store } from "./store.js";
-
-const TWEAK_ID = "return-youtube-dislike";
+} from "../shared/event";
+import { injectCSS } from "./ratebar";
+import { store } from "../shared/store";
+import { extConfig, isMobile, isShorts, cLog } from "../shared/config.js";
 
 let styleEl = null;
 
 export default {
-  id: TWEAK_ID,
+  id: "return-youtube-dislike",
 
   get name() {
     return t("tweak_ryd_name");
@@ -38,15 +36,9 @@ export default {
     window.removeEventListener("yt-navigate-finish", onNavigate, true);
     document.removeEventListener("visibilitychange", onVisibilityChange);
     teardownMobileHistoryPatch();
-
-    // Remove ratio bar
     document.querySelector(".ryd-tooltip")?.remove();
-
-    // Remove injected stylesheet
     styleEl?.remove();
     styleEl = null;
-
-    // Clear store
     store.reset();
     store.currentVideoId = null;
   },

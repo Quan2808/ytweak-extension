@@ -1,8 +1,7 @@
-import { isMobile, isShorts, cLog } from "./config.js";
+import { isMobile, isShorts, cLog } from "../shared/config.js";
 import { store } from "./store.js";
 
 // ─── Viewport ────────────────────────────────────────────────────────────────
-
 export function isInViewport(element) {
   const rect = element.getBoundingClientRect();
   if (
@@ -18,7 +17,6 @@ export function isInViewport(element) {
 }
 
 // ─── Core button queries (cached per navigation) ──────────────────────────────
-
 export function getButtons() {
   if (store._buttons) return store._buttons;
 
@@ -58,6 +56,14 @@ export function getButtons() {
 export function getLikeButton() {
   if (store._likeButton) return store._likeButton;
 
+  if (isShorts() && !isMobile) {
+    const res = document.querySelector("like-button-view-model");
+    if (res) {
+      store._likeButton = res;
+      return res;
+    }
+  }
+
   const buttons = getButtons();
   const result =
     buttons?.children[0]?.tagName ===
@@ -73,6 +79,14 @@ export function getLikeButton() {
 
 export function getDislikeButton() {
   if (store._dislikeButton) return store._dislikeButton;
+
+  if (isShorts() && !isMobile) {
+    const res = document.querySelector("dislike-button-view-model");
+    if (res) {
+      store._dislikeButton = res;
+      return res;
+    }
+  }
 
   const buttons = getButtons();
   let result;
@@ -99,24 +113,37 @@ export function getDislikeButton() {
 }
 
 // ─── Text containers ──────────────────────────────────────────────────────────
-
 export function getLikeTextContainer() {
   const btn = getLikeButton();
+  if (!btn) return null;
+
+  if (isShorts()) {
+    const shortsText = btn.querySelector(".ytAttributedStringHost");
+    if (shortsText) return shortsText;
+  }
+
   return (
-    btn?.querySelector("#text") ??
-    btn?.getElementsByTagName("yt-formatted-string")[0] ??
-    btn?.querySelector("span[role='text']")
+    btn.querySelector("#text") ??
+    btn.getElementsByTagName("yt-formatted-string")[0] ??
+    btn.querySelector("span[role='text']")
   );
 }
 
 export function getDislikeTextContainer() {
   const btn = getDislikeButton();
-  let result =
-    btn?.querySelector("#text") ??
-    btn?.getElementsByTagName("yt-formatted-string")[0] ??
-    btn?.querySelector("span[role='text']");
+  if (!btn) return null;
 
-  if (result === null && btn) {
+  if (isShorts()) {
+    const shortsText = btn.querySelector(".ytAttributedStringHost");
+    if (shortsText) return shortsText;
+  }
+
+  let result =
+    btn.querySelector("#text") ??
+    btn.getElementsByTagName("yt-formatted-string")[0] ??
+    btn.querySelector("span[role='text']");
+
+  if (result === null) {
     const span = document.createElement("span");
     span.id = "text";
     span.style.marginLeft = "6px";
@@ -130,26 +157,35 @@ export function getDislikeTextContainer() {
 }
 
 // ─── Video ID ─────────────────────────────────────────────────────────────────
-
 export function getVideoId() {
   const { pathname, searchParams } = new URL(window.location.href);
+
+  if (isShorts()) {
+    const match = pathname.match(/^\/shorts\/([^/?&]+)/);
+    return match?.[1] ?? pathname.slice(8);
+  }
+
   if (pathname.startsWith("/clip")) {
     return (
       document.querySelector("meta[itemprop='videoId']") ??
       document.querySelector("meta[itemprop='identifier']")
     )?.content;
   }
-  if (pathname.startsWith("/shorts")) return pathname.slice(8);
+
   return searchParams.get("v");
 }
 
 // ─── Ready check ─────────────────────────────────────────────────────────────
-
 export function isVideoLoaded() {
+  if (isShorts()) {
+    return !!getDislikeButton() && !!getDislikeTextContainer();
+  }
+
   if (isMobile)
     return (
       document.getElementById("player")?.getAttribute("loading") === "false"
     );
+
   const videoId = getVideoId();
   return (
     document.querySelector(`ytd-watch-grid[video-id='${videoId}']`) !== null ||
