@@ -26,6 +26,41 @@ export function AppThemeProvider({ children }) {
         typography: {
           fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
         },
+        components: {
+          MuiCssBaseline: {
+            styleOverrides: {
+              "::-webkit-scrollbar": {
+                width: "10px",
+                height: "10px",
+              },
+              "::-webkit-scrollbar-track": {
+                backgroundColor: "transparent",
+              },
+              "::-webkit-scrollbar-corner": {
+                background: "none",
+              },
+              "::-webkit-scrollbar-thumb": {
+                backgroundColor: mode
+                  ? "rgba(255, 255, 255, 0.2)"
+                  : "rgba(0, 0, 0, 0.2)",
+                backgroundClip: "padding-box",
+                border: "2px solid transparent",
+                borderRadius: "5px",
+                transition: "background-color 0.3s ease",
+              },
+              "::-webkit-scrollbar-thumb:hover": {
+                backgroundColor: mode
+                  ? "rgba(255, 255, 255, 0.3)"
+                  : "rgba(0, 0, 0, 0.35)",
+              },
+              "::-webkit-scrollbar-thumb:active": {
+                backgroundColor: mode
+                  ? "rgba(255, 255, 255, 0.3)"
+                  : "rgba(0, 0, 0, 0.4)",
+              },
+            },
+          },
+        },
       }),
     [mode],
   );
