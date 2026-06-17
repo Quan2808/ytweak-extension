@@ -102,5 +102,15 @@
   },
   "tweak_ryd_desc": {
     "message": ""
+  },
+
+  "category_feed_label": {
+    "message": "Feed"
+  },
+  "tweak_hideStatementBanner_name": {
+    "message": "Hide YouTube Premium promotions"
+  },
+  "tweak_hideStatementBanner_desc": {
+    "message": ""
   }
 }

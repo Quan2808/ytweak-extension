@@ -6,6 +6,7 @@ import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import VideoSettingsRoundedIcon from "@mui/icons-material/VideoSettingsRounded";
+import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import {
   Box,
   List,
@@ -28,6 +29,7 @@ const ICON_MAP = {
   MoreHoriz: <MoreHorizOutlinedIcon />,
   RYD: <ReturnYouTubeDislikeIcon />,
   Introduce: <InfoOutlineRoundedIcon />,
+  Feed: <VideoLibraryOutlinedIcon />,
 };
 
 export default function TweakList({ onNavigate }) {

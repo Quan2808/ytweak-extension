@@ -1,7 +1,7 @@
 {
   "name": "ytweak-extension",
   "private": true,
-  "version": "1.4.13",
+  "version": "1.4.14",
   "type": "module",
   "// versioning": "Semantic Versioning (SemVer) guide below",
   "scripts": {

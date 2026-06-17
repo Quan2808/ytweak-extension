@@ -9,6 +9,7 @@ import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-qua
 
 import returnYoutubeDislike from "./return-youtube-dislike/ryd";
 import showThumbnailOnPause from "./video/show-thumbnail-on-pause";
+import hideStatementBanner from "@features/feed/hide-statement-banner";
 
 export const categories = [
   {
@@ -46,6 +47,14 @@ export const categories = [
     },
     icon: "RYD",
     tweaks: [returnYoutubeDislike],
+  },
+  {
+    id: "feed",
+    get label() {
+      return t("category_feed_label");
+    },
+    icon: "Feed",
+    tweaks: [hideStatementBanner],
   },
   {
     id: "test",
