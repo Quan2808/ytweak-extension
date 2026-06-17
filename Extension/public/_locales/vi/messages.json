@@ -91,5 +91,15 @@
   },
   "tweak_ryd_desc": {
     "message": ""
+  },
+
+  "category_feed_label": {
+    "message": "Trang video"
+  },
+  "tweak_hideStatementBanner_name": {
+    "message": "Ẩn quảng cáo YouTube Premium"
+  },
+  "tweak_hideStatementBanner_desc": {
+    "message": ""
   }
 }

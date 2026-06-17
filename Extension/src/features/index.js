@@ -21,16 +21,12 @@ export const categories = [
     tweaks: [customHeaderLogo, linkSanitizer],
   },
   {
-    id: "video",
+    id: "feed",
     get label() {
-      return t("category_video_label");
+      return t("category_feed_label");
     },
-    icon: "VideoSettings",
-    tweaks: [
-      hidePremiumVideoQualityTitle,
-      expandTheaterMode,
-      showThumbnailOnPause,
-    ],
+    icon: "Feed",
+    tweaks: [hideStatementBanner],
   },
   {
     id: "player",
@@ -38,7 +34,13 @@ export const categories = [
       return t("category_player_label");
     },
     icon: "PlayArrow",
-    tweaks: [addPipButton, addLoopButton],
+    tweaks: [
+      hidePremiumVideoQualityTitle,
+      expandTheaterMode,
+      showThumbnailOnPause,
+      addPipButton,
+      addLoopButton,
+    ],
   },
   {
     id: "returnYouTubeDislike",
@@ -47,14 +49,6 @@ export const categories = [
     },
     icon: "RYD",
     tweaks: [returnYoutubeDislike],
-  },
-  {
-    id: "feed",
-    get label() {
-      return t("category_feed_label");
-    },
-    icon: "Feed",
-    tweaks: [hideStatementBanner],
   },
   {
     id: "test",
