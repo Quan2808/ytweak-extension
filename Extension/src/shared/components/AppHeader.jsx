@@ -22,7 +22,10 @@ export default function AppHeader({ currentMode, onToggleTheme }) {
       <AppBar
         position="sticky"
         elevation={0}
-        sx={{ backgroundColor: currentMode ? "transparent" : "#FF0033" }}
+        sx={{
+          backgroundColor: currentMode ? "transparent" : "common.white",
+          color: currentMode ? "common.white" : "text.primary",
+        }}
       >
         <Toolbar sx={{ justifyContent: "space-between", width: "100%" }}>
           <Typography
