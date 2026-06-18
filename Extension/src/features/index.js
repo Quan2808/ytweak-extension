@@ -2,8 +2,8 @@ import { t } from "@shared/utils/i18n";
 
 import customHeaderLogo from "@features/general/change-header-logo";
 import linkSanitizer from "@features/general/link-sanitizer";
-import addLoopButton from "@features/player/add-loop-button";
-import addPipButton from "@features/player/add-pip-button";
+import addLoopButton from "@features/video/add-loop-button";
+import addPipButton from "@features/video/add-pip-button";
 import expandTheaterMode from "@features/video/expand-theater-mode";
 import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-quality-title";
 
