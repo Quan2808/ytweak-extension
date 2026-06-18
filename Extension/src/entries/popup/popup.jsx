@@ -8,10 +8,9 @@ import {
   useThemeContext,
 } from "@shared/contexts/ThemeContext";
 import { storage } from "@shared/utils/storage";
-import { allTweaks } from "@features/index";
+import { allTweaks, categories } from "@features/index";
 
 import AppHeader from "@shared/components/AppHeader";
-import TweakCategory from "@components/TweakCategory";
 import TweakList from "@components/TweakList";
 import Introduce from "@shared/components/pages/Introduce";
 import LicensePage from "@shared/components/pages/License";
@@ -51,6 +50,7 @@ function PopupContent() {
     switch (currentView) {
       case "list":
         return <TweakList onNavigate={setCurrentView} />;
+
       case "introduce_page":
         return (
           <Introduce
@@ -58,17 +58,24 @@ function PopupContent() {
             onNavigate={setCurrentView}
           />
         );
+
       case "license_page":
         return <LicensePage onBack={() => setCurrentView("introduce_page")} />;
-      default:
+
+      default: {
+        const cat = categories.find((c) => c.id === currentView);
+        const CategoryPage = cat?.component;
+
+        if (!CategoryPage) return null;
+
         return (
-          <TweakCategory
-            categoryId={currentView}
+          <CategoryPage
             enabledMap={enabledMap}
             onToggle={handleToggle}
             onBack={() => setCurrentView("list")}
           />
         );
+      }
     }
   };
 

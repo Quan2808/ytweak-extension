@@ -6,10 +6,15 @@ import addLoopButton from "@features/video/add-loop-button";
 import addPipButton from "@features/video/add-pip-button";
 import expandTheaterMode from "@features/video/expand-theater-mode";
 import hidePremiumVideoQualityTitle from "@features/video/hide-premium-video-quality-title";
-
 import returnYoutubeDislike from "./return-youtube-dislike/ryd";
 import showThumbnailOnPause from "./video/show-thumbnail-on-pause";
 import hideStatementBanner from "@features/feed/hide-statement-banner";
+
+// Category page components
+import GeneralCategoryPage from "@features/general/components/GeneralCategoryPage";
+import FeedCategoryPage from "@features/feed/components/FeedCategoryPage";
+import PlayerCategoryPage from "@features/player/components/PlayerCategoryPage";
+import RYDCategoryPage from "@features/return-youtube-dislike/components/RYDCategoryPage";
 
 export const categories = [
   {
@@ -19,6 +24,7 @@ export const categories = [
     },
     icon: "Settings",
     tweaks: [customHeaderLogo, linkSanitizer],
+    component: GeneralCategoryPage,
   },
   {
     id: "feed",
@@ -27,6 +33,7 @@ export const categories = [
     },
     icon: "Feed",
     tweaks: [hideStatementBanner],
+    component: FeedCategoryPage,
   },
   {
     id: "player",
@@ -41,6 +48,7 @@ export const categories = [
       addPipButton,
       addLoopButton,
     ],
+    component: PlayerCategoryPage,
   },
   {
     id: "returnYouTubeDislike",
@@ -49,6 +57,7 @@ export const categories = [
     },
     icon: "RYD",
     tweaks: [returnYoutubeDislike],
+    component: RYDCategoryPage,
   },
   {
     id: "test",
@@ -57,6 +66,7 @@ export const categories = [
     },
     icon: "MoreHoriz",
     tweaks: [],
+    component: null,
   },
 ];
 

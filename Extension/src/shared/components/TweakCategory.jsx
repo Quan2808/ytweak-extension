@@ -1,25 +1,33 @@
 import React, { useState } from "react";
 import { Box, List, ListItem, ListItemText, Switch } from "@mui/material";
-import { categories } from "@features/index";
 import PageHeader from "@shared/components/PageHeader";
 
+/**
+ * Generic reusable tweak list.
+ *
+ * Props:
+ *  - title      : string — header title
+ *  - tweaks     : Tweak[] — list of tweaks to render
+ *  - enabledMap : Record<string, boolean>
+ *  - onToggle   : (tweakId: string) => void
+ *  - onBack     : () => void
+ *  - children   : ReactNode — optional custom UI injected above the list
+ */
 export default function TweakCategory({
-  categoryId,
+  title,
+  tweaks = [],
   enabledMap,
   onToggle,
   onBack,
+  children,
 }) {
-  const category = categories.find((c) => c.id === categoryId);
-
   const [extraValues, setExtraValues] = useState(() =>
     Object.fromEntries(
-      (category?.tweaks ?? [])
+      tweaks
         .filter((t) => t.extra)
         .map((t) => [t.id, t.extraDefaultValue ?? null]),
     ),
   );
-
-  if (!category) return null;
 
   return (
     <Box
@@ -30,12 +38,14 @@ export default function TweakCategory({
         overflow: "hidden",
       }}
     >
-      <PageHeader title={category.label} onBack={onBack} />
+      <PageHeader title={title} onBack={onBack} />
 
       <Box sx={{ overflowY: "auto", height: "calc(100% - 57px)" }}>
+        {children}
+
         <nav>
           <List sx={{ paddingTop: 0, paddingBottom: 0 }}>
-            {category.tweaks.map((tweak) => {
+            {tweaks.map((tweak) => {
               const ExtraUI = tweak.extra;
               const isEnabled = !!enabledMap[tweak.id];
 
@@ -45,7 +55,7 @@ export default function TweakCategory({
                     <ListItemText
                       id={tweak.id}
                       primary={tweak.name}
-                      {...(tweak.description !== null
+                      {...(tweak.description != null
                         ? { secondary: tweak.description }
                         : {})}
                     />
@@ -56,6 +66,7 @@ export default function TweakCategory({
                       slotProps={{ input: { "aria-labelledby": tweak.id } }}
                     />
                   </ListItem>
+
                   {ExtraUI && isEnabled && (
                     <Box sx={{ px: 2, pb: 1 }}>
                       <ExtraUI
