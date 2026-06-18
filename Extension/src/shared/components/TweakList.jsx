@@ -59,22 +59,30 @@ export default function TweakList({ onNavigate }) {
             </ListItemButton>
           </ListItem>
 
-          {categories.map((cat) => (
-            <ListItem key={cat.id} disablePadding>
-              <ListItemButton
-                onClick={() => onNavigate(cat.id)}
-                sx={{ px: 2, py: 1.5 }}
-              >
-                <ListItemIcon sx={{ minWidth: 40 }}>
-                  {ICON_MAP[cat.icon] ?? <TuneOutlinedIcon />}
-                </ListItemIcon>
-                <ListItemText primary={cat.label} />
-                <ArrowForwardOutlinedIcon
-                  sx={{ color: "text.disabled", fontSize: 20 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {categories.map((cat) => {
+            const isDisabled =
+              cat.component === null || cat.tweaks.length === 0;
+
+            return (
+              <ListItem key={cat.id} disablePadding>
+                <ListItemButton
+                  disabled={isDisabled}
+                  onClick={() => onNavigate(cat.id)}
+                  sx={{ px: 2, py: 1.5 }}
+                >
+                  <ListItemIcon sx={{ minWidth: 40 }}>
+                    {ICON_MAP[cat.icon] ?? <TuneOutlinedIcon />}
+                  </ListItemIcon>
+
+                  <ListItemText primary={cat.label} />
+
+                  <ArrowForwardOutlinedIcon
+                    sx={{ color: "text.disabled", fontSize: 20 }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
         </List>
       </nav>
     </Box>
