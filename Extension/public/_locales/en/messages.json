@@ -1,14 +1,25 @@
 {
-  "appName": { "message": "YTweak" },
-  "appDescription": { "message": "Tweak YouTube to your liking." },
-
-  "github_url": { "message": "https://github.com/Quan2808/ytweak-extension" },
-
-  "tooltip_language": { "message": "Change language" },
-  "tooltip_github": { "message": "Click to open the repository on GitHub." },
-  "tooltip_theme_dark": { "message": "Turn on the light" },
-  "tooltip_theme_light": { "message": "Turn off the light" },
-
+  "appName": {
+    "message": "YTweak"
+  },
+  "appDescription": {
+    "message": "Tweak YouTube to your liking."
+  },
+  "github_url": {
+    "message": "https://github.com/Quan2808/ytweak-extension"
+  },
+  "tooltip_language": {
+    "message": "Change language"
+  },
+  "tooltip_github": {
+    "message": "Click to open the repository on GitHub."
+  },
+  "tooltip_theme_dark": {
+    "message": "Turn on the light"
+  },
+  "tooltip_theme_light": {
+    "message": "Turn off the light"
+  },
   "introduce_title": {
     "message": "Introduce"
   },
@@ -33,53 +44,53 @@
   "intro_about_desc": {
     "message": "An extension that helps you customize the interface and features in your own optimal way."
   },
-
   "license_title": {
     "message": "Open source licenses"
   },
-
-  "category_general_label": { "message": "General" },
-  "category_comingSoon_label": { "message": "Coming soon" },
+  "category_general_label": {
+    "message": "General"
+  },
+  "category_comingSoon_label": {
+    "message": "Coming soon"
+  },
   "category_tweakCount": {
     "message": "$1 tweaks",
-    "placeholders": { "count": { "content": "$1" } }
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
-
-  "tweak_customLogo_name": { "message": "Replace YouTube Logo" },
+  "tweak_customLogo_name": {
+    "message": "Replace YouTube Logo"
+  },
   "tweak_customLogo_desc": {
     "message": "Replace the original YouTube logo with the Premium logo."
   },
-
-  "tweak_linkSanitizer_name": { "message": "Clean sharing links" },
+  "tweak_linkSanitizer_name": {
+    "message": "Clean sharing links"
+  },
   "tweak_linkSanitizer_desc": {
     "message": "Remove tracking parameters (si, pp, feature...) from YouTube links and share dialogs."
-  },
-
-  "category_video_label": { "message": "Video" },
-
-  "tweak_volumeAmplifier_name": { "message": "Volume Amplifier" },
-  "tweak_volumeAmplifier_desc": {
-    "message": "Volume Amplifier desc"
   },
   "tweak_showThumbnailOnPause_name": {
     "message": "Show the video thumbnail on pause."
   },
-
   "tweak_hidePremiumVideoQualityTitle_name": {
     "message": "Hide premium video quality title"
   },
   "tweak_hidePremiumVideoQualityTitle_desc": {
     "message": ""
   },
-
   "tweak_expandTheaterMode_name": {
     "message": "Expand theater mode"
   },
   "tweak_expandTheaterMode_desc": {
     "message": ""
   },
-
-  "category_player_label": { "message": "Player" },
+  "category_player_label": {
+    "message": "Player"
+  },
   "tweak_pipButton_name": {
     "message": "Show Picture in Picture video button."
   },
@@ -89,11 +100,9 @@
   "tweak_loopButton_name": {
     "message": "Show Loop video button."
   },
-
   "tweak_loopButton_desc": {
     "message": ""
   },
-
   "category_returnYouTubeDislike_label": {
     "message": "Return YouTube Dislike"
   },
@@ -109,7 +118,6 @@
   "tweak_ryd_footer_desc": {
     "message": "Data is provided by the Return YouTube Dislike API. Tap here to learn more."
   },
-
   "category_feed_label": {
     "message": "Feed"
   },

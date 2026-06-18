@@ -1,7 +1,7 @@
 {
   "name": "ytweak-extension",
   "private": true,
-  "version": "1.5.3",
+  "version": "1.5.4",
   "type": "module",
   "// versioning": "Semantic Versioning (SemVer) guide below",
   "scripts": {
@@ -12,6 +12,7 @@
     "new": "node scripts/build/create-tweak.js",
     "preview": "vite preview",
     "license:scan": "npx license-checker --json --out src/shared/assets/licenses.json --production",
+    "sync-locales": "node scripts/build/sync-locales.js",
     "version:patch": "npm version patch --no-git-tag-version",
     "version:minor": "npm version minor --no-git-tag-version",
     "version:major": "npm version major --no-git-tag-version"

@@ -1,14 +1,25 @@
 {
-  "appName": { "message": "YTweak" },
-  "appDescription": { "message": "Mô tả của YTweak" },
-
-  "github_url": { "message": "https://github.com/Quan2808/ytweak-extension" },
-
-  "tooltip_language": { "message": "Đổi ngôn ngữ" },
-  "tooltip_github": { "message": "Nhấp để mở repository trên GitHub" },
-  "tooltip_theme_dark": { "message": "Chuyển sang chế độ sáng" },
-  "tooltip_theme_light": { "message": "Chuyển sang chế độ tối " },
-
+  "appName": {
+    "message": "YTweak"
+  },
+  "appDescription": {
+    "message": "Mô tả của YTweak"
+  },
+  "github_url": {
+    "message": "https://github.com/Quan2808/ytweak-extension"
+  },
+  "tooltip_language": {
+    "message": "Đổi ngôn ngữ"
+  },
+  "tooltip_github": {
+    "message": "Nhấp để mở repository trên GitHub"
+  },
+  "tooltip_theme_dark": {
+    "message": "Chuyển sang chế độ sáng"
+  },
+  "tooltip_theme_light": {
+    "message": "Chuyển sang chế độ tối "
+  },
   "introduce_title": {
     "message": "Giới thiệu"
   },
@@ -36,29 +47,34 @@
   "license_title": {
     "message": "Giấy phép mã nguồn mở"
   },
-
-  "category_general_label": { "message": "Chung" },
-  "category_comingSoon_label": { "message": "Sắp ra mắt" },
+  "category_general_label": {
+    "message": "Chung"
+  },
+  "category_comingSoon_label": {
+    "message": "Sắp ra mắt"
+  },
   "category_tweakCount": {
     "message": "$1 tính năng",
-    "placeholders": { "count": { "content": "$1" } }
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
-
-  "tweak_customLogo_name": { "message": "Thay logo đầu trang" },
+  "tweak_customLogo_name": {
+    "message": "Thay logo đầu trang"
+  },
   "tweak_customLogo_desc": {
     "message": "Thay thế logo YouTube gốc thành Premium."
   },
-
-  "tweak_linkSanitizer_name": { "message": "Làm sạch liên kết chia sẻ" },
+  "tweak_linkSanitizer_name": {
+    "message": "Làm sạch liên kết chia sẻ"
+  },
   "tweak_linkSanitizer_desc": {
     "message": "Loại bỏ các tham số theo dõi (si, pp, feature...) trong liên kết chia sẻ và hộp thoại chia sẻ."
   },
-
-  "category_video_label": { "message": "Video" },
-
-  "tweak_volumeAmplifier_name": { "message": "Volume Amplifier" },
-  "tweak_volumeAmplifier_desc": {
-    "message": "Mô tả của Volume Amplifier"
+  "tweak_showThumbnailOnPause_name": {
+    "message": "Hiển thị hình thu nhỏ của video khi bấm dừng."
   },
   "tweak_hidePremiumVideoQualityTitle_name": {
     "message": "Ẩn tùy chọn chất lượng Premium"
@@ -72,8 +88,9 @@
   "tweak_expandTheaterMode_desc": {
     "message": ""
   },
-
-  "category_player_label": { "message": "Trình phát" },
+  "category_player_label": {
+    "message": "Trình phát"
+  },
   "tweak_pipButton_name": {
     "message": "Hiển thị nút Hình trong hình."
   },
@@ -86,13 +103,21 @@
   "tweak_loopButton_desc": {
     "message": ""
   },
+  "category_returnYouTubeDislike_label": {
+    "message": "Return YouTube Dislike"
+  },
   "tweak_ryd_name": {
     "message": "Bật Return YouTube Dislike"
   },
   "tweak_ryd_desc": {
     "message": ""
   },
-
+  "tweak_ryd_footer_name": {
+    "message": "ReturnYouTubeDislike.com"
+  },
+  "tweak_ryd_footer_desc": {
+    "message": "Dữ liệu đượcc cung cấp bởi API Return YouTube Dislike. Bấm vào đây để tìm hiểu thêm."
+  },
   "category_feed_label": {
     "message": "Trang video"
   },
