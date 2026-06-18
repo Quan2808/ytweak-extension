@@ -4,6 +4,12 @@ import { r, aliases } from "./vite.shared.js";
 
 export default defineConfig({
   resolve: { alias: aliases },
+  define: {
+    "process.env.NODE_ENV": JSON.stringify(
+      process.env.NODE_ENV || "development",
+    ),
+    "process.env": "{}",
+  },
   build: {
     outDir: r("dist"),
     emptyOutDir: false,

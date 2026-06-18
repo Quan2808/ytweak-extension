@@ -7,6 +7,11 @@ import { r, aliases, serveLocales } from "./vite.shared.js";
 export default defineConfig(() => ({
   root: r("src/entries/popup"),
   resolve: { alias: aliases },
+  define: {
+    "process.env.NODE_ENV": JSON.stringify(
+      process.env.NODE_ENV || "development",
+    ),
+  },
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),
