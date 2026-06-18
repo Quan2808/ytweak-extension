@@ -103,6 +103,12 @@
   "tweak_ryd_desc": {
     "message": ""
   },
+  "tweak_ryd_footer_name": {
+    "message": "ReturnYouTubeDislike.com"
+  },
+  "tweak_ryd_footer_desc": {
+    "message": "Data is provided by the Return YouTube Dislike API. Tap here to learn more."
+  },
 
   "category_feed_label": {
     "message": "Feed"

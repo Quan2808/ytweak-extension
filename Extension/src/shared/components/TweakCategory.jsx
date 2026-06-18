@@ -3,15 +3,14 @@ import { Box, List, ListItem, ListItemText, Switch } from "@mui/material";
 import PageHeader from "@shared/components/PageHeader";
 
 /**
- * Generic reusable tweak list.
- *
  * Props:
- *  - title      : string — header title
- *  - tweaks     : Tweak[] — list of tweaks to render
+ *  - title      : string
+ *  - tweaks     : Tweak[]
  *  - enabledMap : Record<string, boolean>
  *  - onToggle   : (tweakId: string) => void
  *  - onBack     : () => void
- *  - children   : ReactNode — optional custom UI injected above the list
+ *  - children   : ReactNode — custom UI phía TRÊN list
+ *  - footer     : ReactNode — custom UI phía DƯỚI list
  */
 export default function TweakCategory({
   title,
@@ -20,6 +19,7 @@ export default function TweakCategory({
   onToggle,
   onBack,
   children,
+  footer,
 }) {
   const [extraValues, setExtraValues] = useState(() =>
     Object.fromEntries(
@@ -85,6 +85,8 @@ export default function TweakCategory({
             })}
           </List>
         </nav>
+
+        {footer}
       </Box>
     </Box>
   );
