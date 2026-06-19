@@ -13,7 +13,7 @@ const TWEAK_ID = "show-thumbnail-on-pause";
 const OVERLAY_ID = "thumb-overlay";
 
 let currentVideoElement = null;
-let isFeatureActive = false;
+let isFeatureActive = false; 
 
 const ICON_NORMAL =
   "M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.89 2 2 2H1c-.55 0-1 .45-1 1s.45 1 1 1h22c.55 0 1-.45 1-1s-.45-1-1-1zm-7-3.53v-2.19c-2.78 0-4.61.85-6 2.72.56-2.67 2.11-5.33 6-5.87V7l3.61 3.36c.21.2.21.53 0 .73z";
@@ -23,8 +23,13 @@ const ICON_ACTIVE =
 const TWEAK_CSS = `
   #${OVERLAY_ID} {
     position: absolute;
-    inset: 0;
-    background-size: cover;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     background-position: center;
     z-index: 10;
     display: none;
@@ -60,13 +65,23 @@ function getOverlay() {
   return getElementById(OVERLAY_ID);
 }
 
+function syncOverlaySize() {
+  const overlay = getOverlay();
+  const video = currentVideoElement || getSelector("video");
+  if (!overlay || !video) return;
+
+  overlay.style.width = video.style.width || `${video.clientWidth}px`;
+  overlay.style.height = video.style.height || `${video.clientHeight}px`;
+}
+
 function showOverlay() {
-  if (!isFeatureActive) return;
+  if (!isFeatureActive) return; 
   const overlay = getOverlay();
   if (!overlay) return;
   const videoId = getVideoId();
   if (!videoId) return;
 
+  syncOverlaySize();
   overlay.style.display = "block";
   loadThumbnail(overlay, videoId);
 }
@@ -89,6 +104,8 @@ function removeVideoListeners() {
     currentVideoElement.removeEventListener("pause", videoHandlers.pause);
     currentVideoElement.removeEventListener("play", videoHandlers.play);
     currentVideoElement.removeEventListener("seeking", videoHandlers.seeking);
+    window.removeEventListener("resize", syncOverlaySize);
+    document.removeEventListener("fullscreenchange", syncOverlaySize);
     currentVideoElement = null;
   }
 }
@@ -96,10 +113,13 @@ function removeVideoListeners() {
 function setupVideoListeners(video) {
   removeVideoListeners();
   currentVideoElement = video;
-
+  
   video.addEventListener("pause", videoHandlers.pause);
   video.addEventListener("play", videoHandlers.play);
   video.addEventListener("seeking", videoHandlers.seeking);
+  
+  window.addEventListener("resize", syncOverlaySize);
+  document.addEventListener("fullscreenchange", syncOverlaySize);
 
   if (video.paused && !video.seeking) {
     showOverlay();
@@ -108,9 +128,8 @@ function setupVideoListeners(video) {
 
 function toggleFeature() {
   isFeatureActive = !isFeatureActive;
-
   updateButtonUI(TWEAK_ID, isFeatureActive, ICON_ACTIVE, ICON_NORMAL);
-
+  
   if (isFeatureActive) {
     if (currentVideoElement?.paused && !currentVideoElement?.seeking) {
       showOverlay();
@@ -141,8 +160,8 @@ function injectFeature() {
   injectYTWatchRightButton({
     id: TWEAK_ID,
     title: "Show Thumbnail on Pause",
-    titleActive: "Thumb on Pause",
-    titleInactive: "Thumb on Pause",
+    titleActive: "Thumb on Pause: On",
+    titleInactive: "Thumb on Pause: Off",
     iconPath: isFeatureActive ? ICON_ACTIVE : ICON_NORMAL,
     onClick: toggleFeature,
     onInject: () => {
@@ -160,7 +179,7 @@ function cleanup() {
   clearVideoWatcher(TWEAK_ID);
   removeVideoListeners();
   hideOverlay();
-
+  
   removeElement(`#${OVERLAY_ID}`);
   removeElement(`#${TWEAK_ID}`);
   window.removeEventListener("yt-navigate-finish", navHandler);
@@ -168,16 +187,12 @@ function cleanup() {
 
 export default {
   id: TWEAK_ID,
-  get name() {
-    return t("tweak_showThumbnailOnPause_name");
-  },
-  get description() {
-    return t("tweak_showThumbnailOnPause_desc");
-  },
+  get name() { return t("tweak_showThumbnailOnPause_name"); },
+  get description() { return t("tweak_showThumbnailOnPause_desc"); },
   default: false,
 
   enable() {
-    isFeatureActive = true;
+    isFeatureActive = true; 
     addStyle(TWEAK_ID, TWEAK_CSS);
     window.addEventListener("yt-navigate-finish", navHandler);
     navHandler();
