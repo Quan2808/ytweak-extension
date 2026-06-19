@@ -5,7 +5,60 @@ const TWEAK_ID = "grid-resizer";
 const VIDEO_COLS = 5;
 const SHORTS_COLS = Math.max(5, Math.round(5 * (VIDEO_COLS / 3)));
 
+const STYLE_ID = "ytd-grid-resizer-style";
 let observer = null;
+
+function injectStyle() {
+  if (document.getElementById(STYLE_ID)) return;
+
+  const videoWidth = `calc(${100 / VIDEO_COLS}% - var(--ytd-rich-grid-item-margin, 16px))`;
+  const shortsWidth = `calc(${100 / SHORTS_COLS}% - var(--ytd-rich-grid-item-margin, 16px))`;
+
+  const css = `
+    /* Video grid items */
+    ytd-rich-grid-renderer ytd-rich-item-renderer {
+      width: ${videoWidth} !important;
+      min-width: unset !important;
+      max-width: unset !important;
+    }
+
+    /* Video shelf items */
+    ytd-rich-shelf-renderer:not([is-shorts]) ytd-rich-item-renderer {
+      width: ${videoWidth} !important;
+      min-width: unset !important;
+      max-width: unset !important;
+    }
+
+    /* Shorts shelf items */
+    ytd-rich-shelf-renderer[is-shorts] ytd-rich-item-renderer {
+      width: ${shortsWidth} !important;
+      min-width: unset !important;
+      max-width: unset !important;
+    }
+
+    /* Shorts thumbnail container */
+    ytd-rich-shelf-renderer[is-shorts] .shortsLockupViewModelHostThumbnailParentContainer {
+      width: 100% !important;
+    }
+
+    /* Shelf contents wrap */
+    ytd-rich-shelf-renderer #contents {
+      flex-wrap: wrap !important;
+      height: auto !important;
+      overflow: visible !important;
+      transform: none !important;
+    }
+  `;
+
+  const style = document.createElement("style");
+  style.id = STYLE_ID;
+  style.textContent = css;
+  document.head.appendChild(style);
+}
+
+function removeStyle() {
+  document.getElementById(STYLE_ID)?.remove();
+}
 
 function applyColumns() {
   // ── Normal Grid ──
@@ -79,6 +132,7 @@ export default {
   },
   default: false,
   enable() {
+    injectStyle();
     applyColumns();
 
     observer = new MutationObserver(applyColumns);
@@ -101,6 +155,7 @@ export default {
 
     window.removeEventListener("load", applyColumns);
     removeColumns();
+    removeStyle();
 
     console.log(`[YTweak] Disabled: ${TWEAK_ID}`);
   },
