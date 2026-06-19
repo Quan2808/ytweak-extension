@@ -1,7 +1,8 @@
 import { t } from "@shared/utils/i18n";
 import { updateButtonUI, injectYTWatchRightButton } from "@shared/utils/player";
+import { watchVideoReady, clearVideoWatcher } from "@shared/utils/dom";
 
-let interval = null;
+const TWEAK_ID = "loop-button";
 let lastLoopState = null;
 
 const ICON_NORMAL =
@@ -13,13 +14,14 @@ function toggleLoop() {
   const video = document.querySelector("video");
   if (!video) return;
   video.loop = !video.loop;
-  updateIconState();
+  updateIconState(video);
 }
 
-function updateIconState() {
-  const video = document.querySelector("video");
-  if (!video) return;
-  const isActive = video.loop;
+function updateIconState(video) {
+  const targetVideo = video || document.querySelector("video");
+  if (!targetVideo) return;
+  
+  const isActive = targetVideo.loop;
   if (isActive === lastLoopState) return;
   lastLoopState = isActive;
   updateButtonUI("ytweak-loop", isActive, ICON_ACTIVE, ICON_NORMAL);
@@ -32,46 +34,43 @@ function injectButton() {
   }
 
   const video = document.querySelector("video");
-  const currentIcon = video?.loop ? ICON_ACTIVE : ICON_NORMAL;
+  if (!video) return;
 
   injectYTWatchRightButton({
     id: "ytweak-loop",
     title: "Loop Video",
     titleActive: "Loop: On",
     titleInactive: "Loop: Off",
-    iconPath: currentIcon,
+    iconPath: video.loop ? ICON_ACTIVE : ICON_NORMAL,
     onClick: toggleLoop,
-    onInject: (video) => {
-      lastLoopState = video.loop;
+    onInject: (v) => {
+      lastLoopState = v.loop;
     },
   });
 }
 
+function navHandler() {
+  watchVideoReady(TWEAK_ID, injectButton);
+}
+
 function cleanup() {
+  clearVideoWatcher(TWEAK_ID);
   const video = document.querySelector("video");
   if (video) video.loop = false;
   document.getElementById("ytweak-loop")?.remove();
+  window.removeEventListener("yt-navigate-finish", navHandler);
 }
 
 export default {
-  id: "loop-button",
-  get name() {
-    return t("tweak_loopButton_name");
-  },
-  get description() {
-    return t("tweak_loopButton_desc");
-  },
+  id: TWEAK_ID,
+  get name() { return t("tweak_loopButton_name"); },
+  get description() { return t("tweak_loopButton_desc"); },
   default: false,
   enable() {
-    if (interval) return;
-    interval = setInterval(injectButton, 1000);
-    injectButton();
+    window.addEventListener("yt-navigate-finish", navHandler);
+    navHandler();
   },
   disable() {
-    if (interval) {
-      clearInterval(interval);
-      interval = null;
-    }
     cleanup();
   },
 };

@@ -42,3 +42,43 @@ export const addStyle = (id, css) => {
     document.documentElement.append(style);
   }
 };
+
+let videoTimeoutMap = new Map();
+
+export function watchVideoReady(id, callback) {
+  if (videoTimeoutMap.has(id)) {
+    clearTimeout(videoTimeoutMap.get(id));
+    videoTimeoutMap.delete(id);
+  }
+
+  if (!location.pathname.startsWith("/watch")) return;
+
+  if (document.querySelector("video")) {
+    callback();
+    return;
+  }
+
+  let attempts = 0;
+  const check = () => {
+    attempts++;
+    if (document.querySelector("video")) {
+      callback();
+      videoTimeoutMap.delete(id);
+    } else if (attempts < 30) {
+      const timeout = setTimeout(check, 100);
+      videoTimeoutMap.set(id, timeout);
+    } else {
+      videoTimeoutMap.delete(id);
+    }
+  };
+
+  const timeout = setTimeout(check, 100);
+  videoTimeoutMap.set(id, timeout);
+}
+
+export function clearVideoWatcher(id) {
+  if (videoTimeoutMap.has(id)) {
+    clearTimeout(videoTimeoutMap.get(id));
+    videoTimeoutMap.delete(id);
+  }
+}
