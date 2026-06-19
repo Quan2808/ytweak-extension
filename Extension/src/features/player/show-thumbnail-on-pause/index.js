@@ -160,8 +160,8 @@ function injectFeature() {
   injectYTWatchRightButton({
     id: TWEAK_ID,
     title: "Show Thumbnail on Pause",
-    titleActive: "Thumb on Pause: On",
-    titleInactive: "Thumb on Pause: Off",
+    titleActive: "Thumb on Pause",
+    titleInactive: "Thumb on Pause",
     iconPath: isFeatureActive ? ICON_ACTIVE : ICON_NORMAL,
     onClick: toggleFeature,
     onInject: () => {
