@@ -126,5 +126,11 @@
   },
   "tweak_hideStatementBanner_desc": {
     "message": ""
+  },
+  "tweak_gridResizer_name": {
+    "message": "Custom video grid columns"
+  },
+  "tweak_gridResizer_desc": {
+    "message": "Change the number of videos and Shorts displayed per row on the homepage layout."
   }
 }

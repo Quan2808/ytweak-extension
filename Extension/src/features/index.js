@@ -15,6 +15,7 @@ import GeneralCategoryPage from "@features/general/components/GeneralCategoryPag
 import FeedCategoryPage from "@features/feed/components/FeedCategoryPage";
 import PlayerCategoryPage from "@features/player/components/PlayerCategoryPage";
 import RYDCategoryPage from "@features/return-youtube-dislike/components/RYDCategoryPage";
+import gridResizer from "@features/feed/grid-resizer";
 
 export const categories = [
   {
@@ -32,7 +33,9 @@ export const categories = [
       return t("category_feed_label");
     },
     icon: "Feed",
-    tweaks: [hideStatementBanner],
+    tweaks: [hideStatementBanner,
+      gridResizer,
+    ],
     component: FeedCategoryPage,
   },
   {

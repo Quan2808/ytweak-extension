@@ -126,5 +126,11 @@
   },
   "tweak_hideStatementBanner_desc": {
     "message": ""
+  },
+  "tweak_gridResizer_name": {
+    "message": "Tùy chỉnh số cột video"
+  },
+  "tweak_gridResizer_desc": {
+    "message": "Thay đổi số lượng video và Shorts hiển thị trên mỗi hàng tại trang chủ."
   }
 }
