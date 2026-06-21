@@ -16,6 +16,10 @@ const cssContent = `
     ytd-watch-next-secondary-results-renderer ytd-ad-slot-renderer {
         display: none !important;
     }
+
+    ytd-guide-entry-renderer:has(a[href*="/premium"]) {
+        display: none !important;
+      }
   `;
 
 function injectStyle() {
