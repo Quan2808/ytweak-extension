@@ -132,5 +132,11 @@
   },
   "tweak_gridResizer_desc": {
     "message": "Change the number of videos and Shorts displayed per row on the homepage layout."
+  },
+  "tweak_hideHomeAds_name": {
+    "message": "Hide home Ads"
+  },
+  "tweak_hideHomeAds_desc": {
+    "message": ""
   }
 }

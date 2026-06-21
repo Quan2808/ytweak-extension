@@ -43,6 +43,21 @@ export const addStyle = (id, css) => {
   }
 };
 
+export const addStyleAppendChild = (id, css) => {
+  removeElementById(id);
+
+  const style = document.createElement("style");
+  style.id = `ytweak-${id}`;
+  style.className = "ytweak";
+  style.textContent = css;
+
+  if (document.head) {
+    document.head.appendChild(style);
+  } else {
+    document.documentElement.appendChild(style);
+  }
+};
+
 let videoTimeoutMap = new Map();
 
 export function watchVideoReady(id, callback) {
