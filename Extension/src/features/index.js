@@ -19,6 +19,7 @@ import PlayerCategoryPage from "@features/player/components/PlayerCategoryPage";
 import RYDCategoryPage from "@features/return-youtube-dislike/components/RYDCategoryPage";
 import AdsPage from "@features/ads/components/AdsPage";
 import hidePlayerAds from "@features/ads/hide-player-ads";
+import hideStoreShelf from "@features/ads/hide-store-shelf";
 
 export const categories = [
   {
@@ -35,9 +36,13 @@ export const categories = [
     get label() {
       return t("category_ads_label");
     },
-    icon: "Extension",
-    tweaks: [hideSidebarAds, hideStatementBanner, hideHomeAds,
-      hidePlayerAds,
+    icon: "Ads",
+    tweaks: [
+      hideSidebarAds,
+      hideStatementBanner,
+      hideHomeAds,
+      hideStoreShelf,
+      // hidePlayerAds,
     ],
     component: AdsPage,
   },

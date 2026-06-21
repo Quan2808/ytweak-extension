@@ -9,6 +9,13 @@ const cssContent = `
         ytd-compact-promoted-video-renderer {
         display: none !important;
     }
+
+    ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-ads"],
+    #related #player-ads,
+    #related ytd-ad-slot-renderer,
+    ytd-watch-next-secondary-results-renderer ytd-ad-slot-renderer {
+        display: none !important;
+    }
   `;
 
 function injectStyle() {

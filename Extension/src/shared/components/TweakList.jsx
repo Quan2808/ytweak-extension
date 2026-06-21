@@ -7,6 +7,7 @@ import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
 import VideoSettingsRoundedIcon from "@mui/icons-material/VideoSettingsRounded";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
+import CampaignRoundedIcon from "@mui/icons-material/CampaignRounded";
 import {
   Box,
   List,
@@ -30,6 +31,7 @@ const ICON_MAP = {
   RYD: <ReturnYouTubeDislikeIcon />,
   Introduce: <InfoOutlineRoundedIcon />,
   Feed: <VideoLibraryOutlinedIcon />,
+  Ads: <CampaignRoundedIcon />,
 };
 
 export default function TweakList({ onNavigate }) {

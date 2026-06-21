@@ -133,25 +133,31 @@
   "tweak_gridResizer_desc": {
     "message": "Change the number of videos and Shorts displayed per row on the homepage layout."
   },
+  "category_ads_label": {
+    "message": "Ads"
+  },
   "tweak_hideHomeAds_name": {
     "message": "Hide home Ads"
   },
   "tweak_hideHomeAds_desc": {
-    "message": ""
+    "message": "Removes ad banners and promoted videos from the homepage."
   },
   "tweak_hideSidebarAds_name": {
     "message": "Hide sidebar Ads"
   },
   "tweak_hideSidebarAds_desc": {
-    "message": ""
-  },
-  "category_ads_label": {
-    "message": "Ads"
+    "message": "Hides ads mixed within the recommended video list on the watch page."
   },
   "tweak_hidePlayerAds_name": {
     "message": "Hide player Ads"
   },
   "tweak_hidePlayerAds_desc": {
-    "message": ""
+    "message": "Blocks ads that appear directly inside the video player."
+  },
+  "tweak_hideStoreShelf_name": {
+    "message": "Hide store shelf"
+  },
+  "tweak_hideStoreShelf_desc": {
+    "message": "Hides the merchandise and product shelf displayed below the video."
   }
 }

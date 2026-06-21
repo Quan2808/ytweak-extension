@@ -1,13 +1,14 @@
 import { addStyle, getElementById, removeElement } from "@shared/utils/dom";
 import { t } from "@shared/utils/i18n";
 
-const TWEAK_ID = "hide-premium-upsell";
+const TWEAK_ID = "hide-store-shelf";
 
 const cssContent = `
-    tp-yt-paper-dialog:has(yt-mealbar-promo-renderer),
-    ytd-popup-container:has(ytd-ypc-offer-renderer),
-    #offer-module,
-    #premium-yva {
+    #merch-shelf,
+    #pla-shelf,
+    ytd-product-details-renderer,
+    ytd-merch-shelf-renderer,
+    .ytd-merch-shelf-renderer  {
         display: none !important;
     }
   `;
@@ -24,10 +25,10 @@ function removeStyle() {
 export default {
   id: TWEAK_ID,
   get name() {
-    return t("tweak_hidePremiumQuality_name");
+    return t("tweak_hideStoreShelf_name");
   },
   get description() {
-    return t("tweak_hidePremiumQuality_desc");
+    return t("tweak_hideStoreShelf_desc");
   },
   default: true,
 

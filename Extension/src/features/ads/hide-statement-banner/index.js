@@ -14,15 +14,6 @@ const cssContent = `
     yt-mealbar-promo-renderer#mealbar-promo-renderer {
         display: none !important;
     }
-
-    #player-ads,
-    .ytp-ad-module,
-    .ytp-ad-overlay-container,
-    .ytp-ad-image-overlay,
-    .ytp-ad-text-overlay,
-    .video-ads.ytp-ad-module {
-        display: none !important;
-    }
   `;
 
 function injectStyle() {

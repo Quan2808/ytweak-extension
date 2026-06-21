@@ -132,5 +132,32 @@
   },
   "tweak_gridResizer_desc": {
     "message": "Thay đổi số lượng video và Shorts hiển thị trên mỗi hàng tại trang chủ."
+  },
+  "category_ads_label": {
+    "message": "Quảng cáo"
+  },
+  "tweak_hideHomeAds_name": {
+    "message": "Ẩn quảng cáo ở trang chủ"
+  },
+  "tweak_hideHomeAds_desc": {
+    "message": "Loại bỏ các biểu ngữ và video quảng cáo hiển thị tại trang chủ."
+  },
+  "tweak_hideSidebarAds_name": {
+    "message": "Ẩn quảng cáo ở danh sách video bên cạnh"
+  },
+  "tweak_hideSidebarAds_desc": {
+    "message": "Ẩn các quảng cáo xen kẽ trong danh sách video gợi ý khi đang xem video."
+  },
+  "tweak_hidePlayerAds_name": {
+    "message": "Ẩn quảng cáo trong trình phát"
+  },
+  "tweak_hidePlayerAds_desc": {
+    "message": "Chặn các quảng cáo xuất hiện trực tiếp khi đang phát video."
+  },
+  "tweak_hideStoreShelf_name": {
+    "message": "Ẩn kệ hàng mua sắm"
+  },
+  "tweak_hideStoreShelf_desc": {
+    "message": "Ẩn khu vực trưng bày sản phẩm/hàng hóa của kênh bên dưới video."
   }
 }
