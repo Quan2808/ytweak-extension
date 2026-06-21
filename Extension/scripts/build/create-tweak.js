@@ -250,6 +250,40 @@ export default {
   }
 
   fs.writeFileSync(INDEX_FILE_PATH, updatedContent, "utf-8");
+
+  try {
+    let currentLocales = {};
+    if (fs.existsSync(LOCALE_PATH)) {
+      currentLocales = JSON.parse(fs.readFileSync(LOCALE_PATH, "utf-8"));
+    }
+
+    const nameKey = `tweak_${tweakVarName}_name`;
+    const descKey = `tweak_${tweakVarName}_desc`;
+
+    currentLocales[nameKey] = { message: tweakRawName };
+    currentLocales[descKey] = { message: "" };
+
+    if (isNewCategory) {
+      const catLabelKey = `category_${categoryId}_label`;
+      currentLocales[catLabelKey] = {
+        message: categoryId.charAt(0).toUpperCase() + categoryId.slice(1),
+      };
+    }
+
+    fs.writeFileSync(
+      LOCALE_PATH,
+      JSON.stringify(currentLocales, null, 2),
+      "utf-8",
+    );
+    console.log(
+      `📝 Auto-inserted i18n keys into: \x1b[34m${LOCALE_PATH}\x1b[0m`,
+    );
+  } catch (error) {
+    console.error(
+      `⚠️ Warning: Failed to update localization file: ${error.message}`,
+    );
+  }
+
   console.log("\n🚀 \x1b[32mAll tasks completed flawlessly!\x1b[0m\n");
   process.exit(0);
 }

@@ -98,7 +98,9 @@ function applyColumns() {
 }
 
 function removeColumns() {
-  document.documentElement.style.removeProperty("--ytd-rich-grid-items-per-row");
+  document.documentElement.style.removeProperty(
+    "--ytd-rich-grid-items-per-row",
+  );
 
   document.querySelectorAll("ytd-rich-grid-renderer").forEach((el) => {
     el.style.removeProperty("--ytd-rich-grid-items-per-row");
@@ -156,7 +158,5 @@ export default {
     window.removeEventListener("load", applyColumns);
     removeColumns();
     removeStyle();
-
-    console.log(`[YTweak] Disabled: ${TWEAK_ID}`);
   },
 };
