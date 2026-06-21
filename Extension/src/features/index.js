@@ -8,14 +8,17 @@ import expandTheaterMode from "@features/player/expand-theater-mode";
 import hidePremiumVideoQualityTitle from "@features/player/hide-premium-video-quality-title";
 import returnYoutubeDislike from "@features/return-youtube-dislike/ryd";
 import showThumbnailOnPause from "@features/player/show-thumbnail-on-pause";
-import hideStatementBanner from "@features/feed/hide-statement-banner";
+import hideStatementBanner from "@features/ads/hide-statement-banner";
+import hideHomeAds from "@features/ads/hide-home-ads";
+import hideSidebarAds from "@features/ads/hide-sidebar-ads";
 
 // Category page components
 import GeneralCategoryPage from "@features/general/components/GeneralCategoryPage";
 import FeedCategoryPage from "@features/feed/components/FeedCategoryPage";
 import PlayerCategoryPage from "@features/player/components/PlayerCategoryPage";
 import RYDCategoryPage from "@features/return-youtube-dislike/components/RYDCategoryPage";
-import hideHomeAds from "@features/feed/hide-home-ads";
+import AdsPage from "@features/ads/components/AdsPage";
+import hidePlayerAds from "@features/ads/hide-player-ads";
 
 export const categories = [
   {
@@ -28,12 +31,23 @@ export const categories = [
     component: GeneralCategoryPage,
   },
   {
+    id: "ads",
+    get label() {
+      return t("category_ads_label");
+    },
+    icon: "Extension",
+    tweaks: [hideSidebarAds, hideStatementBanner, hideHomeAds,
+      hidePlayerAds,
+    ],
+    component: AdsPage,
+  },
+  {
     id: "feed",
     get label() {
       return t("category_feed_label");
     },
     icon: "Feed",
-    tweaks: [hideStatementBanner, hideHomeAds],
+    tweaks: [],
     component: FeedCategoryPage,
   },
   {

@@ -1,17 +1,17 @@
 import { addStyle, getElementById, removeElement } from "@shared/utils/dom";
 import { t } from "@shared/utils/i18n";
 
-const TWEAK_ID = "hide-statement-banner";
+const TWEAK_ID = "hide-player-ads";
 
 const cssContent = `
-    ytd-rich-section-renderer:has(ytd-statement-banner-renderer),
-    ytd-statement-banner-renderer {
-        display: none !important;
-    }
-
-    .style-scope.yt-mealbar-promo-renderer
-    #main.yt-mealbar-promo-renderer,
-    yt-mealbar-promo-renderer#mealbar-promo-renderer {
+   #player-ads,
+    .video-ads.ytp-ad-module,
+    .ytp-ad-module,
+    .ytp-ad-overlay-container,
+    .ytp-ad-image-overlay,
+    .ytp-ad-text-overlay,
+    .ytp-ad-progress-list,
+    .ytp-ad-skip-button-container {
         display: none !important;
     }
   `;
@@ -28,10 +28,10 @@ function removeStyle() {
 export default {
   id: TWEAK_ID,
   get name() {
-    return t("tweak_hideStatementBanner_name");
+    return t("tweak_hidePlayerAds_name");
   },
   get description() {
-    return t("tweak_hideStatementBanner_desc");
+    return t("tweak_hidePlayerAds_desc");
   },
   default: true,
 

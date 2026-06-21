@@ -138,5 +138,20 @@
   },
   "tweak_hideHomeAds_desc": {
     "message": ""
+  },
+  "tweak_hideSidebarAds_name": {
+    "message": "Hide sidebar Ads"
+  },
+  "tweak_hideSidebarAds_desc": {
+    "message": ""
+  },
+  "category_ads_label": {
+    "message": "Ads"
+  },
+  "tweak_hidePlayerAds_name": {
+    "message": "Hide player Ads"
+  },
+  "tweak_hidePlayerAds_desc": {
+    "message": ""
   }
 }

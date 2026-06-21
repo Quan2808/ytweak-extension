@@ -13,6 +13,12 @@ const cssContent = `
     ytd-ad-slot-renderer {
         display: none !important;
     }
+
+    #masthead-ad,
+    ytd-banner-promo-renderer,
+    ytd-rich-section-renderer:has(ytd-banner-promo-renderer) {
+        display: none !important;
+    }
   `;
 
 function injectStyle() {
