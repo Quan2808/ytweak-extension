@@ -8,6 +8,12 @@ const cssContent = `
     ytd-statement-banner-renderer {
         display: none !important;
     }
+
+    .style-scope.yt-mealbar-promo-renderer
+    #main.yt-mealbar-promo-renderer,
+    yt-mealbar-promo-renderer#mealbar-promo-renderer {
+        display: none !important;
+    }
   `;
 
 function injectStyle() {

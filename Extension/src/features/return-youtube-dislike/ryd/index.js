@@ -22,7 +22,7 @@ export default {
     return t("tweak_ryd_desc");
   },
 
-  default: false,
+  default: true,
 
   enable() {
     styleEl = injectCSS();

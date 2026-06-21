@@ -17,7 +17,13 @@ const cssContent = `
 
 function injectStyle() {
   if (getElementById(TWEAK_ID)) return;
-  addStyleAppendChild(TWEAK_ID, cssContent);
+
+  const style = document.createElement("style");
+  style.id = `ytweak-${TWEAK_ID}`;
+  style.className = "ytweak";
+  style.textContent = cssContent;
+
+  document.head.appendChild(style);
 }
 
 function removeStyle() {
