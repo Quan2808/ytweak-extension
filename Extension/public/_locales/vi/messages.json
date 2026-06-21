@@ -121,6 +121,12 @@
   "category_feed_label": {
     "message": "Trang video"
   },
+  "tweak_removePlaylistFromHome_name": {
+    "message": "Ẩn danh sách phát ở trang chủ"
+  },
+  "tweak_removePlaylistFromHome_desc": {
+    "message": "Tự động loại bỏ các Tuyển tập (Mix) và Danh sách phát (Playlist) xuất hiện trên bảng tin trang chủ."
+  },
   "tweak_hideStatementBanner_name": {
     "message": "Ẩn quảng cáo YouTube Premium"
   },

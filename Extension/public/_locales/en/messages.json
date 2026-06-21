@@ -159,5 +159,11 @@
   },
   "tweak_hideStoreShelf_desc": {
     "message": "Hides the merchandise and product shelf displayed below the video."
+  },
+  "tweak_removePlaylistFromHome_name": {
+    "message": "Remove Playlist from home"
+  },
+  "tweak_removePlaylistFromHome_desc": {
+    "message": "Automatically hides YouTube Mixes and Playlists from appearing on your home feed."
   }
 }

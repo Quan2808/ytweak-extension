@@ -20,6 +20,7 @@ import RYDCategoryPage from "@features/return-youtube-dislike/components/RYDCate
 import AdsPage from "@features/ads/components/AdsPage";
 import hidePlayerAds from "@features/ads/hide-player-ads";
 import hideStoreShelf from "@features/ads/hide-store-shelf";
+import removePlaylistFromHome from "@features/feed/remove-playlist-from-home";
 
 export const categories = [
   {
@@ -52,7 +53,9 @@ export const categories = [
       return t("category_feed_label");
     },
     icon: "Feed",
-    tweaks: [],
+    tweaks: [
+      removePlaylistFromHome,
+    ],
     component: FeedCategoryPage,
   },
   {
